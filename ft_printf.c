@@ -29,10 +29,8 @@ int     display_parameter(const char **str, va_list ap)
     if (i)
         get_options(*str, format, i);
     /* this is just for testing. Printing to the display should be moved out to a separate function*/
-    printf ("format extracted. format->type = %c, format->flag = |%s|, format->width = %zu, format->precision = %zu", format->type, format->flag, format->width, format->precision);
-    // -> replace this on 10.07 with proper formatting of standard output stream. Following 2 rows are just for testing.
-    if (format->type == '%')
-        write(1, *str + i, 1);
+    //printf ("format extracted. format->type = %c, format->flag = |%s|, format->width = %zu, format->precision = %zu\n", format->type, format->flag, format->width, format->precision);
+    combine_options(format, ap);
     /*moving pointer to the index next to parameter type definition */
     *str = *str + i + 1;
     free(format);

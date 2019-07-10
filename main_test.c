@@ -6,9 +6,12 @@ int ft_printf(const char *str, ...);
 int main()
 {
     const double RENT = 3852.99;
-
-    printf("123%-10.5%\n");
-    ft_printf("123%-10.5%\n");
+    printf("123%%\n");
+    ft_printf("123%%\n");
+    printf("123%-10%%c%s\n", 'a', "abc");
+    ft_printf("123%-10%%c%s\n", 'a', "abc");
+    printf("%p %*p* %5p %-20p\n", "a", 8, "", "", "");
+    ft_printf("%p %*p* %5p %-20p\n", "a", 8, "", "", "");
     /*
     printf("%c %*c* %5c %-5c\n", 'a', 8, 'b', 'c', 'd');
     printf("%p %*p* %5p %-20p\n", "a", 8, "", "", "");
