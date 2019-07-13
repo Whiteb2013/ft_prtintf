@@ -5,7 +5,7 @@ void    apply_default_options(t_format *format)
 {
     format->flag[0] = '\0';
     format->width = 0;
-    format->precision = 4;
+    format->precision = 6;
 }
 
 /* checking if symbol matches any predefined format: 1 - true, 0 - false */

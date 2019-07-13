@@ -10,8 +10,28 @@ int main()
     ft_printf("123%%\n");
     printf("123%-10%%c%s\n", 'a', "abc");
     ft_printf("123%-10%%c%s\n", 'a', "abc");
-    printf("%p %*p* %5p %-20p\n", "a", 8, "", "", "");
-    ft_printf("%p %*p* %5p %-20p\n", "a", 8, "", "", "");
+    printf("%x %X %#x\n", 1234234, 1234234, 1234234);
+    ft_printf("%x %X %#x\n", 1234234, 1234234, 1234234);
+    
+ 
+    printf("%p %p* %5p %-20p\n", "a", "", "", "");
+    ft_printf("%p %p* %5p %-20p\n", "a", "", "", "");
+    printf("**%d**% d% d **\n", 42, 42, -42);
+    ft_printf("**%d**% d% d **\n", 42, 42, -42);
+    printf("%o\n", 10);
+    ft_printf("%o\n", 10);
+    printf("%u\n", 10);
+    ft_printf("%u\n", 10);
+
+    printf("*%f*\n", RENT);
+    ft_printf("*%f*\n", RENT);
+	printf("*%4.2f*\n", RENT);
+	printf("*%3.1f*\n", RENT);
+	printf("*%10.3f*\n", RENT);
+	printf("*%+4.2f*\n", RENT);
+
+    printf("\n");
+    
     /*
     printf("%c %*c* %5c %-5c\n", 'a', 8, 'b', 'c', 'd');
     printf("%p %*p* %5p %-20p\n", "a", 8, "", "", "");
@@ -20,18 +40,10 @@ int main()
 
     printf("\n");
 
-    printf("%x %X %#x\n", 31, 31, 31);
-	printf("**%d**% d% d **\n", 42, 42, -42);
+    
+	
 	printf("**%5d**%5.3d**%05d**%05.3d**\n", 6, 6, 6, 6);
-
-    printf("\n");
-
-    printf("*%8f*\n", RENT);
-	printf("*%4.2f*\n", RENT);
-	printf("*%3.1f*\n", RENT);
-	printf("*%10.3f*\n", RENT);
-	printf("*%+4.2f*\n", RENT);
-
+    
     printf("\n");
 
     char c = 255;

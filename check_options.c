@@ -8,6 +8,7 @@ int     check_precision(char c)
         return (0);
 }
 
+/* replace with ft_isdigit */
 int     check_width(char c)
 {
     if (c >= '0' && c <= '9')
@@ -38,7 +39,7 @@ a - all (check if symbol is part of flag or width or precision);
 f - flag (check if symbol is part of flag);
 w - width (check if symbol is part of width);
 p - precision (check if symbol is part of precision);
- */
+*/
 int     check_options(char c, char mode)
 {
     if (mode == 'a')

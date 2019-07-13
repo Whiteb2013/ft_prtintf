@@ -11,12 +11,13 @@ typedef struct  s_format
     char        flag[3];
     size_t      width;
     size_t      precision;
+    size_t      length;
 }               t_format;
 
 int     ft_printf(const char *str, ...);
 int     get_type(const char *str, t_format *format);
 void    get_options(const char *str, t_format *format, int i);
 int     check_options(char c, char mode);
-void    combine_options(t_format *format, va_list ap);
+int     combine_options(t_format *format, va_list ap);
 
 #endif
