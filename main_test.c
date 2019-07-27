@@ -5,7 +5,7 @@ int ft_printf(const char *str, ...);
 
 int main()
 {
-    const double RENT = 3852.99;
+    const double RENT = 3852.51;
     printf("123%%\n");
     ft_printf("123%%\n");
     printf("123%-10%%c%s\n", 'a', "abc");
@@ -25,7 +25,8 @@ int main()
 
     printf("*%f*\n", RENT);
     ft_printf("*%f*\n", RENT);
-	printf("*%4.2f*\n", RENT);
+	printf("*%4.0f*\n", RENT);
+    ft_printf("*%4.0f*\n", RENT);
 	printf("*%3.1f*\n", RENT);
 	printf("*%10.3f*\n", RENT);
 	printf("*%+4.2f*\n", RENT);

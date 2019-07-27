@@ -1,59 +1,5 @@
 #include "ft_printf.h"
 
-size_t  int_length(unsigned long long int b, unsigned int base)
-{
-    size_t i;
-
-    i = 0;
-    while ((b = (b / base)))
-        i++;
-    return (++i);
-}
-
-char    *ft_itoa_base(size_t b, size_t base, t_format *format, char *str)
-{
-    size_t	i;
-    char	values[16] = "0123456789abcdef";
-    
-    i = 0;
-    if (format->type == 'X')
-        while (values[i])
-        {
-            values[i] = ft_toupper(values[i]);
-            i++;
-        }
-    i = format->length;
-    str[i] = '\0';
-    while (b / base)
-    {
-        str[--i] = values[b % base];
-        b = b / base;
-    }
-    str[--i] = values[b % base];
-    return (str);
-}
-
-/* decimal calculation goes wrong here due to unknown reason */
-int     get_decimal(size_t precision, double a)
-{
-    int     decimal;
-    size_t  i;
-    
-    decimal = 0;
-    i = 0;
-    while (i <= precision)
-    {
-        decimal = decimal * 10 + (int)a;
-        a = (a - (int)a) * 10;
-        printf("decimal = %d, float = %f\n", decimal, a);
-        i++;
-    }
-    if ((int)a >= 5)
-        return (decimal / 10 + 1);
-    else
-        return (decimal / 10);
-}
-
 int		convert2char(t_format *format, int a)
 {
     format->length = 1;
@@ -88,6 +34,9 @@ int     convert2int(t_format *format, long long int a, size_t base)
     str = ft_itoa_base(b, base, format, str);
     if (sign)
         str[0] = '-';
+    if (format->type == 'p')
+        if (!(str = join_prefix("0x", str, format)))
+            return (0);
     convert2string(format, str);
     free (str);
     return (1);
@@ -95,15 +44,45 @@ int     convert2int(t_format *format, long long int a, size_t base)
 
 int		convert2float(t_format *format, double a)
 {
-	int     integer;
-    int     decimal;
+	long long int   integer;
+    long long int   decimal;
+    char			*temp_str;
+    char			*result_str;
 
-    integer = (int)a;
-    decimal = get_decimal(format->precision, (a - (int)a) * 10);
-    /* this is for testing only. Has to be improved 1) add +1 in case of exceeded precision 2)adopt length, etc. */
-    convert2int(format, integer, 10);
-    convert2char(format, '.');
-    convert2int(format, decimal, 10);
+    /* var "integer" contains everything before separator, var "decimal" contains everything after separator */
+    integer = (long long int)a;
+    if (a < 0)
+	{
+        decimal = get_decimal(format->precision, -(a - integer), &integer);
+		format->length = int_length(integer, 10) + 1;
+	}
+	else
+	{
+        decimal = get_decimal(format->precision, a - integer, &integer);
+		format->length = int_length(integer, 10);
+	}
+    if (!format->length || !(result_str = ft_strnew(format->length)))
+        return (0);
+    result_str = ft_itoa_base(integer, 10, format, result_str);
+    if (a < 0)
+        result_str[0] = '-';
+    /* following cycle may be considered as subroutine to join decimal part*/
+    if (format->precision)
+    {
+	    format->length = int_length(decimal, 10);
+	    if (!(temp_str = ft_strnew(format->length)))
+            return (0);
+	    temp_str = ft_itoa_base(decimal, 10, format, temp_str);
+	    while (format->length < format->precision)
+            if (!(temp_str = join_prefix("0", temp_str, format)))
+                return (0);
+        if (!(temp_str = join_prefix(".", temp_str, format)))
+		    return (0);
+        if (!(result_str = join_strings(result_str, temp_str, format)))
+		    return (0);
+    }
+    convert2string(format, result_str);
+    free (result_str);
     return (1);
 }
 

@@ -19,5 +19,11 @@ int     get_type(const char *str, t_format *format);
 void    get_options(const char *str, t_format *format, int i);
 int     check_options(char c, char mode);
 int     combine_options(t_format *format, va_list ap);
+char    *ft_itoa_base(size_t b, size_t base, t_format *format, char *str);
+size_t  int_length(unsigned long long int b, unsigned int base);
+int     get_decimal(size_t precision, double a, long long int *integer);
+char	*join_prefix(char *s1, char *s2, t_format *format);
+char	*join_postfix(char *s1, char *s2, t_format *format);
+char	*join_strings(char *s1, char *s2, t_format *format);
 
 #endif

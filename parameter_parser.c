@@ -66,7 +66,7 @@ void    get_options(const char *str, t_format *format, int i)
     while (k < i)
     {
         /* check if it looks like flag and the rest options are still default to avoid flag rewriting*/
-        if (format->flag[0] == '\0' && format->width == 0 && format->precision == 4 && check_options(str[k], 'f'))
+        if (format->flag[0] == '\0' && format->width == 0 && format->precision == 6 && check_options(str[k], 'f'))
             k = k + get_flag(&str[k], format);
         /* check if it looks like width and precision is still default to avoud width rewriting*/
         else if (format->width == 0 && format->precision == 4 && check_options(str[k], 'w'))
@@ -76,7 +76,7 @@ void    get_options(const char *str, t_format *format, int i)
                 k++;
         }
         /* check if it looks like precision. If yes - write and break the cycle, because precision is always the last one */
-        else if (check_options(str[k++], 'p') && format->precision == 4)
+        else if (check_options(str[k++], 'p') && format->precision == 6)
         {
             format->precision = ft_atoi(&str[k]);
             break;
