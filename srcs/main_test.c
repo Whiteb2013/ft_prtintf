@@ -6,32 +6,50 @@ int ft_printf(const char *str, ...);
 int main()
 {
     const double RENT = 3852.51;
+    
     printf("123%%\n");
     ft_printf("123%%\n");
+    puts("");
+    
     printf("123%-10%%c%s\n", 'a', "abc");
     ft_printf("123%-10%%c%s\n", 'a', "abc");
+    puts("");
+
     printf("%x %X %#x\n", 1234234, 1234234, 1234234);
     ft_printf("%x %X %#x\n", 1234234, 1234234, 1234234);
-    
+    puts("");
+
  
     printf("%p %p* %5p %-20p\n", "a", "", "", "");
     ft_printf("%p %p* %5p %-20p\n", "a", "", "", "");
+    puts("");
+
     printf("**%d**% d% d **\n", 42, 42, -42);
     ft_printf("**%d**% d% d **\n", 42, 42, -42);
+    puts("");
+
     printf("%o\n", 10);
     ft_printf("%o\n", 10);
+    puts("");
+
     printf("%u\n", 10);
     ft_printf("%u\n", 10);
+    puts("");
 
     printf("*%f*\n", RENT);
     ft_printf("*%f*\n", RENT);
-	printf("*%4.0f*\n", RENT);
+	puts("");
+    
+    printf("*%4.0f*\n", RENT);
     ft_printf("*%4.0f*\n", RENT);
-	printf("*%3.1f*\n", RENT);
+	puts("");
+    
+    printf("*%3.1f*\n", RENT);
 	printf("*%10.3f*\n", RENT);
 	printf("*%+4.2f*\n", RENT);
+    puts("");
 
-    printf("\n");
+    /*printf("\n");*/
     
     /*
     printf("%c %*c* %5c %-5c\n", 'a', 8, 'b', 'c', 'd');
