@@ -10,4 +10,4 @@
 #                                                                              #
 # **************************************************************************** #
 
-gcc -I ./srcs -I ./libft main_test.c -L. -lftprintf -o printf
+make re && gcc -I ./srcs -I ./libft main_test.c -L. -lftprintf -o printf && ./printf
