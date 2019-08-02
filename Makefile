@@ -36,10 +36,10 @@ CFLAGS = -Wall -Wextra -Werror
 LFLAGS = -I ./libft/ -I ./srcs/
 
 %.o:$(SRC_DIR)/%.c
-	$(CC) $(LFLAGS) -o $@ -c $<
+	@$(CC) $(LFLAGS) -o $@ -c $<
 #	$(CC) $(CFLAGS) $(LFLAGS) -o $@ -c $<
 %.o:$(LIB_DIR)/%.c
-	$(CC) $(LFLAGS) -o $@ -c $<
+	@$(CC) $(LFLAGS) -o $@ -c $<
 #	$(CC) $(CFLAGS) $(LFLAGS) -o $@ -c $<
 
 all: $(NAME)
