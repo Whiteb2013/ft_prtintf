@@ -69,7 +69,7 @@ void    get_options(const char *str, t_format *format, int i)
         if (format->flag[0] == '\0' && format->width == 0 && format->precision == 6 && check_options(str[k], 'f'))
             k = k + get_flag(&str[k], format);
         /* check if it looks like width and precision is still default to avoud width rewriting*/
-        else if (format->width == 0 && format->precision == 4 && check_options(str[k], 'w'))
+        else if (format->width == 0 && format->precision == 6 && check_options(str[k], 'w'))
         {
             format->width = ft_atoi(&str[k]);
             while (check_options(str[k], 'w'))

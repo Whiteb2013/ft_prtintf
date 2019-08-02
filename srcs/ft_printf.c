@@ -15,6 +15,7 @@ size_t  display_buffer(const char **str, size_t i)
 int     display_parameter(const char **str, va_list ap)
 {
     int         i;
+    int			k;
     t_format    *format;
 
     if (!(format = (t_format *)ft_memalloc(sizeof(t_format))))
@@ -30,12 +31,12 @@ int     display_parameter(const char **str, va_list ap)
         get_options(*str, format, i);
     /* this is just for testing. Printing to the display should be moved out to a separate function*/
     //printf ("format extracted. format->type = %c, format->flag = |%s|, format->width = %zu, format->precision = %zu\n", format->type, format->flag, format->width, format->precision);
-    if (!combine_options(format, ap))
+    if (!(k = combine_options(format, ap)))
         return (0);
     /*moving pointer to the index next to parameter type definition */
     *str = *str + i + 1;
     free(format);
-    return (1);
+    return (k);
 }  
 
 /* project function: 1 - successful processing, 0 - error encountered */

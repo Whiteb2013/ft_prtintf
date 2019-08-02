@@ -1,17 +1,26 @@
 #include "ft_printf.h"
 
-int		convert2char(t_format *format, int a)
-{
-    format->length = 1;
-    write (1, &a, 1);
-	return (1);
-}
-
 int		convert2string(t_format *format, char *s)
 {
     format->length = ft_strlen(s);
-    write (1, s, ft_strlen(s));
-	return (1);    
+    if (format->length < format->width)
+		s = apply_width(s, format);
+    write (1, s, format->length);
+	return ((int)format->length);    
+}
+
+int		convert2char(t_format *format, int a)
+{
+    char	*str;
+    int		i;
+    
+    if (!(str = ft_strnew(1)))
+        return (0);
+    str[0] = (unsigned char)a;
+    i = convert2string(format, str);
+    //issue to resolve later: str will cause a leak in case of no padding
+	//free (str);
+	return (i);
 }
 
 int     convert2int(t_format *format, long long int a, size_t base)
@@ -19,6 +28,7 @@ int     convert2int(t_format *format, long long int a, size_t base)
     char                    *str;
     size_t                  sign;
     unsigned long long int  b;
+	int						i;
 
     sign = 0;
     if (a < 0)
@@ -37,9 +47,10 @@ int     convert2int(t_format *format, long long int a, size_t base)
     if (format->type == 'p')
         if (!(str = join_prefix("0x", str, format)))
             return (0);
-    convert2string(format, str);
-    free (str);
-    return (1);
+    i = convert2string(format, str);
+    //issue to resolve later: str will cause a leak in case of no padding
+	//free (str);
+    return (i);
 }
 
 int		convert2float(t_format *format, double a)
@@ -48,6 +59,7 @@ int		convert2float(t_format *format, double a)
     long long int   decimal;
     char			*temp_str;
     char			*result_str;
+	int				i;
 
     /* var "integer" contains everything before separator, var "decimal" contains everything after separator */
     integer = (long long int)a;
@@ -81,9 +93,9 @@ int		convert2float(t_format *format, double a)
         if (!(result_str = join_strings(result_str, temp_str, format)))
 		    return (0);
     }
-    convert2string(format, result_str);
+    i = convert2string(format, result_str);
     free (result_str);
-    return (1);
+    return (i);
 }
 
 int     combine_options(t_format *format, va_list ap)
