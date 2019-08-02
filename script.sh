@@ -10,4 +10,4 @@
 #                                                                              #
 # **************************************************************************** #
 
-gcc ft_printf.h main_test.c ft_printf.c parameter_parser.c check_options.c apply_format.c ft_itoa_base.c sub_functions.c formatting.c ../libft/libft.a && ./a.out
+gcc -I ./srcs -I ./libft main_test.c -L. -lftprintf -o printf

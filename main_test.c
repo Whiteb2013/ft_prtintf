@@ -7,8 +7,9 @@ int main()
 {
     const double RENT = 3852.51;
     
-    printf("123%%\n");
-    ft_printf("123%%\n");
+    int n = printf("123%%\n");
+    int m = ft_printf("123%%\n");
+    printf("%d = %d\n", n, m);
     puts("");
     
     printf("123%-10%%c%s\n", 'a', "abc");
