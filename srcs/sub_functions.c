@@ -5,7 +5,7 @@ size_t  int_length(unsigned long long int b, unsigned int base)
     size_t i;
 
     i = 0;
-    while ((b = (b / base)))
+    while ((b = b / base))
         i++;
     return (++i);
 }

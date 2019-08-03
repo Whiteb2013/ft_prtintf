@@ -94,6 +94,7 @@ int		convert2float(t_format *format, double a)
 		    return (0);
     }
     i = convert2string(format, result_str);
+    //issue to resolve later: str will cause a leak in case of no padding
     //free (result_str);
     return (i);
 }

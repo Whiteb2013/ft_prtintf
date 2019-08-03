@@ -7,12 +7,11 @@ char	*apply_width(char *s, t_format *format)
 	size_t	i;
 
 	i = 0;
+	c = ' ';
 	if (!(filler_str = ft_strnew(format->width - format->length)))
 		return (NULL);
-	if (format->flag.zero == 't')
+	if (format->flag.zero == 't' && format->flag.minus == 'f')
 		c = '0';
-	else
-		c = ' ';	
 	while (i < format->width - format->length)
 		filler_str[i++] = c;
 	if (format->flag.minus == 't')
