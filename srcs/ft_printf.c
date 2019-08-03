@@ -20,6 +20,8 @@ int     display_parameter(const char **str, va_list ap)
 
     if (!(format = (t_format *)ft_memalloc(sizeof(t_format))))
         return (0);
+    if (!(format->length_flag = ft_strnew(2)))
+        return (0);
     /*taking out parameter type: c, s, p, d, i, o, u, x, X or %. 
     Returning i < 0 if none of these types detected or type character index i value */
     if ((i = get_type(*str, format)) < 0)
@@ -31,10 +33,12 @@ int     display_parameter(const char **str, va_list ap)
         get_options(*str, format, i);
     /* this is just for testing. Printing to the display should be moved out to a separate function*/
     //printf ("format extracted. format->type = %c, format->flag = |%s|, format->width = %zu, format->precision = %zu\n", format->type, format->flag, format->width, format->precision);
+    printf ("format extracted. format->length_flag = %s\n", format->length_flag);
     if (!(k = combine_options(format, ap)))
         return (0);
     /*moving pointer to the index next to parameter type definition */
     *str = *str + i + 1;
+    free(format->length_flag);
     free(format);
     return (k);
 }  

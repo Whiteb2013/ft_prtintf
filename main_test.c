@@ -49,6 +49,17 @@ int main()
     ft_printf("*%4.0f*\n", RENT);
 	puts("");
 
+    ft_printf("123%L%%c%s\n", 'a', "abc");
+    ft_printf("123%ll%%c%s\n", 'a', "abc");
+    ft_printf("123%l%%c%s\n", 'a', "abc");
+    ft_printf("123%hh%%c%s\n", 'a', "abc");
+    ft_printf("123%h%%c%s\n", 'a', "abc");
+    printf("123%hmmm%hmmm%hmmm%lmmm%Lmmm\n", 'a', "abc");
+    ft_printf("123%hc%Ls%lc%Ls\n", 'a', "abc", 'a', "abc");
+    //в строке ниже добавлена 'm' и начиная с нее ft_printf ничего не выводит
+    ft_printf("123%hc%mLs%lc%Ls\n", 'a', "abc", 'a', "abc");
+    puts("");
+
 	/*
     //printf("123%.10-+ 0#10.10d\n", 777);
 	printf("123%.12+ 0#15.8d\n", 777);

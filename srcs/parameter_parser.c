@@ -1,7 +1,7 @@
 #include "ft_printf.h"
 
 /* defining default displaying options */
-void    apply_default_options(t_format *format)
+int     apply_default_options(t_format *format)
 {
     format->flag.minus = 'f';
     format->flag.plus = 'f';
@@ -10,6 +10,7 @@ void    apply_default_options(t_format *format)
     format->flag.hash = 'f';
     format->width = 0;
     format->precision = 6;
+    return (1);
 }
 
 /* checking if symbol matches any predefined format: 1 - true, 0 - false */
@@ -69,10 +70,17 @@ void    get_options(const char *str, t_format *format, int i)
     k = 0;
     while (k < i)
     {
+        printf("str k = %s", str);
+        printf("str k = %c", str[k]);
         if (str[k] >= '1' && str[k] <= '9')
         {
             format->width = ft_atoi(&str[k]);
             k += int_length(format->width, 10) - 1;
+        }
+        else if (str[k] == '.')
+        {
+            format->precision = ft_atoi(&str[++k]);
+            k += int_length(format->precision, 10) - 1;
         }
         else if (str[k] == '-')
             format->flag.minus = 't';
@@ -84,11 +92,27 @@ void    get_options(const char *str, t_format *format, int i)
             format->flag.zero = 't';
         else if (str[k] == '#')
             format->flag.hash = 't';
-        else if (str[k] == '.')
+        else if (str[k] == 'L')
+            format->length_flag = ft_strdup("L");
+        else if (str[k] == 'l')
         {
-            format->precision = ft_atoi(&str[++k]);
-            //printf("============= format->precision = %zu\n", format->precision);
-            k += int_length(format->precision, 10) - 1;
+            if (k + 1 < i && str[k + 1] == 'l')
+            {
+                format->length_flag = ft_strdup("ll");
+                k++;
+            }
+            else
+                format->length_flag = ft_strdup("l");
+        }
+        else if (str[k] == 'h')
+        {
+            if (k + 1 < i && str[k + 1] == 'h')
+            {
+                format->length_flag = ft_strdup("hh");
+                k++;
+            }
+            else
+                format->length_flag = ft_strdup("h");
         }
         k++;
     }   
