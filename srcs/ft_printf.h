@@ -17,11 +17,11 @@ typedef struct  s_flag
 typedef struct  s_format
 {
     char        type;
+	char		length_flag[3];
     t_flag      flag;
     size_t      width;
     size_t      precision;
     size_t      length;
-    size_t      retlen;
 }               t_format;
 
 int     ft_printf(const char *str, ...);
