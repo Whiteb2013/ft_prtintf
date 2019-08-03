@@ -94,7 +94,7 @@ int		convert2float(t_format *format, double a)
 		    return (0);
     }
     i = convert2string(format, result_str);
-    free (result_str);
+    //free (result_str);
     return (i);
 }
 

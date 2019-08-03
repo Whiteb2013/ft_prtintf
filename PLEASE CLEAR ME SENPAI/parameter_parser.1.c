@@ -3,11 +3,11 @@
 /* defining default displaying options */
 void    apply_default_options(t_format *format)
 {
-    format->flag.minus = 'f';
-    format->flag.plus = 'f';
-    format->flag.space = 'f';
-    format->flag.zero = 'f';
-    format->flag.hash = 'f';
+    format->flag->minus = 'f';
+    format->flag->plus = 'f';
+    format->flag->space = 'f';
+    format->flag->zero = 'f';
+    format->flag->hash = 'f';
     format->width = 0;
     format->precision = 6;
 }
@@ -49,17 +49,17 @@ int     get_type(const char *str, t_format *format)
     return (i);
 }
 
-// /* extracting flag and writing to a structure: 1 - flag consists of 1 symbol, 2 - flag consists of 2 symbols */
-// int     get_flag(const char *str, t_format *format)
-// {
-//     format->flag[0] = str[0];
-//     if ((str[0] == 'h' && str[1] == 'h') || (str[0] == 'l' && str[1] == 'l'))
-//     {
-//         format->flag[1] = str[1];
-//         return (2);
-//     }
-//     return (1);
-// }
+/* extracting flag and writing to a structure: 1 - flag consists of 1 symbol, 2 - flag consists of 2 symbols */
+int     get_flag(const char *str, t_format *format)
+{
+    format->flag[0] = str[0];
+    if ((str[0] == 'h' && str[1] == 'h') || (str[0] == 'l' && str[1] == 'l'))
+    {
+        format->flag[1] = str[1];
+        return (2);
+    }
+    return (1);
+}
 
 /* extracting parameter options (flag, width, precision) */
 void    get_options(const char *str, t_format *format, int i)
@@ -72,23 +72,23 @@ void    get_options(const char *str, t_format *format, int i)
         if (str[k] >= '1' && str[k] <= '9')
         {
             format->width = ft_atoi(&str[k]);
-            k += int_length(format->width, 10) - 1;
+            k += int_length(format->width, 10);
         }
         else if (str[k] == '-')
-            format->flag.minus = 't';
+            format->flag->minus = 't';
         else if (str[k] == '+')
-            format->flag.plus = 't';
+            format->flag->plus = 't';
         else if (str[k] == ' ')
-            format->flag.space = 't';
+            format->flag->space = 't';
         else if (str[k] == '0')
-            format->flag.zero = 't';
+            format->flag->zero = 't';
         else if (str[k] == '#')
-            format->flag.hash = 't';
+            format->flag->hash = 't';
         else if (str[k] == '.')
         {
-            format->precision = ft_atoi(&str[++k]);
-            //printf("============= format->precision = %zu\n", format->precision);
-            k += int_length(format->precision, 10) - 1;
+            format->precision = ft_atoi(&str[k]);
+            if (format->precision)
+                k += int_length(format->precision, 10);
         }
         k++;
     }   
