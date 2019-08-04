@@ -75,11 +75,8 @@ void    get_options(const char *str, t_format *format, va_list ap, int i)
     while (k < i)
     {
         //printf("str k = %s", str);
-        //printf("\nva_arg = %d\n", (int) va_arg(ap, size_t));
         if (str[k] == '*')
-        {
             format->width = va_arg(ap, size_t);
-        }
         else if (str[k] >= '1' && str[k] <= '9')
         {
             format->width = ft_atoi(&str[k]);
