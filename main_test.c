@@ -6,10 +6,102 @@ int ft_printf(const char *str, ...);
 int main()
 {
     const double RENT = 3852.51;
+    char *str = "ada";
     
     printf("123%s%*.*f\n", " start", 10, 2 ,999.1);
     ft_printf("123%s%*.*f\n", " start", 10, 2, 999.1);
     puts("");
+
+    printf("%-10.3s\n", "  str");
+    ft_printf("%-10.3s\n", "  str");
+    //printf("%.4f\n", 10.12345);
+    //ft_printf("%.4f\n", 10.1);
+    puts("");
+
+    printf("%i\n", atoi("+00123"));
+    printf("% +08i\n", 123);
+    printf("%0+08.5i\n", 123);
+    //ft_printf("%+10i\n", 10);
+    ft_printf("%+08.5i\n", 123);
+    //printf("%.4f\n", 10.12345);
+    //ft_printf("%.4f\n", 10.1);
+    puts("");
+
+    // printf("%010c\n", 'c');
+    // printf("%010d\n", 10);
+    // printf("%010i\n", 10);
+    // printf("%010f\n", 10.1);
+    // printf("%010o\n", 10);
+    // printf("%010p\n", (void *) 10);
+    // printf("%010s\n", "str");
+    // printf("%010u\n", 10);
+    // printf("%010x\n", 10);
+    // printf("%010X\n", 10);
+    // puts("");
+
+    // printf("%o\n", 10);
+    // ft_printf("%o\n", 10);
+    // puts("");
+
+    // printf("%#o\n", 10);
+    // ft_printf("%#o\n", 10);
+    // puts("");
+
+    // printf("%o\n", -10);
+    // ft_printf("%o\n", -10);
+    // puts("");
+
+    // printf("%#o\n", -10);
+    // ft_printf("%#o\n", -10);
+    // puts("");
+
+    // printf("%x\n", 10);
+    // ft_printf("%x\n", 10);
+    // puts("");
+
+    // printf("%#x\n", 10);
+    // ft_printf("%#x\n", 10);
+    // puts("");
+
+    // printf("%x\n", -10);
+    // ft_printf("%x\n", -10);
+    // puts("");
+
+    // printf("%#x\n", -10);
+    // ft_printf("%#x\n", -10);
+    // puts("");
+
+    // printf("%+x\n", 10);
+    // ft_printf("%+x\n", 10);
+    // puts("");
+
+    // printf("%+#x\n", 10);
+    // ft_printf("%+#x\n", 10);
+    // puts("");
+
+    // printf("%+x\n", -10);
+    // ft_printf("%+x\n", -10);
+    // puts("");
+
+    // printf("%+#x\n", -10);
+    // ft_printf("%+#x\n", -10);
+    // puts("");
+
+    // printf("%+o\n", 10);
+    // ft_printf("%+o\n", 10);
+    // puts("");
+
+    // printf("%+#o\n", 10);
+    // ft_printf("%+#o\n", 10);
+    // puts("");
+
+    // printf("%+o\n", -10);
+    // ft_printf("%+o\n", -10);
+    // puts("");
+
+    // printf("%+#o\n", -10);
+    // ft_printf("%+#o\n", -10);
+    // puts("");
 
     // int n = printf("1%23.0f\n", 12.3);
     // int m = ft_printf("1%23.0f\n", 12.3);

@@ -15,7 +15,7 @@ int		convert2string(t_format *format, char *s)
         while (s[++i])
             s[i] = ft_toupper(s[i]);
 	write (1, s, format->length);
-	return ((int)format->length);    
+	return ((int)format->length);
 }
 
 int		convert2char(t_format *format, int a)
@@ -108,27 +108,67 @@ int		convert2float(t_format *format, double a)
     return (i);
 }
 
+//for now this function palced here...
+char	*apply_precision(char *s, t_format *format)
+{
+	char	*filler_str;
+	size_t	i;
+
+	i = 0;
+    format->length = ft_strlen(s);
+	if (!(filler_str = ft_strnew(format->precision - format->length)))
+		return (NULL);
+	while (i < format->precision - format->length)
+		filler_str[i++] = '0';
+	s = join_strings (filler_str, s, format);
+	return (s);
+}
+
 int     combine_options(t_format *format, va_list ap)
 {
-    int res;
+    int     res;
+    char    *str;
 	
+    //%% seems ok for now
 	if (format->type == '%')
         res = convert2char(format, '%');
+    //%c seems ok for now
     else if (format->type == 'c')
         res = convert2char(format, va_arg(ap, int));
+    //%s seems ok for now
     else if (format->type == 's')
-        res = convert2string(format, va_arg(ap, char *));
+    {
+        str = va_arg(ap, char *);
+        if (format->precision_flag == 't')
+            str = ft_strndup(str, format->precision);
+        res = convert2string(format, str);
+        //free(str);
+    }
+    //%p must be cheked
     else if (format->type == 'p')
         res = convert2int(format, va_arg(ap, long long int), 16);
+    //for %d & %i have to add precision // works like width + flag zero // printf("%+8.5i\n", 123) => __+00123
+    //i think we must get argument as a string, apply precision and only then convert it to int
     else if (format->type == 'd' || format->type == 'i')
-        res = convert2int(format, va_arg(ap, int), 10);
+    {
+        str = ft_itoa(va_arg(ap, int));
+        if (format->precision_flag == 't')
+            str = apply_precision(str, format);
+        //from this moment i dont know what is going on with standard printf // look at rows 22, 23, 25 in main_test.c
+        if (atoi(str) >= 0)
+            str = join_prefix("+", str, format);
+        res = convert2string(format, str);
+        //res = convert2int(format, atoi(str), 10);
+    }
     else if (format->type == 'x' || format->type == 'X')
         res = convert2int(format, va_arg(ap, unsigned int), 16);
     else if (format->type == 'o')
     	res = convert2int(format, va_arg(ap, unsigned int), 8);
     else if (format->type == 'u')
 		res = convert2int(format, va_arg(ap, unsigned int), 10);
+    //for %f have to add rounding numbers when precision applied
 	else if (format->type == 'f')
+        //apply precision
         res = convert2float(format, va_arg(ap, double));
     return (res);
 }
