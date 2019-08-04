@@ -71,16 +71,13 @@ void    get_options(const char *str, t_format *format, va_list ap, int i)
 {
     int     k;
 
-    printf("OMNOM\n");
     k = 0;
     while (k < i)
     {
         //printf("str k = %s", str);
-        printf("OMNOM\n");
-        printf("va_arg = %d\n", (int) va_arg(ap, size_t));
+        printf("\nva_arg = %d\n", (int) va_arg(ap, size_t));
         if (str[k] == '*')
         {
-            printf("\nwidth OOOOOOOOOOOOKKKKKKKKKKK\n");
             format->width = va_arg(ap, size_t);
         }
         else if (str[k] >= '1' && str[k] <= '9')
@@ -90,7 +87,6 @@ void    get_options(const char *str, t_format *format, va_list ap, int i)
         }
         else if (str[k] == '.')
         {
-            printf("\nprecision OOOOOOOOOOOOKKKKKKKKKKK\n");
             format->precision_flag = 't';
             if (k + 1 < i && str[k + 1] == '*')
             {

@@ -22,7 +22,7 @@ int     check_flag(char c)
     char    *options;
     int     i;
 
-    options = " #0-+hlL";
+    options = " #0-+hlL*";
     i = 0;
     while (options[i])
     {
