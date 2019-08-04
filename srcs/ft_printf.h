@@ -18,6 +18,7 @@ typedef struct  s_format
 {
     char        type;
 	char		*length_flag;
+    char        precision_flag;
     t_flag      flag;
     size_t      width;
     size_t      precision;
@@ -26,7 +27,7 @@ typedef struct  s_format
 
 int     ft_printf(const char *str, ...);
 int     get_type(const char *str, t_format *format);
-void    get_options(const char *str, t_format *format, int i);
+void    get_options(const char *str, t_format *format, va_list ap, int i);
 int     check_options(char c, char mode);
 int     combine_options(t_format *format, va_list ap);
 char    *ft_itoa_base(size_t b, size_t base, t_format *format, char *str);

@@ -7,67 +7,86 @@ int main()
 {
     const double RENT = 3852.51;
     
-    int n = printf("1%23.0f\n", 12.3);
-    int m = ft_printf("1%23.0f\n", 12.3);
-    printf("%d = %d\n", n, m);
+    printf("123%s%*.*f\n", " start", 10, 2 ,999.1);
+    ft_printf("123%s%*.*f\n", " start", 10, 2, 999.1);
     puts("");
+
+    // int n = printf("1%23.0f\n", 12.3);
+    // int m = ft_printf("1%23.0f\n", 12.3);
+    // printf("%d = %d\n", n, m);
+    // puts("");
     
-    printf("123%010%%c%s\n", 'a', "abc");
-    ft_printf("123%010%%c%s\n", 'a', "abc");
-    puts("");
+    // printf("123%010%%c%s\n", 'a', "abc");
+    // ft_printf("123%010%%c%s\n", 'a', "abc");
+    // puts("");
 
-    printf("123%10.10%%c%s\n", 'a', "abc");
-    ft_printf("123%10.10%%c%s\n", 'a', "abc");
-    puts("");
+    // printf("123%10.10%%c%s\n", 'a', "abc");
+    // ft_printf("123%10.10%%c%s\n", 'a', "abc");
+    // puts("");
 
-    printf("%x %X %#x\n", 1234234, 1234234, 1234234);
-    ft_printf("%x %X %#x\n", 1234234, 1234234, 1234234);
-    puts("");
+    // printf("%x %X %#x\n", 1234234, 1234234, 1234234);
+    // ft_printf("%x %X %#x\n", 1234234, 1234234, 1234234);
+    // puts("");
 
  
-    printf("%p %p* %5p %-20p\n", "a", "", "", "");
-    ft_printf("%p %p* %5p %-20p\n", "a", "", "", "");
-    puts("");
+    // printf("%p %p* %5p %-20p\n", "a", "", "", "");
+    // ft_printf("%p %p* %5p %-20p\n", "a", "", "", "");
+    // puts("");
 
-    printf("**%d**% d% d **\n", 42, 42, -42);
-    ft_printf("**%d**% d% d **\n", 42, 42, -42);
-    puts("");
+    // printf("**%d**% d% d **\n", 42, 42, -42);
+    // ft_printf("**%d**% d% d **\n", 42, 42, -42);
+    // puts("");
 
-    printf("%#o\n", 10);
-    ft_printf("%#o\n", 10);
-    puts("");
+    // printf("%#o\n", 10);
+    // ft_printf("%#o\n", 10);
+    // puts("");
 
-    printf("%u\n", 10);
-    ft_printf("%u\n", 10);
-    puts("");
+    // printf("%u\n", 10);
+    // ft_printf("%u\n", 10);
+    // puts("");
 
-    printf("*%f*\n", RENT);
-    ft_printf("*%f*\n", RENT);
-	puts("");
+    // printf("*%f*\n", RENT);
+    // ft_printf("*%f*\n", RENT);
+	// puts("");
     
-    printf("*%4.0f*\n", RENT);
-    ft_printf("*%4.0f*\n", RENT);
-	puts("");
+    // printf("*%4.0f*\n", RENT);
+    // ft_printf("*%4.0f*\n", RENT);
+	// puts("");
 
-    printf("123%L%%c%s\n", 'a', "abc");
-    ft_printf("123%L%%c%s\n", 'a', "abc");
-    printf("123%ll%%c%s\n", 'a', "abc");
-    ft_printf("123%ll%%c%s\n", 'a', "abc");
-    printf("123%l%%c%s\n", 'a', "abc");
-    ft_printf("123%l%%c%s\n", 'a', "abc");
-    printf("123%hh%%c%s\n", 'a', "abc");
-    ft_printf("123%hh%%c%s\n", 'a', "abc");
-    printf("123%h%%c%s\n", 'a', "abc");
-    ft_printf("123%h%%c%s\n", 'a', "abc");
-    //printf("123%hmmm%hmmm%hmmm%lmmm%Lmmm\n", 'a', "abc");
-    //ft_printf("123%hmmm%hmmm%hmmm%lmmm%Lmmm\n", 'a', "abc");
-    printf("123%c%s%lc%s\n", 'a', "abc", 'a', "abc");
-    ft_printf("123%c%s%lc%s\n", 'a', "abc", 'a', "abc");
-    //в строке ниже добавлена 'm' и начиная с нее ft_printf ничего не выводит
-    //standard printf also drops a warning. Not sure what bahaviour do you expect to see here
-    printf("123%c%ms%lc%s\n", 'a', "abc", 'a', "abc");
-    ft_printf("123%c%ms%lc%s\n", 'a', "abc", 'a', "abc");
-    puts("");
+    // printf("123%L%%c%s\n", 'a', "abc");
+    // ft_printf("123%L%%c%s\n", 'a', "abc");
+    // printf("123%ll%%c%s\n", 'a', "abc");
+    // ft_printf("123%ll%%c%s\n", 'a', "abc");
+    // printf("123%l%%c%s\n", 'a', "abc");
+    // ft_printf("123%l%%c%s\n", 'a', "abc");
+    // printf("123%hh%%c%s\n", 'a', "abc");
+    // ft_printf("123%hh%%c%s\n", 'a', "abc");
+    // printf("123%h%%c%s\n", 'a', "abc");
+    // ft_printf("123%h%%c%s\n", 'a', "abc");
+    // //printf("123%hmmm%hmmm%hmmm%lmmm%Lmmm\n", 'a', "abc");
+    // //ft_printf("123%hmmm%hmmm%hmmm%lmmm%Lmmm\n", 'a', "abc");
+    // printf("123%c%s%lc%s\n", 'a', "abc", 'a', "abc");
+    // ft_printf("123%c%s%lc%s\n", 'a', "abc", 'a', "abc");
+    // //в строке ниже добавлена 'm' и начиная с нее ft_printf ничего не выводит
+    // //standard printf also drops a warning. Not sure what bahaviour do you expect to see here
+    // printf("123%c%ms%lc%s\n", 'a', "abc", 'a', "abc");
+    // ft_printf("123%c%ms%lc%s\n", 'a', "abc", 'a', "abc");
+    // puts("");
+
+    // printf("123%*.*f\n", 10,2 ,999);
+    // printf("\nOK?\n");
+    // ft_printf("123%*.*f\n", 10, 2, 999);
+    // puts("");
+
+    // printf("123%10d\n", 999);
+    // printf("\nOK?\n");
+    // ft_printf("123%10d\n", 999);
+    // puts("");
+
+    // printf("123%.2f\n", 999);
+    // printf("\nOK?\n");
+    // ft_printf("123%.2f\n", 999);
+    // puts("");
 
 	/*
     //printf("123%.10-+ 0#10.10d\n", 777);
