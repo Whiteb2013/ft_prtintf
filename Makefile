@@ -8,6 +8,7 @@ SRC_FILES =	ft_printf.c \
 			check_options.c \
 			apply_format.c \
 			apply_width.c \
+			apply_flags.c \
 			ft_itoa_base.c \
 			sub_functions.c \
 			formatting.c 

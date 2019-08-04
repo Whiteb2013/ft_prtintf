@@ -33,8 +33,8 @@ int main()
     ft_printf("**%d**% d% d **\n", 42, 42, -42);
     puts("");
 
-    printf("%o\n", 10);
-    ft_printf("%o\n", 10);
+    printf("%#o\n", 10);
+    ft_printf("%#o\n", 10);
     puts("");
 
     printf("%u\n", 10);
@@ -49,15 +49,24 @@ int main()
     ft_printf("*%4.0f*\n", RENT);
 	puts("");
 
+    printf("123%L%%c%s\n", 'a', "abc");
     ft_printf("123%L%%c%s\n", 'a', "abc");
+    printf("123%ll%%c%s\n", 'a', "abc");
     ft_printf("123%ll%%c%s\n", 'a', "abc");
+    printf("123%l%%c%s\n", 'a', "abc");
     ft_printf("123%l%%c%s\n", 'a', "abc");
+    printf("123%hh%%c%s\n", 'a', "abc");
     ft_printf("123%hh%%c%s\n", 'a', "abc");
+    printf("123%h%%c%s\n", 'a', "abc");
     ft_printf("123%h%%c%s\n", 'a', "abc");
-    printf("123%hmmm%hmmm%hmmm%lmmm%Lmmm\n", 'a', "abc");
-    ft_printf("123%hc%Ls%lc%Ls\n", 'a', "abc", 'a', "abc");
+    //printf("123%hmmm%hmmm%hmmm%lmmm%Lmmm\n", 'a', "abc");
+    //ft_printf("123%hmmm%hmmm%hmmm%lmmm%Lmmm\n", 'a', "abc");
+    printf("123%c%s%lc%s\n", 'a', "abc", 'a', "abc");
+    ft_printf("123%c%s%lc%s\n", 'a', "abc", 'a', "abc");
     //в строке ниже добавлена 'm' и начиная с нее ft_printf ничего не выводит
-    ft_printf("123%hc%mLs%lc%Ls\n", 'a', "abc", 'a', "abc");
+    //standard printf also drops a warning. Not sure what bahaviour do you expect to see here
+    printf("123%c%ms%lc%s\n", 'a', "abc", 'a', "abc");
+    ft_printf("123%c%ms%lc%s\n", 'a', "abc", 'a', "abc");
     puts("");
 
 	/*

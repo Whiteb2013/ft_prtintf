@@ -11,7 +11,7 @@ int     check_precision(char c)
 /* replace with ft_isdigit */
 int     check_width(char c)
 {
-    if (c >= '0' && c <= '9')
+    if (c >= '1' && c <= '9')
         return (1);
     else
         return (0);

@@ -36,5 +36,6 @@ char	*join_prefix(char *s1, char *s2, t_format *format);
 char	*join_postfix(char *s1, char *s2, t_format *format);
 char	*join_strings(char *s1, char *s2, t_format *format);
 char	*apply_width(char *s, t_format *format);
+char	*apply_flags(char *s, t_format *format);
 
 #endif

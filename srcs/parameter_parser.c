@@ -9,7 +9,10 @@ int     apply_default_options(t_format *format)
     format->flag.zero = 'f';
     format->flag.hash = 'f';
     format->width = 0;
-    format->precision = 6;
+	if (format->type == 'f')
+    	format->precision = 6;
+	else
+		format->precision = 0;
     return (1);
 }
 
@@ -70,8 +73,8 @@ void    get_options(const char *str, t_format *format, int i)
     k = 0;
     while (k < i)
     {
-        printf("str k = %s", str);
-        printf("str k = %c", str[k]);
+        //printf("str k = %s", str);
+        //printf("str k = %c", str[k]);
         if (str[k] >= '1' && str[k] <= '9')
         {
             format->width = ft_atoi(&str[k]);

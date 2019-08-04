@@ -2,10 +2,19 @@
 
 int		convert2string(t_format *format, char *s)
 {
-    format->length = ft_strlen(s);
-    if (format->length < format->width)
-		s = apply_width(s, format);
-    write (1, s, format->length);
+    int i;
+	
+	i = -1;
+	format->length = ft_strlen(s);
+	if (format->length < format->width)
+		if (!(s = apply_width(s, format)))
+			return (0);
+    if (!(s = apply_flags(s, format)))
+		return (0);
+	if (format->type >= 'A' && format->type <= 'Z')
+        while (s[++i])
+            s[i] = ft_toupper(s[i]);
+	write (1, s, format->length);
 	return ((int)format->length);    
 }
 

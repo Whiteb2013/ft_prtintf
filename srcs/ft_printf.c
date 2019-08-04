@@ -33,7 +33,7 @@ int     display_parameter(const char **str, va_list ap)
         get_options(*str, format, i);
     /* this is just for testing. Printing to the display should be moved out to a separate function*/
     //printf ("format extracted. format->type = %c, format->flag = |%s|, format->width = %zu, format->precision = %zu\n", format->type, format->flag, format->width, format->precision);
-    printf ("format extracted. format->length_flag = %s\n", format->length_flag);
+    //printf ("format extracted. format->length_flag = %s\n", format->length_flag);
     if (!(k = combine_options(format, ap)))
         return (0);
     /*moving pointer to the index next to parameter type definition */
