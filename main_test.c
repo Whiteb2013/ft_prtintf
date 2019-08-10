@@ -8,19 +8,33 @@ int main()
     const double RENT = 3852.51;
     char *str = "ada";
     
-    printf("123%s%*.*f\n", " start", 10, 2 ,999.1);
-    ft_printf("123%s%*.*f\n", " start", 10, 2, 999.1);
+    printf("023%23.2s%*.*f\n", " start", 10, 2 , -999.1551);
+    ft_printf("023%23.2s%*.*f\n", " start", 10, 2, -999.1551);
+    puts("");
+
+    printf("023%23.8s%*.*f\n", " start", 10, 10 , -999.1);
+    ft_printf("023%23.8s%*.*f\n", " start", 10, 10, -999.1);
     puts("");
 
     printf("%-10.3s\n", "  str");
     ft_printf("%-10.3s\n", "  str");
-    //printf("%.4f\n", 10.12345);
-    //ft_printf("%.4f\n", 10.1);
     puts("");
 
+    printf("%.5c\n", '1');
+    ft_printf("%.5c\n", '1');
+    puts("");
+
+    printf("%.5c\n", '1');
+    ft_printf("%.5c\n", '1');
+    puts("");
+
+    printf("%0+08.5i\n", -123);
+    ft_printf("%0+08.5i\n", -123);
+    puts("");
+    
     printf("%i\n", atoi("+00123"));
-    printf("% +08i\n", 123);
-    printf("%0+08.5i\n", 123);
+    printf("%+08i\n", 123);
+    
     //ft_printf("%+10i\n", 10);
     ft_printf("%+08.5i\n", 123);
     //printf("%.4f\n", 10.12345);

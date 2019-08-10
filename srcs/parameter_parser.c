@@ -110,7 +110,7 @@ void    get_options(const char *str, t_format *format, va_list ap, int i)
             }
             else
             {
-                format->precision = ft_atoi(&str[++k]);
+            	format->precision = ft_atoi(&str[++k]);
                 k += int_length(format->precision, 10);
             }
         }

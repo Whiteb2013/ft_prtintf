@@ -1,16 +1,21 @@
 #include "ft_printf.h"
 
-int		convert2string(t_format *format, char *s)
+int		convert_string(t_format *format, char *s)
 {
     int i;
 	
 	i = -1;
+	if (format->precision_flag == 't' && !(s = apply_precision(s, format)))
+		return (0);
+	if (format->type == 'p')
+        if (!(s = join_prefix("0x", s, format)))
+            return (0);
 	format->length = ft_strlen(s);
+	if (!(s = apply_flags(s, format)))
+		return (0);
 	if (format->length < format->width)
 		if (!(s = apply_width(s, format)))
 			return (0);
-    if (!(s = apply_flags(s, format)))
-		return (0);
 	if (format->type >= 'A' && format->type <= 'Z')
         while (s[++i])
             s[i] = ft_toupper(s[i]);
@@ -18,7 +23,7 @@ int		convert2string(t_format *format, char *s)
 	return ((int)format->length);
 }
 
-int		convert2char(t_format *format, int a)
+int		convert_char(t_format *format, int a)
 {
     char	*str;
     int		i;
@@ -26,13 +31,13 @@ int		convert2char(t_format *format, int a)
     if (!(str = ft_strnew(1)))
         return (0);
     str[0] = (unsigned char)a;
-    i = convert2string(format, str);
+    i = convert_string(format, str);
     //issue to resolve later: str will cause a leak in case of no padding
 	//free (str);
 	return (i);
 }
 
-int     convert2int(t_format *format, long long int a, size_t base)
+int     convert_int(t_format *format, long long int a, size_t base)
 {
     char                    *str;
     size_t                  sign;
@@ -53,16 +58,13 @@ int     convert2int(t_format *format, long long int a, size_t base)
     str = ft_itoa_base(b, base, format, str);
     if (sign)
         str[0] = '-';
-    if (format->type == 'p')
-        if (!(str = join_prefix("0x", str, format)))
-            return (0);
-    i = convert2string(format, str);
+    i = convert_string(format, str);
     //issue to resolve later: str will cause a leak in case of no padding
 	//free (str);
     return (i);
 }
 
-int		convert2float(t_format *format, double a)
+int		convert_float(t_format *format, double a)
 {
 	long long int   integer;
     long long int   decimal;
@@ -94,22 +96,21 @@ int		convert2float(t_format *format, double a)
 	    if (!(temp_str = ft_strnew(format->length)))
             return (0);
 	    temp_str = ft_itoa_base(decimal, 10, format, temp_str);
-	    while (format->length < format->precision)
-            if (!(temp_str = join_prefix("0", temp_str, format)))
-                return (0);
-        if (!(temp_str = join_prefix(".", temp_str, format)))
-		    return (0);
-        if (!(result_str = join_strings(result_str, temp_str, format)))
-		    return (0);
+	    if (!(temp_str = apply_precision_int(temp_str, format)))
+			return (0);
+		if (!(temp_str = join_prefix(".", temp_str, format)))
+			return (0);
+		if (!(result_str = join_strings(result_str, temp_str, format)))
+			return (0);
     }
-    i = convert2string(format, result_str);
+    i = convert_string(format, result_str);
     //issue to resolve later: str will cause a leak in case of no padding
     //free (result_str);
     return (i);
 }
 
 //for now this function palced here...
-char	*apply_precision(char *s, t_format *format)
+char	*apply_precision_v2(char *s, t_format *format)
 {
 	char	*filler_str;
 	size_t	i;
@@ -129,46 +130,23 @@ int     combine_options(t_format *format, va_list ap)
     int     res;
     char    *str;
 	
-    //%% seems ok for now
 	if (format->type == '%')
-        res = convert2char(format, '%');
-    //%c seems ok for now
+        res = convert_char(format, '%');
     else if (format->type == 'c')
-        res = convert2char(format, va_arg(ap, int));
-    //%s seems ok for now
+        res = convert_char(format, va_arg(ap, int));
     else if (format->type == 's')
-    {
-        str = va_arg(ap, char *);
-        if (format->precision_flag == 't')
-            str = ft_strndup(str, format->precision);
-        res = convert2string(format, str);
-        //free(str);
-    }
-    //%p must be cheked
+        res = convert_string(format, va_arg(ap, char *));
     else if (format->type == 'p')
-        res = convert2int(format, va_arg(ap, long long int), 16);
-    //for %d & %i have to add precision // works like width + flag zero // printf("%+8.5i\n", 123) => __+00123
-    //i think we must get argument as a string, apply precision and only then convert it to int
+        res = convert_int(format, va_arg(ap, long long int), 16);
     else if (format->type == 'd' || format->type == 'i')
-    {
-        str = ft_itoa(va_arg(ap, int));
-        if (format->precision_flag == 't')
-            str = apply_precision(str, format);
-        //from this moment i dont know what is going on with standard printf // look at rows 22, 23, 25 in main_test.c
-        if (atoi(str) >= 0)
-            str = join_prefix("+", str, format);
-        res = convert2string(format, str);
-        //res = convert2int(format, atoi(str), 10);
-    }
+        res = convert_int(format, va_arg(ap, int), 10);
     else if (format->type == 'x' || format->type == 'X')
-        res = convert2int(format, va_arg(ap, unsigned int), 16);
+        res = convert_int(format, va_arg(ap, unsigned int), 16);
     else if (format->type == 'o')
-    	res = convert2int(format, va_arg(ap, unsigned int), 8);
+    	res = convert_int(format, va_arg(ap, unsigned int), 8);
     else if (format->type == 'u')
-		res = convert2int(format, va_arg(ap, unsigned int), 10);
-    //for %f have to add rounding numbers when precision applied
+		res = convert_int(format, va_arg(ap, unsigned int), 10);
 	else if (format->type == 'f')
-        //apply precision
-        res = convert2float(format, va_arg(ap, double));
+        res = convert_float(format, va_arg(ap, double));
     return (res);
 }

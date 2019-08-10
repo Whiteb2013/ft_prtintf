@@ -25,6 +25,7 @@ typedef struct  s_format
     size_t      length;
 }               t_format;
 
+int		display_parameter_buffer(char *str, t_format *format);
 int     ft_printf(const char *str, ...);
 int     get_type(const char *str, t_format *format);
 void    get_options(const char *str, t_format *format, va_list ap, int i);
@@ -38,5 +39,8 @@ char	*join_postfix(char *s1, char *s2, t_format *format);
 char	*join_strings(char *s1, char *s2, t_format *format);
 char	*apply_width(char *s, t_format *format);
 char	*apply_flags(char *s, t_format *format);
+char	*apply_precision(char *s, t_format *format);
+char	*apply_precision_string(char *s, t_format *format);
+char	*apply_precision_int(char *s, t_format *format);
 
 #endif
