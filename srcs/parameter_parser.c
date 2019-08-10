@@ -17,6 +17,33 @@ int     apply_default_options(t_format *format)
     return (1);
 }
 
+int     extract_flag(const char *str, t_format *format)
+{
+		if (str[0] == '-')
+            format->flag.minus = 't';
+        else if (str[0] == '+')
+            format->flag.plus = 't';
+        else if (str[0] == ' ')
+            format->flag.space = 't';
+        else if (str[0] == '0')
+            format->flag.zero = 't';
+        else if (str[0] == '#')
+            format->flag.hash = 't';
+        else if (str[0] == 'L')
+            ft_strcpy(format->length_flag, "L");
+        else if (str[0] == 'l' && str[1] && str[1] == 'l')
+            ft_strcpy(format->length_flag, "ll");
+        else if (str[0] == 'l')
+            ft_strcpy(format->length_flag, "l");
+        else if (str[0] == 'h' && str[1] && str[1] == 'h')
+            ft_strcpy(format->length_flag, "hh");
+        else if (str[0] == 'h')
+            ft_strcpy(format->length_flag, "h");
+		if (ft_isalpha(str[0]))
+			return ((int)ft_strlen(format->length_flag));
+		return (1);
+}
+
 /* checking if symbol matches any predefined format: 1 - true, 0 - false */
 int     check_type(char c)
 {
@@ -54,18 +81,6 @@ int     get_type(const char *str, t_format *format)
     return (i);
 }
 
-// /* extracting flag and writing to a structure: 1 - flag consists of 1 symbol, 2 - flag consists of 2 symbols */
-// int     get_flag(const char *str, t_format *format)
-// {
-//     format->flag[0] = str[0];
-//     if ((str[0] == 'h' && str[1] == 'h') || (str[0] == 'l' && str[1] == 'l'))
-//     {
-//         format->flag[1] = str[1];
-//         return (2);
-//     }
-//     return (1);
-// }
-
 /* extracting parameter options (flag, width, precision) */
 void    get_options(const char *str, t_format *format, va_list ap, int i)
 {
@@ -74,60 +89,32 @@ void    get_options(const char *str, t_format *format, va_list ap, int i)
     k = 0;
     while (k < i)
     {
-        //printf("str k = %s", str);
+        //printf("str k = %s, char k = %c", str, str[k]);
         if (str[k] == '*')
+        {
             format->width = va_arg(ap, size_t);
-        else if (str[k] >= '1' && str[k] <= '9')
+            k++;
+        }
+        else if (check_options(str[k], 'w'))
         {
             format->width = ft_atoi(&str[k]);
-            k += int_length(format->width, 10) - 1;
+            k += int_length(format->width, 10);
         }
-        else if (str[k] == '.')
+        else if (check_options(str[k], 'p'))
         {
             format->precision_flag = 't';
             if (k + 1 < i && str[k + 1] == '*')
             {
                 format->precision = va_arg(ap, size_t);
-                k++;
+                k += 2;
             }
             else
             {
                 format->precision = ft_atoi(&str[++k]);
-                k += int_length(format->precision, 10) - 1;
+                k += int_length(format->precision, 10);
             }
         }
-        else if (str[k] == '-')
-            format->flag.minus = 't';
-        else if (str[k] == '+')
-            format->flag.plus = 't';
-        else if (str[k] == ' ')
-            format->flag.space = 't';
-        else if (str[k] == '0')
-            format->flag.zero = 't';
-        else if (str[k] == '#')
-            format->flag.hash = 't';
-        else if (str[k] == 'L')
-            format->length_flag = ft_strdup("L");
-        else if (str[k] == 'l')
-        {
-            if (k + 1 < i && str[k + 1] == 'l')
-            {
-                format->length_flag = ft_strdup("ll");
-                k++;
-            }
-            else
-                format->length_flag = ft_strdup("l");
-        }
-        else if (str[k] == 'h')
-        {
-            if (k + 1 < i && str[k + 1] == 'h')
-            {
-                format->length_flag = ft_strdup("hh");
-                k++;
-            }
-            else
-                format->length_flag = ft_strdup("h");
-        }
-        k++;
+        else if (check_options(str[k], 'f'))
+            k += extract_flag(&str[k], format);
     }   
 }

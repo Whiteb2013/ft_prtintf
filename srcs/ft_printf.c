@@ -61,7 +61,7 @@ int     ft_printf(const char *str, ...)
                 {
                     str++;
                     if (!(i = display_parameter(&str, ap)))
-                        return (0);
+                        return (-1);
                     k = k + i;
                 }
                 i = 0;
