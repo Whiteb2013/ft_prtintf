@@ -14,7 +14,8 @@ SRC_FILES =	ft_printf.c \
 			ft_itoa_base.c \
 			sub_functions.c \
 			display.c \
-			formatting.c 
+			formatting.c \
+			cleaner.c
 
 SRC_LIB_FILES = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 				ft_memchr.c ft_memcmp.c ft_strlen.c ft_strdup.c ft_strcpy.c \

@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-char	*apply_width(char *s, t_format *format)
+int		apply_width(t_format *format)
 {
 	char	*filler_str;
 	char	c;
@@ -8,15 +8,19 @@ char	*apply_width(char *s, t_format *format)
 
 	i = 0;
 	c = ' ';
-	if (!(filler_str = ft_strnew(format->width - format->length)))
-		return (NULL);
-	if (format->flag.zero == 't' && format->flag.minus == 'f')
-		c = '0';
-	while (i < format->width - format->length)
-		filler_str[i++] = c;
-	if (format->flag.minus == 't')
-		s = join_strings (s, filler_str, format);
-	else
-		s = join_strings (filler_str, s, format);
-	return (s);
+	if (format->length < format->width)
+	{
+		if (!(filler_str = ft_strnew(format->width - format->length)))
+			return (0);
+		if (format->flag.zero == 't' && format->flag.minus == 'f')
+			c = '0';
+		while (i < format->width - format->length)
+			filler_str[i++] = c;
+		if (format->flag.minus == 't')
+			format->content.string2show = join_strings (format->content.string2show, filler_str, format);
+		else
+			format->content.string2show = join_strings (filler_str, format->content.string2show, format);
+		format->length = ft_strlen(format->content.string2show);
+	}
+	return (1);
 }

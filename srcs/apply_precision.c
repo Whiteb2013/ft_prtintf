@@ -1,52 +1,49 @@
 #include "ft_printf.h"
 
-char	*apply_precision_string(char *s, t_format *format)
+int		apply_precision_string(t_format *format)
 {
-	format->length = ft_strlen(s);
 	if (format->length > format->precision)
-		if (!(s = ft_strndup(s, format->precision)))
-			return (NULL);
-	format->length = ft_strlen(s);
-	return (s);
+		if (!(format->content.string2show = ft_strndup(format->content.string2show, format->precision)))
+			return (0);
+	return (1);
 }
 
-char	*apply_precision_int(char *s, t_format *format)
+int		apply_precision_int(t_format *format)
 {
 	char	*filler_str;
 	size_t	i;
 
 	i = 0;
-	format->length = ft_strlen(s);
+	//printf("\n|Length = %zu, precision = %zu|\n", format->length, format->precision);
 	if (format->length < format->precision)
 	{
 		if (!(filler_str = ft_strnew(format->precision - format->length)))
-			return (NULL);
+			return (0);
 		while (i < format->precision - format->length)
 			filler_str[i++] = '0';
-		s = join_strings (filler_str, s, format);
+		format->content.string2show = join_strings (filler_str, format->content.string2show, format);
 	}
-	return (s);
+	format->flag.zero = 'f';
+	return (1);
 }
 
-char	*apply_precision_float(char *s, t_format *format)
+int		apply_precision_float(t_format *format)
 {
-	char *str;
-	
-	if (!s)
-		return (NULL);
-	if (!(str = apply_precision_int(s, format)))
-		return (NULL);
-	if (!(str = join_prefix(".", str, format)))
+	format->length = ft_strlen(format->content.string2show);
+	if (!apply_precision_int(format))
 		return (0);
-	return (str);
+	if (!(format->content.string2show = join_prefix(".", format->content.string2show, format)))
+		return (0);
+	return (1);
 }
 
-char	*apply_precision(char *s, t_format *format)
+int		apply_precision(t_format *format)
 {
-	format->length = ft_strlen(s);
-	if (format->type == 's')
-		s = apply_precision_string (s, format);
+	if (format->type == 's' && !apply_precision_string(format))
+		return (0);
 	if (format->type == 'i' || format->type == 'd' || format->type == 'o' || format->type == 'x' || format->type == 'X' || format->type == 'p')
-		s = apply_precision_int (s, format);
-	return (s);
+		if (!apply_precision_int(format))
+			return (0);
+	format->length = ft_strlen(format->content.string2show);
+	return (1);
 }

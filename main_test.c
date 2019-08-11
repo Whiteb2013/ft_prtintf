@@ -20,8 +20,8 @@ int main()
     ft_printf("%-10.3s\n", "  str");
     puts("");
 
-    printf("%.5p\n", NULL);
-    ft_printf("%.5p\n", NULL);
+    printf("%10.2p\n", NULL);
+    ft_printf("%10.2p\n", NULL);
     puts("");
 
     printf("%.1d\n", 123);
@@ -30,12 +30,28 @@ int main()
 
     printf("%0+08.5i\n", -123);
     ft_printf("%0+08.5i\n", -123);
-    puts("");
-    
-    printf("%i\n", atoi("+00123"));
+    printf("%0+08.5i\n", 123);
+    ft_printf("%0+08.5i\n", 123);
+    printf("%08.5i\n", 123);
+    ft_printf("%08.5i\n", 123);
+    printf("%08i\n", 123);
+    ft_printf("%08i\n", 123);
+
     printf("%+08i\n", 123);
-    
+    ft_printf("%+08i\n", 123);
+    printf("%08i\n", -123);
+    ft_printf("%08i\n", -123);
+    printf("%+ 8i\n", 123);
+    ft_printf("%+ 8i\n", 123);
+    printf("% 8i\n", -123);
+    ft_printf("% 8i\n", -123);
+    puts("");
+
+    printf("%i\n", atoi("+00123"));
+    ft_printf("%i\n", atoi("+00123"));
+
     //ft_printf("%+10i\n", 10);
+    printf("%+08.5i\n", 123);
     ft_printf("%+08.5i\n", 123);
     //printf("%.4f\n", 10.12345);
     //ft_printf("%.4f\n", 10.1);

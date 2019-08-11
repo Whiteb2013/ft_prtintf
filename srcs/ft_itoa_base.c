@@ -1,7 +1,8 @@
 #include "ft_printf.h"
 
-char    *ft_itoa_base(size_t int2convert, size_t base, char *str)
+char    *ft_itoa_base(size_t int2convert, size_t base)
 {
+    char    *str;
     size_t	i;
     char	values[16] = "0123456789abcdef";
     
