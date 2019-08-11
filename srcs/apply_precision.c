@@ -28,6 +28,19 @@ char	*apply_precision_int(char *s, t_format *format)
 	return (s);
 }
 
+char	*apply_precision_float(char *s, t_format *format)
+{
+	char *str;
+	
+	if (!s)
+		return (NULL);
+	if (!(str = apply_precision_int(s, format)))
+		return (NULL);
+	if (!(str = join_prefix(".", str, format)))
+		return (0);
+	return (str);
+}
+
 char	*apply_precision(char *s, t_format *format)
 {
 	format->length = ft_strlen(s);

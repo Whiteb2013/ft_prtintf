@@ -10,7 +10,7 @@ size_t  int_length(unsigned long long int b, unsigned int base)
     return (++i);
 }
 
-int     get_decimal(size_t precision, double a, long long int *integer)
+int     get_decimal(size_t precision, long double a, long long int *integer)
 {
     int     decimal;
     size_t  i;

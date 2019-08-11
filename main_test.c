@@ -8,24 +8,24 @@ int main()
     const double RENT = 3852.51;
     char *str = "ada";
     
-    printf("023%23.2s%*.*f\n", " start", 10, 2 , -999.1551);
-    ft_printf("023%23.2s%*.*f\n", " start", 10, 2, -999.1551);
+    printf("023%23.2s%*.*f\n", " start", 10, 2 , 999.1551);
+    ft_printf("023%23.2s%*.*f\n", " start", 10, 2, 999.1551);
     puts("");
 
-    printf("023%23.8s%*.*f\n", " start", 10, 10 , -999.1);
-    ft_printf("023%23.8s%*.*f\n", " start", 10, 10, -999.1);
+    printf("023%23.8s%*.*f\n", " start", 10, 0 , 999.1);
+    ft_printf("023%23.8s%*.*f\n", " start", 10, 0, 999.1);
     puts("");
 
     printf("%-10.3s\n", "  str");
     ft_printf("%-10.3s\n", "  str");
     puts("");
 
-    printf("%.5c\n", '1');
-    ft_printf("%.5c\n", '1');
+    printf("%.5p\n", NULL);
+    ft_printf("%.5p\n", NULL);
     puts("");
 
-    printf("%.5c\n", '1');
-    ft_printf("%.5c\n", '1');
+    printf("%.1d\n", 123);
+    ft_printf("%.1d\n", 123);
     puts("");
 
     printf("%0+08.5i\n", -123);

@@ -10,7 +10,8 @@ int     apply_default_options(t_format *format)
     format->flag.hash = 'f';
     format->precision_flag = 'f';
     format->width = 0;
-	if (format->type == 'f')
+	format->content.sign = '+';
+    if (format->type == 'f')
     	format->precision = 6;
 	else
 		format->precision = 0;

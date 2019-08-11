@@ -1,17 +1,19 @@
 #include "ft_printf.h"
 
-char    *ft_itoa_base(size_t b, size_t base, t_format *format, char *str)
+char    *ft_itoa_base(size_t int2convert, size_t base, char *str)
 {
     size_t	i;
     char	values[16] = "0123456789abcdef";
     
-    i = format->length;
+    i = int_length(int2convert, 10);
+    if (!(str = ft_strnew(i)))
+        return (NULL);
     str[i] = '\0';
-    while (b / base)
+    while (int2convert / base)
     {
-        str[--i] = values[b % base];
-        b = b / base;
+        str[--i] = values[int2convert % base];
+        int2convert = int2convert / base;
     }
-    str[--i] = values[b % base];
+    str[--i] = values[int2convert % base];
     return (str);
 }

@@ -14,6 +14,12 @@ typedef struct  s_flag
     char        hash;
 }               t_flag;
 
+typedef struct	s_content
+{
+    char		*string2show;
+	char		sign;
+}				t_content;
+
 typedef struct  s_format
 {
     char        type;
@@ -23,24 +29,28 @@ typedef struct  s_format
     size_t      width;
     size_t      precision;
     size_t      length;
+    t_content   content;
 }               t_format;
 
-int		display_parameter_buffer(char *str, t_format *format);
+int		display_static_buffer(const char **str, int i);
+int		display_parameter_buffer(t_format *format);
 int     ft_printf(const char *str, ...);
 int     get_type(const char *str, t_format *format);
 void    get_options(const char *str, t_format *format, va_list ap, int i);
 int     check_options(char c, char mode);
-int     combine_options(t_format *format, va_list ap);
-char    *ft_itoa_base(size_t b, size_t base, t_format *format, char *str);
+int     convert2string(t_format *format, va_list ap);
+char    *ft_itoa_base(size_t b, size_t base, char *str);
 size_t  int_length(unsigned long long int b, unsigned int base);
-int     get_decimal(size_t precision, double a, long long int *integer);
+int     get_decimal(size_t precision, long double a, long long int *integer);
 char	*join_prefix(char *s1, char *s2, t_format *format);
 char	*join_postfix(char *s1, char *s2, t_format *format);
 char	*join_strings(char *s1, char *s2, t_format *format);
 char	*apply_width(char *s, t_format *format);
-char	*apply_flags(char *s, t_format *format);
+int		apply_flags(t_format *format);
 char	*apply_precision(char *s, t_format *format);
 char	*apply_precision_string(char *s, t_format *format);
 char	*apply_precision_int(char *s, t_format *format);
+char	*apply_precision_float(char *s, t_format *format);
+int		format_string(t_format *format);
 
 #endif

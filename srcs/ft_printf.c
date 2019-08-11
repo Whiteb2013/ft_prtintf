@@ -1,18 +1,7 @@
 #include "ft_printf.h"
 
-/* simply send last i symbols to show on screen: 0 - succesfully executed*/
-int		display_static_buffer(const char **str, int i)
-{
-    if (i)
-    {
-        write(1, *str, (size_t)i);
-        *str = *str + i;
-    }
-    return (i);
-}
-
 /* extracting paramter and displaying settings: returns amount of displayed symbols or 0. 0 means that error encountered while exctracting*/
-int     display_parameter(const char **str, va_list ap)
+int     extract_parameter(const char **str, va_list ap)
 {
     int         i;
     int			k;
@@ -25,12 +14,13 @@ int     display_parameter(const char **str, va_list ap)
         return (0);
     if ((i = get_type(*str, format)) < 0)
         return (0);
-    if (i)
-        get_options(*str, format, ap, i);
+    get_options(*str, format, ap, i);
     //printf ("format extracted. format->type = %c, format->flag = |%s|, format->width = %zu, format->precision = %zu\n", format->type, format->flag, format->width, format->precision);
-    if (!(k = combine_options(format, ap)))
+    if (!convert2string(format, ap) && !format_string(format))
         return (0);
+    k = display_parameter_buffer(format);
     *str = *str + i + 1;
+    //free(format->content.string2show);
     free(format->length_flag);
     free(format);
     return (k);
@@ -53,7 +43,7 @@ int     ft_printf(const char *str, ...)
                 k = k + display_static_buffer(&str, i);
                 if (str[0] == '%')
                 {
-                    if (!(i = display_parameter(&str, ap)))
+                    if (!(i = extract_parameter(&str, ap)))
                         return (-1);
                     k = k + i;
                 }

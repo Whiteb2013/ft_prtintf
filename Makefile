@@ -6,7 +6,8 @@ LIB_DIR = ./libft
 SRC_FILES =	ft_printf.c \
 			parameter_parser.c \
 			check_options.c \
-			apply_format.c \
+			get_unformatted_string.c \
+			get_formatted_string.c \
 			apply_width.c \
 			apply_flags.c \
 			apply_precision.c \

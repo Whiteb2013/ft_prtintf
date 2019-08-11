@@ -1,30 +1,31 @@
 #include "ft_printf.h"
 
-char	*apply_hash(char *s, t_format *format)
+int		apply_hash(t_format *format)
 {
 	if (format->flag.hash == 't')
 	{
 		if (format->type == 'x' || format->type == 'X')
 		{
-			if (!(s = join_prefix("0x", s, format)))
-            	return (NULL);
+			if (!(format->content.string2show = join_prefix("0x", format->content.string2show, format)))
+            	return (0);
 		}
 		else if (format->type == 'f' && format->precision == 0)
 		{
-			if (!(s = join_postfix(s, ".", format)))
-            	return (NULL);
+			if (!(format->content.string2show = join_postfix(format->content.string2show, ".", format)))
+            	return (0);
 		}
 		else if (format->type == 'o')
 		{
-			if (!(s = join_prefix("0", s, format)))
-            	return (NULL);
+			if (!(format->content.string2show = join_prefix("0", format->content.string2show, format)))
+            	return (0);
 		}
 	}
-	return (s);
+	return (1);
 }
 
-char	*apply_flags(char *s, t_format *format)
+int		apply_flags(t_format *format)
 {
-	s = apply_hash(s, format);
-	return (s);
+	if (!apply_hash(format))
+		return (0);
+	return (1);
 }
