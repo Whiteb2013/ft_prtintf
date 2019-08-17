@@ -120,5 +120,5 @@ void    get_options(const char *str, t_format *format, va_list ap, int i)
 		}
 		else if (check_options(str[k], 'f'))
 			k += extract_flag(&str[k], format);
-	}   
+	}
 }

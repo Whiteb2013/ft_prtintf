@@ -1,0 +1,87 @@
+1.
+стандартный printf выдает warning при пустой строке
+warning: zero-length gnu_printf format string [-Wformat-zero-length]
+
+    printf("");
+    ft_printf("");
+    puts("");
+
+2.
+отличается поведение при %hZ
+    printf("test5\n");
+    printf("test5_printf\n");
+    printf("%hZ\n");
+    printf("test5_ft_printf\n");
+    ft_printf("%hZ\n");
+    puts("");
+
+3.
+    puts("test2");
+    puts("printf");
+    printf("%5%");
+    puts("");
+    puts("ft_printf");
+    ft_printf("%5%");
+    puts("");
+    puts("");
+
+4.
+    puts("test4");
+    puts("printf");
+    printf("%05%");
+    puts("");
+    puts("ft_printf");
+    ft_printf("%05%");
+    puts("");
+    puts("");
+
+5.
+    puts("test6");
+    puts("printf");
+    printf("% hZ%");
+    puts("");
+    puts("ft_printf");
+    ft_printf("% hZ%");
+    puts("");
+    puts("");
+
+6.
+    puts("test1");
+    puts("printf");
+    printf("% Z|test");
+    puts("");
+    puts("ft_printf");
+    ft_printf("% Z|test");
+    puts("");
+    puts("");
+
+7.  
+    puts("test2");
+    puts("printf");
+    printf("% Z |test");
+    puts("");
+    puts("ft_printf");
+    ft_printf("% Z |test");
+    puts("");
+    puts("");
+
+8.  
+    puts("test3");
+    puts("printf");
+    printf("% Z%s|test");
+    puts("");
+    puts("ft_printf");
+    ft_printf("% Z%s|test");
+    puts("");
+
+9.  
+    puts("test8");
+    puts("printf");
+    printf("%%   %|test");
+    puts("");
+    puts("ft_printf");
+    ft_printf("%%   %|test");
+    puts("");
+    puts("");
+
+10.
