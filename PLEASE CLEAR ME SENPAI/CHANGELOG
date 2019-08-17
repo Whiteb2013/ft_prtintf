@@ -1,1 +1,2 @@
-Добавлено make fclean в скрипт script.sh
+1. Добавлены length (h, hh, l, ll, L)
+2. Пофикшен отрицательный double
