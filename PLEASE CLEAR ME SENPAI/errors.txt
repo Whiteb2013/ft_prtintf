@@ -85,3 +85,9 @@ warning: zero-length gnu_printf format string [-Wformat-zero-length]
     puts("");
 
 10.
+    printf("%llu\n", 111285212672);
+    printf("%i\n", 111285212672);
+    puts("");
+
+11.
+    

@@ -5,17 +5,13 @@ int ft_printf(const char *str, ...);
 
 int main()
 {
-    puts("test1");
-    puts("printf");
-    printf("% Z|test");
+    printf("%f\n", -1.245);
     puts("");
-    puts("ft_printf");
-    ft_printf("% Z|test");
+    ft_printf("%f\n", -1.245);
     puts("");
+    printf("%f\n", 1.245);
     puts("");
-  
-    printf("%llu\n", 111285212672);
-    printf("%i\n", 111285212672);
+    ft_printf("%f\n", 1.245); 
 
     return (0);
 }
