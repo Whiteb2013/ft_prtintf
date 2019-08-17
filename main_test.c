@@ -5,21 +5,21 @@ int ft_printf(const char *str, ...);
 
 int main()
 {
-    puts("test0");
+    puts("test2");
     puts("printf");
-    printf("%lld", 9223372036854775807);
+    printf("%10x", 42);
     puts("");
     puts("ft_printf");
-    ft_printf("%lld", 9223372036854775807);
+    ft_printf("%10x", 42);
     puts("");
     puts("");
 
-    puts("test1");
+    puts("test3");
     puts("printf");
-    printf("%lld", -9223372036854775808);
+    printf("%-10X", 42);
     puts("");
     puts("ft_printf");
-    ft_printf("%lld", -9223372036854775808);
+    ft_printf("%-10X", 42);
     puts("");
     puts("");
 
