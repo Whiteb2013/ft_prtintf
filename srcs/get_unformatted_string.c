@@ -15,8 +15,17 @@ char    *ft_itoa_base_2(long long int int2convert, size_t base)
     size_t	i;
     size_t  k;
     char	values[16] = "0123456789abcdef";
-    
-    i = int_length(int2convert, 10);
+
+	// idk why but we cant <return "0";> so next 7 rows for that
+    if (int2convert == 0)
+	{
+		if (!(str2 = ft_strnew(1)))
+        	return (NULL);
+		str2[0] = '0';
+		return (str2);
+	}
+
+	i = int_length(int2convert, 10);
     if (!(str1 = ft_strnew(i)) || !(str2 = ft_strnew(i)))
         return (NULL);
     k = 0;
@@ -102,15 +111,12 @@ int     apply_length(t_format *format, va_list ap)
 	int res;
 
 	res = 0;
-	//puts("OOOOOOKKKKKK");
-	//printf("type = %c\n", format->type);
-	//printf("length_flag = %s\n", format->length_flag);
 	
 	// LENGTH == h
 	if ((format->type == 'd' || format->type == 'i') && !ft_strcmp(format->length_flag, "h"))
 		res = convert_int2string(format, (int)((short)(va_arg(ap, int))), 10);
 	else if ((format->type == 'x' || format->type == 'X') && !ft_strcmp(format->length_flag, "h"))
-		res = convert_short2string(format, (int)((short)(va_arg(ap, int))), 16);
+		res = convert_int2string(format, (int)((short)(va_arg(ap, int))), 16);
 	else if (format->type == 'o' && !ft_strcmp(format->length_flag, "h"))
 		res = convert_int2string(format, (int)((short)(va_arg(ap, int))), 8);
 	
@@ -126,7 +132,7 @@ int     apply_length(t_format *format, va_list ap)
 	else if ((format->type == 'd' || format->type == 'i') && !ft_strcmp(format->length_flag, "l"))
 		res = convert_int2string(format, va_arg(ap, long), 10);
 	else if ((format->type == 'x' || format->type == 'X') && !ft_strcmp(format->length_flag, "l"))
-		res = convert_short2string(format, va_arg(ap, long), 16);
+		res = convert_int2string(format, va_arg(ap, long), 16);
 	else if (format->type == 'o' && !ft_strcmp(format->length_flag, "l"))
 		res = convert_int2string(format, va_arg(ap, long), 8);
 
@@ -134,7 +140,7 @@ int     apply_length(t_format *format, va_list ap)
 	else if ((format->type == 'd' || format->type == 'i') && !ft_strcmp(format->length_flag, "ll"))
 		res = convert_int2string(format, va_arg(ap, long long int), 10);
 	else if ((format->type == 'x' || format->type == 'X') && !ft_strcmp(format->length_flag, "ll"))
-		res = convert_short2string(format, va_arg(ap, long long int), 16);
+		res = convert_int2string(format, va_arg(ap, long long int), 16);
 	else if (format->type == 'o' && !ft_strcmp(format->length_flag, "ll"))
 		res = convert_int2string(format, va_arg(ap, long long int), 8);
 	
@@ -187,7 +193,10 @@ int     convert2string(t_format *format, va_list ap)
 		res = convert_char2string(format, va_arg(ap, int));
 	else if (format->type == 's')
 	{
+		//puts("OK");
+		//printf("content = %s\n", va_arg(ap, char *));
 		format->content.string2show = va_arg(ap, char *);
+		//printf("content = %s\n", format->content.string2show);
 		res = 1;
 	}
 	else if (format->type == 'p')
