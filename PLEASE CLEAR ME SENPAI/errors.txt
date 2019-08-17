@@ -7,7 +7,8 @@ warning: zero-length gnu_printf format string [-Wformat-zero-length]
     puts("");
 
 2.
-отличается поведение при %hZ
+отличается поведение
+//1
     printf("test5\n");
     printf("test5_printf\n");
     printf("%hZ\n");
@@ -15,7 +16,7 @@ warning: zero-length gnu_printf format string [-Wformat-zero-length]
     ft_printf("%hZ\n");
     puts("");
 
-3.
+//2
     puts("test2");
     puts("printf");
     printf("%5%");
@@ -25,7 +26,7 @@ warning: zero-length gnu_printf format string [-Wformat-zero-length]
     puts("");
     puts("");
 
-4.
+//3
     puts("test4");
     puts("printf");
     printf("%05%");
@@ -35,7 +36,7 @@ warning: zero-length gnu_printf format string [-Wformat-zero-length]
     puts("");
     puts("");
 
-5.
+//4
     puts("test6");
     puts("printf");
     printf("% hZ%");
@@ -45,7 +46,7 @@ warning: zero-length gnu_printf format string [-Wformat-zero-length]
     puts("");
     puts("");
 
-6.
+//5
     puts("test1");
     puts("printf");
     printf("% Z|test");
@@ -55,7 +56,7 @@ warning: zero-length gnu_printf format string [-Wformat-zero-length]
     puts("");
     puts("");
 
-7.  
+//6 
     puts("test2");
     puts("printf");
     printf("% Z |test");
@@ -65,7 +66,7 @@ warning: zero-length gnu_printf format string [-Wformat-zero-length]
     puts("");
     puts("");
 
-8.  
+//7  
     puts("test3");
     puts("printf");
     printf("% Z%s|test");
@@ -74,7 +75,7 @@ warning: zero-length gnu_printf format string [-Wformat-zero-length]
     ft_printf("% Z%s|test");
     puts("");
 
-9.  
+//8 
     puts("test8");
     puts("printf");
     printf("%%   %|test");
@@ -84,10 +85,50 @@ warning: zero-length gnu_printf format string [-Wformat-zero-length]
     puts("");
     puts("");
 
-10.
+//llu
     printf("%llu\n", 111285212672);
     printf("%i\n", 111285212672);
     puts("");
 
-11.
+//9 problem with X (integer base 16)
+    puts("test3T");
+    puts("printf");
+    printf("%x", 12345);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%x", 12345);
+    puts("");
+    puts("");
+
+//10 and something with %ho (integer base 8)
+    puts("test4");
+    puts("printf");
+    printf("%ho", 123456);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%ho", 123456);
+    puts("");
+    puts("");
+
+//11
+    puts("test4");
+    puts("printf");
+    printf("%ho", 123456);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%ho", 123456);
+    puts("");
+    puts("");
+
+//12
+    puts("test4");
+    puts("printf");
+    printf("%hX", 123456);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%hX", 123456);
+    puts("");
+    puts("");
+
+//13
     

@@ -24,6 +24,22 @@ int     convert_int2string(t_format *format, long long int a, size_t base)
 	return (1);
 }
 
+int     convert_short2string(t_format *format, short a, size_t base)
+{
+	short	b;
+
+	if (a < 0)
+	{
+		format->content.sign = '-';
+		b = -a;
+	}
+	else
+		b = a;
+	if (!(format->content.string2show = ft_itoa_base(b, base)))
+		return (0);
+	return (1);
+}
+
 int		convert_pointer2string(t_format *format, long long int a)
 {
 	if (!convert_int2string(format, a, 16))
@@ -55,6 +71,54 @@ int		convert_float2string(t_format *format, double a)
 	if (!(format->content.string2show = join_strings(ft_itoa_base(integer, 10), format->content.string2show, format)))
 		return (0);
 	return (1);
+}
+
+int     apply_length(t_format *format, va_list ap)
+{
+	int res;
+
+	res = 0;
+	//puts("OOOOOOKKKKKK");
+	//printf("type = %c\n", format->type);
+	//printf("length_flag = %s\n", format->length_flag);
+	
+	// LENGTH == h
+	if ((format->type == 'd' || format->type == 'i') && !ft_strcmp(format->length_flag, "h"))
+		res = convert_int2string(format, (int)((short)(va_arg(ap, int))), 10);
+	else if ((format->type == 'x' || format->type == 'X') && !ft_strcmp(format->length_flag, "h"))
+		res = convert_short2string(format, (int)((short)(va_arg(ap, int))), 16);
+	else if (format->type == 'o' && !ft_strcmp(format->length_flag, "h"))
+		res = convert_int2string(format, (int)((short)(va_arg(ap, int))), 8);
+	
+	// LENGTH == hh
+	else if ((format->type == 'd' || format->type == 'i') && !ft_strcmp(format->length_flag, "hh"))
+		res = convert_int2string(format, (int)((char)(va_arg(ap, int))), 10);
+	else if ((format->type == 'x' || format->type == 'X') && !ft_strcmp(format->length_flag, "hh"))
+		res = convert_int2string(format, (int)((char)(va_arg(ap, int))), 16);
+	else if (format->type == 'o' && !ft_strcmp(format->length_flag, "hh"))
+		res = convert_int2string(format, (int)((char)(va_arg(ap, int))), 8);
+	
+	// LENGTH == l
+	else if ((format->type == 'd' || format->type == 'i') && !ft_strcmp(format->length_flag, "l"))
+		res = convert_int2string(format, va_arg(ap, long), 10);
+	else if ((format->type == 'x' || format->type == 'X') && !ft_strcmp(format->length_flag, "l"))
+		res = convert_short2string(format, va_arg(ap, long), 16);
+	else if (format->type == 'o' && !ft_strcmp(format->length_flag, "l"))
+		res = convert_int2string(format, va_arg(ap, long), 8);
+
+	// LENGTH == ll
+	else if ((format->type == 'd' || format->type == 'i') && !ft_strcmp(format->length_flag, "ll"))
+		res = convert_int2string(format, va_arg(ap, long long int), 10);
+	else if ((format->type == 'x' || format->type == 'X') && !ft_strcmp(format->length_flag, "ll"))
+		res = convert_short2string(format, va_arg(ap, long long int), 16);
+	else if (format->type == 'o' && !ft_strcmp(format->length_flag, "ll"))
+		res = convert_int2string(format, va_arg(ap, long long int), 8);
+	
+	// LENGTH == L
+	else if (format->type == 'f' && !ft_strcmp(format->length_flag, "L"))
+		res = convert_float2string(format, va_arg(ap, long double));
+
+	return (res);
 }
 
 /*
@@ -93,6 +157,8 @@ int     convert2string(t_format *format, va_list ap)
 	res = 0;
 	if (format->type == '%')
 		res = convert_char2string(format, '%');
+	if (format->length_flag[0] != 0) 					// rewrite condition
+		res = apply_length(format, ap);
 	else if (format->type == 'c')
 		res = convert_char2string(format, va_arg(ap, int));
 	else if (format->type == 's')

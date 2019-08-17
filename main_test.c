@@ -5,13 +5,23 @@ int ft_printf(const char *str, ...);
 
 int main()
 {
-    printf("%f\n", -1.245);
+    puts("test0");
+    puts("printf");
+    printf("%lld", 9223372036854775807);
     puts("");
-    ft_printf("%f\n", -1.245);
+    puts("ft_printf");
+    ft_printf("%lld", 9223372036854775807);
     puts("");
-    printf("%f\n", 1.245);
     puts("");
-    ft_printf("%f\n", 1.245); 
+
+    puts("test1");
+    puts("printf");
+    printf("%lld", -9223372036854775808);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%lld", -9223372036854775808);
+    puts("");
+    puts("");
 
     return (0);
 }
