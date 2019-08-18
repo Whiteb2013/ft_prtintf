@@ -5,14 +5,15 @@ int ft_printf(const char *str, ...);
 
 int main()
 {
-    puts("test4");
+    puts("test1");
     puts("printf");
-    printf("% c", 0);
+    printf("%hd", 32767);
     puts("");
     puts("ft_printf");
-    ft_printf("% c", 0);
+    ft_printf("%hd", 32767);
     puts("");
     puts("");
+
 
     return (0);
 }

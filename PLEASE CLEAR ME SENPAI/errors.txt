@@ -219,4 +219,68 @@ warning: zero-length gnu_printf format string [-Wformat-zero-length]
     puts("");
 
 //19
-    
+    puts("test1");
+    puts("printf");
+    printf("@moulitest: %.o %.0o", 0, 0);
+    puts("");
+    puts("ft_printf");
+    ft_printf("@moulitest: %.o %.0o", 0, 0);
+    puts("");
+    puts("");
+
+    puts("test2");
+    puts("printf");
+    printf("@moulitest: %5.o %5.0o", 0, 0);
+    puts("");
+    puts("ft_printf");
+    ft_printf("@moulitest: %5.o %5.0o", 0, 0);
+    puts("");
+    puts("");
+
+    puts("test3");
+    puts("printf");
+    printf("@moulitest: %#.o %#.0o", 0, 0);
+    puts("");
+    puts("ft_printf");
+    ft_printf("@moulitest: %#.o %#.0o", 0, 0);
+    puts("");
+    puts("");
+
+//20  // warning: too many arguments for format [-Wformat-extra-args]
+    puts("test1");
+    puts("printf");
+    printf("%5+d", 42);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%5+d", 42);
+    puts("");
+    puts("");
+
+    puts("test1");
+    puts("printf");
+    printf("%5+d", -42);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%5+d", -42);
+    puts("");
+    puts("");
+
+    puts("test1");
+    puts("printf");
+    printf("%-5+d", 42);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%-5+d", 42);
+    puts("");
+    puts("");
+
+    puts("test1");
+    puts("printf");
+    printf("%-5+d", -42);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%-5+d", -42);
+    puts("");
+    puts("");
+
+//21

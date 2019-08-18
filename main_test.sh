@@ -1,0 +1,1 @@
+gcc -I ./srcs -I ./libft main_test.c -L. -lftprintf -o printf && ./printf

@@ -23,6 +23,14 @@ int		apply_hash(t_format *format)
 	return (1);
 }
 
+int		apply_space(t_format *format)
+{
+	if (!(format->content.string2show = join_prefix(" ", format->content.string2show, format)))
+		return (0);
+	format->length = ft_strlen(format->content.string2show);
+	return (1);
+}
+
 int		apply_plus(t_format *format)
 {
 	if (!(format->content.string2show = join_prefix(&format->content.sign, format->content.string2show, format)))
@@ -43,11 +51,13 @@ int		apply_zero(t_format *format)
 
 int		apply_flags(t_format *format)
 {
+	if ((format->content.sign != '-' && format->flag.plus != 't' && format->flag.space == 't') && !apply_space(format))
+		return (0);
 	if (format->flag.hash == 't' && format->flag.zero != 't' && !apply_hash(format))
 		return (0);
 	if (format->flag.zero == 't' && format->flag.hash != 't' && format->type != 'c' && !apply_zero(format))
 		return (0);
-	// this condition for the next case: printf("%#08x", 42);
+	// next condition for the case: printf("%#08x", 42);
 	if (format->flag.hash == 't' && format->flag.zero == 't')
 	{
 		if (format->width > 1)
