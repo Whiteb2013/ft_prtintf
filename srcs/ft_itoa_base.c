@@ -1,12 +1,12 @@
 #include "ft_printf.h"
 
-char    *ft_itoa_base(size_t int2convert, size_t base)
+char    *ft_itoa_base_2(unsigned long long int2convert, size_t base)
 {
     char    *str;
     size_t	i;
     char	values[16] = "0123456789abcdef";
     
-    i = int_length(int2convert, 10);
+    i = int_length(int2convert, base);
     if (!(str = ft_strnew(i)))
         return (NULL);
     str[i] = '\0';

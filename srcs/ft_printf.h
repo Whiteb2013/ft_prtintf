@@ -39,7 +39,7 @@ int     get_type(const char *str, t_format *format);
 void    get_options(const char *str, t_format *format, va_list ap, int i);
 int     check_options(char c, char mode);
 int     convert2string(t_format *format, va_list ap);
-char    *ft_itoa_base(size_t b, size_t base);
+char    *ft_itoa_base_2(unsigned long long b, size_t base);
 size_t  int_length(unsigned long long int b, unsigned int base);
 int     get_decimal(size_t precision, long double a, long long int *integer);
 //int     get_decimal(size_t precision, long double a, int *integer);
