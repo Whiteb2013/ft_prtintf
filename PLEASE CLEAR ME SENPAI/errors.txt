@@ -292,3 +292,246 @@ warning: zero-length gnu_printf format string [-Wformat-zero-length]
     printf("%zd", -1);
 
 //23
+    puts("test13");
+    puts("printf");
+    printf("%.d %.0d", 0, 0);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%.d %.0d", 0, 0);
+    puts("");
+    puts("");
+
+    puts("test14");
+    puts("printf");
+    printf("%5.d %5.0d", 0, 0);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%5.d %5.0d", 0, 0);
+    puts("");
+    puts("");
+
+//24
+    puts("test4");
+    puts("printf");
+    printf("% u", 4294967295);
+    puts("");
+    puts("ft_printf");
+    ft_printf("% u", 4294967295);
+    puts("");
+    puts("");
+
+    puts("test5");
+    puts("printf");
+    printf("%+u", 4294967295);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%+u", 4294967295);
+    puts("");
+    puts("");
+
+//25
+    puts("test4");
+    puts("printf");
+    printf("%lu", 4294967295);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%lu", 4294967295);
+    puts("");
+    puts("");
+
+//26
+    puts("test4");
+    puts("printf");
+    printf("%lu", 4294967295);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%lu", 4294967295);
+    puts("");
+    puts("");
+
+    puts("test4");
+    puts("printf");
+    printf("%lu", 4294967296);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%lu", 4294967296);
+    puts("");
+    puts("");
+
+    puts("test4");
+    puts("printf");
+    printf("%lu", -42);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%lu", -42);
+    puts("");
+    puts("");
+
+//27
+    puts("test4");
+    puts("printf");
+    printf("%llu", 4999999999);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%llu", 4999999999);
+    puts("");
+    puts("");
+
+//28
+    puts("test4");
+    puts("printf");
+    printf("%ju", 4999999999);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%ju", 4999999999);
+    puts("");
+    puts("");
+
+    puts("test4");
+    puts("printf");
+    printf("%ju", 4294967296);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%ju", 4294967296);
+    puts("");
+    puts("");
+
+//29
+    puts("test0");
+    puts("printf");
+    printf("%U", 4294967295);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%U", 4294967295);
+    puts("");
+    puts("");
+
+    puts("test1");
+    puts("printf");
+    printf("%hU", 4294967296);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%hU", 4294967296);
+    puts("");
+    puts("");
+
+    puts("test2");
+    puts("printf");
+    printf("%U", 4294967296);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%U", 4294967296);
+    puts("");
+    puts("");
+
+//30
+    puts("test0");
+    puts("printf");
+    printf("@moulitest: %.5u", 42);
+    puts("");
+    puts("ft_printf");
+    ft_printf("@moulitest: %.5u", 42);
+    puts("");
+    puts("");
+    
+//31
+    puts("test0");
+    puts("printf");
+    printf("%zhd", 4294967296);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%zhd", 4294967296);
+    puts("");
+    puts("");
+
+    puts("test0");
+    puts("printf");
+    printf("%jzd", 9223372036854775807);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%jzd", 9223372036854775807);
+    puts("");
+    puts("");
+
+    puts("test0");
+    puts("printf");
+    printf("%jhd", 9223372036854775807);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%jhd", 9223372036854775807);
+    puts("");
+    puts("");
+    
+//32
+    puts("test0");
+    puts("printf");
+    printf("%lhl", 9223372036854775807);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%lhl", 9223372036854775807);
+    puts("");
+    puts("");
+
+    puts("test0");
+    puts("printf");
+    printf("%lhlz", 9223372036854775807);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%lhlz", 9223372036854775807);
+    puts("");
+    puts("");
+
+    puts("test0");
+    puts("printf");
+    printf("%zj", 9223372036854775807);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%zj", 9223372036854775807);
+    puts("");
+    puts("");
+
+    puts("test0");
+    puts("printf");
+    printf("%lhh", 2147483647);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%lhh", 2147483647);
+    puts("");
+    puts("");
+
+    puts("test0");
+    puts("printf");
+    printf("%hhld", 128);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%hhld", 128);
+    puts("");
+    puts("");
+
+    puts("test0");
+    puts("printf");
+    printf("@main_ftprintf: %####0000 33..1..#00d\n", 256);
+    puts("");
+    puts("ft_printf");
+    ft_printf("@main_ftprintf: %####0000 33..1..#00d\n", 256);
+    puts("");
+    puts("");
+
+    puts("test0");
+    puts("printf");
+    printf("@main_ftprintf: %####0000 33..1d", 256);
+    puts("");
+    puts("ft_printf");
+    ft_printf("@main_ftprintf: %####0000 33..1d", 256);
+    puts("");
+    puts("");
+
+//33
+    puts("test0");
+    puts("printf");
+    printf("@main_ftprintf: %###-#0000 33...12..#0+0d", 256);
+    puts("");
+    puts("ft_printf");
+    ft_printf("@main_ftprintf: %###-#0000 33...12..#0+0d", 256);
+    puts("");
+    puts("");
