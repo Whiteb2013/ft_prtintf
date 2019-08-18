@@ -12,7 +12,7 @@ int		apply_width(t_format *format)
 	{
 		if (!(filler_str = ft_strnew(format->width - format->length)))
 			return (0);
-		if (format->flag.zero == 't' && format->flag.minus == 'f')
+		if (format->flag.zero == 't' && format->flag.minus == 'f' && format->type != 'c')
 			c = '0';
 		while (i < format->width - format->length)
 			filler_str[i++] = c;

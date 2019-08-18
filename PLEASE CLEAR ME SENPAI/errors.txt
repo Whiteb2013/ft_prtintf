@@ -131,4 +131,164 @@ warning: zero-length gnu_printf format string [-Wformat-zero-length]
     puts("");
 
 //13
-    
+    puts("test3");
+    puts("printf");
+    printf("%llx", 9223372036854775808);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%llx", 9223372036854775808);
+    puts("");
+    puts("");
+
+//14 во втором случае правильное поведение, в первом оно должно быть не определено
+    puts("test1");
+    puts("printf");
+    printf("%ll#x", 9223372036854775807);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%ll#x", 9223372036854775807);
+    puts("");
+    puts("");
+
+    puts("test2");
+    puts("printf");
+    printf("%#llx", 9223372036854775807);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%#llx", 9223372036854775807);
+    puts("");
+    puts("");
+
+//15
+    puts("test4");
+    puts("printf");
+    printf("%#.x %#.0x", 0, 0);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%#.x %#.0x", 0, 0);
+    puts("");
+    puts("");
+
+    puts("test4");
+    puts("printf");
+    printf("%.x %.0x", 0, 0);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%.x %.0x", 0, 0);
+    puts("");
+    puts("");
+
+    puts("test4");
+    puts("printf");
+    printf("%5.x %5.0x", 0, 0);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%5.x %5.0x", 0, 0);
+    puts("");
+    puts("");
+
+//16
+    char *str = "abs";
+    puts("test4");
+    puts("printf");
+    printf("%s", str);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%s", str);
+    puts("");
+    puts("");
+
+//17
+    puts("test4");
+    puts("printf");
+    printf("%s", "abc");
+    puts("");
+    puts("ft_printf");
+    ft_printf("%s", "abc");
+    puts("");
+    puts("");
+
+//18
+    puts("test4");
+    puts("printf");
+    printf("null %c and text", 0);
+    puts("");
+    puts("ft_printf");
+    ft_printf("null %c and text", 0);
+    puts("");
+    puts("");
+
+//19
+    puts("test1");
+    puts("printf");
+    printf("@moulitest: %.o %.0o", 0, 0);
+    puts("");
+    puts("ft_printf");
+    ft_printf("@moulitest: %.o %.0o", 0, 0);
+    puts("");
+    puts("");
+
+    puts("test2");
+    puts("printf");
+    printf("@moulitest: %5.o %5.0o", 0, 0);
+    puts("");
+    puts("ft_printf");
+    ft_printf("@moulitest: %5.o %5.0o", 0, 0);
+    puts("");
+    puts("");
+
+    puts("test3");
+    puts("printf");
+    printf("@moulitest: %#.o %#.0o", 0, 0);
+    puts("");
+    puts("ft_printf");
+    ft_printf("@moulitest: %#.o %#.0o", 0, 0);
+    puts("");
+    puts("");
+
+//20  // warning: too many arguments for format [-Wformat-extra-args]
+    puts("test1");
+    puts("printf");
+    printf("%5+d", 42);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%5+d", 42);
+    puts("");
+    puts("");
+
+    puts("test1");
+    puts("printf");
+    printf("%5+d", -42);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%5+d", -42);
+    puts("");
+    puts("");
+
+    puts("test1");
+    puts("printf");
+    printf("%-5+d", 42);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%-5+d", 42);
+    puts("");
+    puts("");
+
+    puts("test1");
+    puts("printf");
+    printf("%-5+d", -42);
+    puts("");
+    puts("ft_printf");
+    ft_printf("%-5+d", -42);
+    puts("");
+    puts("");
+
+//21 ????????????????????????????????????
+    printf("%jd", 9223372036854775807);
+    printf("%jd", -9223372036854775808);
+    printf("%zd", 4294967295);
+    printf("%zd", 4294967296);
+    printf("%zd", -0);
+    printf("%zd", -1);
+
+//23
