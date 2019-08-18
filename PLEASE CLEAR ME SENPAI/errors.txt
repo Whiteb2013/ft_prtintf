@@ -283,4 +283,12 @@ warning: zero-length gnu_printf format string [-Wformat-zero-length]
     puts("");
     puts("");
 
-//21
+//21 ????????????????????????????????????
+    printf("%jd", 9223372036854775807);
+    printf("%jd", -9223372036854775808);
+    printf("%zd", 4294967295);
+    printf("%zd", 4294967296);
+    printf("%zd", -0);
+    printf("%zd", -1);
+
+//23
