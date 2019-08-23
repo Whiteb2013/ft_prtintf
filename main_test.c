@@ -5,22 +5,56 @@ int ft_printf(const char *str, ...);
 
 int main()
 {
-    int i = 0;
+	//int i = 0;
 
-    i = printf("%s\n", NULL);
-    printf("\ni = %i\n", i);
-    puts("test0");
-    puts("printf");
-    i = printf("@moulitest: %s", NULL);
-    //i = printf("%.x", 0, 0);
-    printf("\ni = %i\n", i);
-    puts("");
-    puts("ft_printf");
-    i = ft_printf("@moulitest: %s", NULL);
-    //i = ft_printf("%.x", 0, 0);
-    printf("\ni = %i\n", i);
-    puts("");
-    puts("");
+	printf("stnd:null %c and text\n", 0);
+	ft_printf("cust:null %c and text\n", 0);
+	puts("");
 
-    return (0);
+	printf("stnd:%.2s is a string\n", "");
+	ft_printf("cust:%.2s is a string\n", "");
+	puts("");
+
+	printf("stnd:%#.x %#.0x %.0x %5.0x.here.\n", 0, 0, 0, 0);
+	ft_printf("cust:%#.x %#.0x %.0x %5.0x.here.\n", 0, 0, 0, 0);
+	puts("");
+
+	printf("stnd:%#.o %#.0o %.0o %5.0o.here.\n", 0, 0, 0, 0);
+	ft_printf("cust:%#.o %#.0o %.0o %5.0o.here.\n", 0, 0, 0, 0);
+	puts("");
+
+	printf("stnd:%.0d %5.0d.here.\n", 0, 0);
+	ft_printf("cust:%.0d %5.0d.here.\n", 0, 0);
+	puts("");
+
+	// puts("test0");
+	// puts("printf");
+	// i = printf("%.x", 0, 0);
+	// printf("\ni = %i\n", i);
+	// puts("");
+	// puts("ft_printf");
+	// i = ft_printf("%.x", 0, 0);
+	// printf("\ni = %i\n", i);
+	// puts("");
+	// 
+
+	// puts("test0");
+	// puts("printf");
+	// printf("@moulitest: %.x %.0x", 0, 0);
+	// puts("");
+	// puts("ft_printf");
+	// ft_printf("@moulitest: %.x %.0x", 0, 0);
+	// puts("");
+	// puts("");
+
+	// puts("test0");
+	// puts("printf");
+	// printf("@moulitest: %5.x %5.0x", 0, 0);
+	// puts("");
+	// puts("ft_printf");
+	// ft_printf("@moulitest: %5.x %5.0x", 0, 0);
+	// puts("");
+	// puts("");
+
+	return (0);
 }

@@ -13,7 +13,6 @@ int		display_static_buffer(const char **str, int i)
 
 int		display_parameter_buffer(t_format *format)
 {
-    //if (format->zero_flag == 'f')
     write (1, format->content.string2show, format->length);
 	return ((int)format->length);
 }

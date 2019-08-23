@@ -8,5 +8,5 @@ int		cleaner(t_format *format)
 	// 	free(format->length_flag);
 	// if (format)
 	// 	free(format);
-	return (0);
+	return (-1);
 }

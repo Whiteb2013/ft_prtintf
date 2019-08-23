@@ -41,7 +41,7 @@ int     ft_printf(const char *str, ...)
 				k = k + display_static_buffer(&str, i);
 				if (str[0] == '%')
 				{
-					if (!(i = extract_parameter(&str, ap)))
+					if ((i = extract_parameter(&str, ap)) < 0)
 					{
 						va_end(ap);
 						return (-1);
