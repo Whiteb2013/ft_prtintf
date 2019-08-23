@@ -5,11 +5,10 @@ int		apply_hash(t_format *format)
 	if (format->type == 'x' || format->type == 'X' || format->type == 'p')
 	{
 		//printf("content = %s\n", format->content.string2show);
-		if (ft_strcmp(format->content.string2show, "0"))
-			if (!(format->content.string2show = join_prefix("0x", format->content.string2show, format)))
-            	return (0);
+		if (!(format->content.string2show = join_prefix("0x", format->content.string2show, format)))
+            return (0);
 	}
-	else if (format->type == 'f' && format->precision == 0)
+	else if (format->type == 'f' && !format->precision)
 	{
 		if (!(format->content.string2show = join_postfix(format->content.string2show, ".", format)))
 			return (0);

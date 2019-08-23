@@ -52,10 +52,10 @@ int     convert_int2string(t_format *format, long long int a, size_t base)
 	}
 	else
 		b = a;
-	if (!a)
-			format->zero_flag = 't';
 	if (!(format->content.string2show = ft_itoa_base(b, base)))// itoa2
 		return (0);
+	if (!a)
+		format->flag.hash = 'f';
 	//printf("\ncontent = %s\n", format->content.string2show);
 	return (1);
 }
@@ -73,6 +73,8 @@ int     convert_short2string(t_format *format, short a, size_t base)
 		b = a;
 	if (!(format->content.string2show = ft_itoa_base(b, base)))// itoa2
 		return (0);
+	if (!a)
+		format->flag.hash = 'f';
 	return (1);
 }
 
@@ -215,9 +217,9 @@ int     convert2string(t_format *format, va_list ap)
 	else if (format->type == 'd' || format->type == 'i')
 		res = convert_int2string(format, va_arg(ap, int), 10);
 	else if (format->type == 'x' || format->type == 'X')
-		res = convert_int2string(format, va_arg(ap, long long int), 16);
+		res = convert_int2string(format, va_arg(ap, unsigned int), 16);
 	else if (format->type == 'o')
-		res = convert_int2string(format, va_arg(ap, long long int), 8);
+		res = convert_int2string(format, va_arg(ap, unsigned int), 8);
 	else if (format->type == 'u')
 		res = convert_int2string(format, va_arg(ap, unsigned int), 10);
 	else if (format->type == 'f')

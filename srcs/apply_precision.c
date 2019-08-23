@@ -23,6 +23,8 @@ int		apply_precision_int(t_format *format)
 			filler_str[i++] = '0';
 		format->content.string2show = join_strings (filler_str, format->content.string2show, format);
 	}
+	if (!format->precision && !ft_strcmp(format->content.string2show, "0"))
+		ft_strclr(format->content.string2show);
 	format->flag.zero = 'f';
 	return (1);
 }

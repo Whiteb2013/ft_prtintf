@@ -7,6 +7,10 @@ int main()
 {
 	//int i = 0;
 
+	printf("%o\n", -4646);
+	ft_printf("%o\n", -4646);
+	puts("");
+
 	printf("stnd:null %c and text\n", 0);
 	ft_printf("cust:null %c and text\n", 0);
 	puts("");
