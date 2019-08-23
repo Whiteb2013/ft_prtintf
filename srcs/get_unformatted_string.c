@@ -198,10 +198,10 @@ int     convert2string(t_format *format, va_list ap)
 		res = convert_char2string(format, va_arg(ap, int));
 	else if (format->type == 's')
 	{
-		//puts("OK");
-		//printf("content = %s\n", va_arg(ap, char *));
 		format->content.string2show = va_arg(ap, char *);
-		//printf("content = %s\n", format->content.string2show);
+		if (format->content.string2show == NULL)
+			if (!(format->content.string2show = ft_strdup("(null)")))
+				return (0);
 		res = 1;
 	}
 	else if (format->type == 'p')
