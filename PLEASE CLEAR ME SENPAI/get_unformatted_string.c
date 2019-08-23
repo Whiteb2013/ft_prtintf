@@ -51,9 +51,11 @@ int     convert_int2string(t_format *format, long long int a, size_t base)
 		b = -a;
 	}
 	else
+	{
 		b = a;
-	if (!a)
+		if (a == 0)
 			format->zero_flag = 't';
+	}
 	if (!(format->content.string2show = ft_itoa_base(b, base)))// itoa2
 		return (0);
 	//printf("\ncontent = %s\n", format->content.string2show);
@@ -117,6 +119,8 @@ int     apply_length(t_format *format, va_list ap)
 	
 	// LENGTH == h
 	if ((format->type == 'd' || format->type == 'i') && !ft_strcmp(format->length_flag, "h"))
+		res = convert_int2string(format, (int)((short)(va_arg(ap, int))), 10);
+	else if ((format->type == 'u') && !ft_strcmp(format->length_flag, "h"))
 		res = convert_int2string(format, (int)((short)(va_arg(ap, int))), 10);
 	else if ((format->type == 'u') && !ft_strcmp(format->length_flag, "h"))
 		res = convert_int2string(format, (int)((short)(va_arg(ap, int))), 10);
@@ -205,7 +209,7 @@ int     convert2string(t_format *format, va_list ap)
 	else if (format->type == 's')
 	{
 		format->content.string2show = va_arg(ap, char *);
-		if (!format->content.string2show)
+		if (format->content.string2show == NULL)
 			if (!(format->content.string2show = ft_strdup("(null)")))
 				return (0);
 		res = 1;
