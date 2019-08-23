@@ -13,6 +13,7 @@ int     apply_default_options(t_format *format)
 	format->precision_flag = 'f';
 	format->width = 0;
 	format->content.sign = '+';
+	format->zero_flag = 'f';
 	if (format->type == 'f')
 		format->precision = 6;
 	else

@@ -46,7 +46,7 @@ char	*ft_strnew(size_t size)
 	return (str);
 }
 
-char    *ft_itoa_base(long long int int2convert, size_t base)
+char    *ft_itoa_base_2(long long int int2convert, size_t base)
 {
     char    *str1;
     char    *str2;

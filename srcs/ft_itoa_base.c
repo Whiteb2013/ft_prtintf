@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-char    *ft_itoa_base_2(unsigned long long int2convert, size_t base)
+char    *ft_itoa_base(unsigned long long int2convert, size_t base)
 {
     char    *str;
     size_t	i;

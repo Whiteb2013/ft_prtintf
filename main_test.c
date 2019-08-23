@@ -5,14 +5,36 @@ int ft_printf(const char *str, ...);
 
 int main()
 {
-    puts("test2");
+    int i = 0;
+
+    puts("test0");
     puts("printf");
-    printf("%5%");
+    i = printf("%.x", 0, 0);
+    printf("\ni = %i\n", i);
     puts("");
     puts("ft_printf");
-    ft_printf("%5%");
+    i = ft_printf("%.x", 0, 0);
+    printf("\ni = %i\n", i);
     puts("");
     puts("");
+
+    // puts("test0");
+    // puts("printf");
+    // printf("@moulitest: %.x %.0x", 0, 0);
+    // puts("");
+    // puts("ft_printf");
+    // ft_printf("@moulitest: %.x %.0x", 0, 0);
+    // puts("");
+    // puts("");
+
+    // puts("test0");
+    // puts("printf");
+    // printf("@moulitest: %5.x %5.0x", 0, 0);
+    // puts("");
+    // puts("ft_printf");
+    // ft_printf("@moulitest: %5.x %5.0x", 0, 0);
+    // puts("");
+    // puts("");
 
     return (0);
 }
