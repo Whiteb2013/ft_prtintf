@@ -24,7 +24,7 @@ int		apply_hash(t_format *format)
 
 int		apply_space(t_format *format)
 {
-	if (format->type == '%')
+	if (format->type == '%' || format->type == 'u')
 		return (1);
 	if (!(format->content.string2show = join_prefix(" ", format->content.string2show, format)))
 		return (0);
@@ -34,6 +34,8 @@ int		apply_space(t_format *format)
 
 int		apply_plus(t_format *format)
 {
+	if (format->type == 'u')
+		return (1);
 	if (!(format->content.string2show = join_prefix(&format->content.sign, format->content.string2show, format)))
 		return (0);
 	format->length = ft_strlen(format->content.string2show);
