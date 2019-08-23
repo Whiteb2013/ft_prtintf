@@ -24,7 +24,11 @@ int		apply_precision_int(t_format *format)
 		format->content.string2show = join_strings (filler_str, format->content.string2show, format);
 	}
 	if (!format->precision && !ft_strcmp(format->content.string2show, "0"))
+	{
 		ft_strclr(format->content.string2show);
+		if (format->type != 'o')
+			format->flag.hash = 'f';
+	}
 	format->flag.zero = 'f';
 	return (1);
 }

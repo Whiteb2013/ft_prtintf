@@ -5,8 +5,9 @@ int		apply_hash(t_format *format)
 	if (format->type == 'x' || format->type == 'X' || format->type == 'p')
 	{
 		//printf("content = %s\n", format->content.string2show);
-		if (!(format->content.string2show = join_prefix("0x", format->content.string2show, format)))
-            return (0);
+		if (ft_strcmp("0", format->content.string2show))
+			if (!(format->content.string2show = join_prefix("0x", format->content.string2show, format)))
+            	return (0);
 	}
 	else if (format->type == 'f' && !format->precision)
 	{

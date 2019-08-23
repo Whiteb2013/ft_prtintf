@@ -23,8 +23,12 @@ int main()
 	ft_printf("cust:%#.x %#.0x %.0x %5.0x.here.\n", 0, 0, 0, 0);
 	puts("");
 
-	printf("stnd:%#.o %#.0o %.0o %5.0o.here.\n", 0, 0, 0, 0);
-	ft_printf("cust:%#.o %#.0o %.0o %5.0o.here.\n", 0, 0, 0, 0);
+	printf("stnd:%.0o %5.0o.here.\n", 0, 0);
+	ft_printf("stnd:%.0o %5.0o.here.\n", 0, 0);
+	puts("");
+
+	printf("stnd:%#.o %#.0o.here.\n", 0, 0);
+	ft_printf("stnd:%#.o %#.0o.here.\n", 0, 0);
 	puts("");
 
 	printf("stnd:%.0d %5.0d.here.\n", 0, 0);
