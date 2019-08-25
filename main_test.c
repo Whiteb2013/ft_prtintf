@@ -35,6 +35,16 @@ int main()
 	ft_printf("cust:%.0d %5.0d.here.\n", 0, 0);
 	puts("");
 
+	printf("%p\n", NULL);
+	ft_printf("%p\n", NULL);
+	puts("");
+	
+	printf("|%2c|\n", 0);
+ 	ft_printf("|%2c|\n", 0);
+	printf("|%2c|\n", 56);
+ 	ft_printf("|%2c|\n", 56);
+	puts("");
+
 	// puts("test0");
 	// puts("printf");
 	// i = printf("%.x", 0, 0);

@@ -73,8 +73,6 @@ int     convert_short2string(t_format *format, short a, size_t base)
 		b = a;
 	if (!(format->content.string2show = ft_itoa_base(b, base)))// itoa2
 		return (0);
-	//if (!a)
-	//	format->flag.hash = 'f';
 	return (1);
 }
 

@@ -10,6 +10,8 @@ int		apply_width(t_format *format)
 	c = ' ';
 	if (format->length < format->width)
 	{
+		if (format->type == 'c' && !ft_strcmp(format->content.string2show, ""))
+			format->length += 1;
 		if (!(filler_str = ft_strnew(format->width - format->length)))
 			return (0);
 		if (format->flag.zero == 't' && format->flag.minus == 'f' && format->type != 'c')
