@@ -12,7 +12,7 @@ int     convert_int2string(t_format *format, long long int a, size_t base)
 {
 	unsigned long long int  b;
 
-	if (a < 0)
+	if (a < 0 && format->type != 'u')
 	{
 		format->content.sign = '-';
 		b = -a;

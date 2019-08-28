@@ -18,9 +18,5 @@ int main()
     puts("");
     puts("");
 
-    puts("strjoin");
-    printf("%s", ft_strjoin("12", "34"));
-    puts("");
-
     return (0);
 }
