@@ -19,16 +19,16 @@ int main()
 	ft_printf("cust:%.2s is a string\n", "");
 	puts("");
 
-	printf("stnd:%#.x %#.0x %.0x %5.0x.here.\n", 0, 0, 0, 0);
-	ft_printf("cust:%#.x %#.0x %.0x %5.0x.here.\n", 0, 0, 0, 0);
+	printf("stnd:%#.x %#.0x %.0x %5.0x.here.\n", 00, 00, 00, 00);
+	ft_printf("cust:%#.x %#.0x %.0x %5.0x.here.\n", 00, 00, 00, 00);
 	puts("");
 
-	printf("stnd:%.0o %5.0o.here.\n", 0, 0);
-	ft_printf("stnd:%.0o %5.0o.here.\n", 0, 0);
+	printf("stnd:%.0o %5.0o.here.\n", 00, 00);
+	ft_printf("stnd:%.0o %5.0o.here.\n", 00, 00);
 	puts("");
 
-	printf("stnd:%#.o %#.0o.here.\n", 0, 0);
-	ft_printf("stnd:%#.o %#.0o.here.\n", 0, 0);
+	printf("stnd:%#.o %#.0o.here.\n", 00, 00);
+	ft_printf("stnd:%#.o %#.0o.here.\n", 00, 00);
 	puts("");
 
 	printf("stnd:%.0d %5.0d.here.\n", 0, 0);

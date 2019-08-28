@@ -8,39 +8,6 @@ int		convert_char2string(t_format *format, int a)
 	return (1);
 }
 
-char    *ft_itoa_base_2(long long int int2convert, size_t base)
-{
-    char    *str1;
-    char    *str2;
-    size_t	i;
-    size_t  k;
-    char	values[16] = "0123456789abcdef";
-
-	// idk why but we cant <return "0";> so next 7 rows for that
-	if (int2convert == 0)
-	{
-		if (!(str2 = ft_strnew(0)))
-        	return (NULL);
-		str2[0] = '0';
-		return (str2);
-	}
-
-	i = int_length(int2convert, 10);
-    if (!(str1 = ft_strnew(i)) || !(str2 = ft_strnew(i)))
-        return (NULL);
-    k = 0;
-    while (int2convert)
-    {
-        str1[k++] = values[int2convert % base];
-        int2convert = int2convert / base;
-    }
-    i = 0;
-    str2[k] = '\0';
-    while (k > 0)
-        str2[i++] = str1[--k];
-    return (str2);
-}
-
 int     convert_int2string(t_format *format, long long int a, size_t base)
 {
 	unsigned long long int  b;
@@ -52,11 +19,8 @@ int     convert_int2string(t_format *format, long long int a, size_t base)
 	}
 	else
 		b = a;
-	if (!(format->content.string2show = ft_itoa_base(b, base)))// itoa2
+	if (!(format->content.string2show = ft_itoa_base(b, base)))
 		return (0);
-	//if (!a)
-	//	format->flag.hash = 'f';
-	//printf("\ncontent = %s\n", format->content.string2show);
 	return (1);
 }
 
@@ -71,7 +35,7 @@ int     convert_short2string(t_format *format, short a, size_t base)
 	}
 	else
 		b = a;
-	if (!(format->content.string2show = ft_itoa_base(b, base)))// itoa2
+	if (!(format->content.string2show = ft_itoa_base(b, base)))
 		return (0);
 	return (1);
 }
@@ -99,12 +63,12 @@ int		convert_float2string(t_format *format, double a)
 	decimal = get_decimal(format->precision, a - integer, &integer);
 	if (format->precision)
 	{
-		if (!(format->content.string2show = ft_itoa_base(decimal, 10)))// itoa2
+		if (!(format->content.string2show = ft_itoa_base(decimal, 10)))
 			return (0);
 		if (!apply_precision_float(format))
 			return (0);
 	}
-	if (!(format->content.string2show = join_strings(ft_itoa_base(integer, 10), format->content.string2show, format)))// itoa2
+	if (!(format->content.string2show = join_strings(ft_itoa_base(integer, 10), format->content.string2show, format)))
 		return (0);
 	return (1);
 }
