@@ -38,7 +38,7 @@ int		apply_precision_float(t_format *format)
 	format->length = ft_strlen(format->content.string2show);
 	if (!apply_precision_int(format))
 		return (0);
-	if (!(format->content.string2show = join_prefix(".", format->content.string2show, format)))
+	if (!(format->content.string2show = join_prefix(".", format)))
 		return (0);
 	return (1);
 }
