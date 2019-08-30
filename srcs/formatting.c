@@ -29,8 +29,8 @@ char	*join_strings(char *s1, char *s2, t_format *format)
 	char	*str;
 	
 	str = ft_strjoin(s1, s2);
-	//free (s1);
-	//free (s2);
+	free (s1);
+	free (s2);
 	format->length = ft_strlen(str);
 	return (str);
 }

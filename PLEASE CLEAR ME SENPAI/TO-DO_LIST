@@ -7,4 +7,10 @@
 
 ...
 
+subroutine for string
+str2str
+//format->content.string2show = va_arg(ap, char *);
+
+...
+
 убрать комменты в Makefile и добавить проверку CFLAGS при компиляции

@@ -155,6 +155,18 @@ int		convert_float2string(t_format *format, double a)
 }
 */
 
+int		convert_string2string(t_format *format, char *str)
+{
+	if (!str)
+	{
+		if(!(format->content.string2show = ft_strdup("(null)")))
+			return (0);
+	}
+	else if (!(format->content.string2show = ft_strdup(str)))
+		return (0);
+	return (1);
+}
+
 int     convert2string(t_format *format, va_list ap)
 {
 	int res;
@@ -168,11 +180,7 @@ int     convert2string(t_format *format, va_list ap)
 		res = convert_char2string(format, va_arg(ap, int));
 	else if (format->type == 's')
 	{
-		format->content.string2show = va_arg(ap, char *);
-		if (!format->content.string2show)
-			if (!(format->content.string2show = "(null)"))
-				return (0);
-		res = 1;
+		res = convert_string2string(format, va_arg(ap, char *));
 	}
 	else if (format->type == 'p')
 		res = convert_pointer2string(format, va_arg(ap, long long int));
