@@ -21,7 +21,7 @@ int		apply_precision_int(t_format *format)
 			return (0);
 		while (i < format->precision - format->length)
 			filler_str[i++] = '0';
-		format->content.string2show = join_strings (filler_str, format->content.string2show, format);
+		format->content.string2show = join_strings(filler_str, format->content.string2show, format);
 	}
 	if (!format->precision && !ft_strcmp(format->content.string2show, "0"))
 	{
@@ -30,6 +30,7 @@ int		apply_precision_int(t_format *format)
 			format->flag.hash = 'f';
 	}
 	format->flag.zero = 'f';
+	//free(filler_str);
 	return (1);
 }
 

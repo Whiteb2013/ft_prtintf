@@ -23,6 +23,7 @@ int		apply_width(t_format *format)
 		else
 			format->content.string2show = join_strings (filler_str, format->content.string2show, format);
 		format->length = format->width;
+		free(filler_str);
 	}
 	return (1);
 }

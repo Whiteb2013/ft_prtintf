@@ -170,7 +170,7 @@ int     convert2string(t_format *format, va_list ap)
 	{
 		format->content.string2show = va_arg(ap, char *);
 		if (!format->content.string2show)
-			if (!(format->content.string2show = ft_strdup("(null)")))
+			if (!(format->content.string2show = "(null)"))
 				return (0);
 		res = 1;
 	}
