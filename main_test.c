@@ -5,14 +5,14 @@ int main()
 {
 	//i = printf("%s\n", NULL);
     //printf("\ni = %i\n", i);
-    puts("test0");
-    puts("printf");
-    printf("%10s", "this");
-    puts("");
-    puts("ft_printf");
-    ft_printf("%s", NULL);
-    puts("");
-    puts("");
+    //puts("test0");
+    //puts("printf");
+    //printf("%%%", "test");
+    //puts("");
+    //puts("ft_printf");
+    ft_printf("%%%", "test");
+    //puts("");
+    //puts("");
 
     return (0);
 }
