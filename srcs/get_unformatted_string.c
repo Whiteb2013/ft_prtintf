@@ -174,7 +174,7 @@ int     convert2string(t_format *format, va_list ap)
 	res = 0;
 	if (format->type == '%')
 		res = convert_char2string(format, '%');
-	if (format->length_flag[0] != 0) 					// rewrite condition
+	if (format->length_flag[0]) 					// rewrite condition
 		res = apply_length(format, ap);
 	else if (format->type == 'c')
 		res = convert_char2string(format, va_arg(ap, int));
