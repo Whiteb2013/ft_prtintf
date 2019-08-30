@@ -1,5 +1,13 @@
 #include "ft_printf.h"
 
+int     check_dollar(char c)
+{
+    if (c == '$')
+        return (1);
+    else
+        return (0);
+}
+
 int     check_precision(char c)
 {
     if (c == '.')
@@ -43,12 +51,14 @@ p - precision (check if symbol is part of precision);
 int     check_options(char c, char mode)
 {
     if (mode == 'a')
-        return (check_flag(c) || check_width(c) || check_precision(c));
+        return (check_flag(c) || check_width(c) || check_precision(c) || check_dollar(c));
     else if (mode == 'f')
         return (check_flag(c));
     else if (mode == 'w')
         return (check_width(c));
     else if (mode == 'p')
         return (check_precision(c));
+    else if (mode == '$')
+        return (check_dollar(c));
     return (0);
 }
