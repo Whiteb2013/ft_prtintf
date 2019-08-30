@@ -12,14 +12,21 @@ int     extract_parameter(const char **str, va_list ap)
 		return (0);
 	if ((i = get_type(*str, format)) < 0)
 		return (cleaner (format));
-	get_options(*str, format, ap, i);
+	if (check_type(format->type))
+	{
+		get_options(*str, format, ap, i);
 	//printf ("format extracted. format->type = %c, format->flag = |%s|, format->width = %zu, format->precision = %zu\n", format->type, format->flag, format->width, format->precision);
-	if (!convert2string(format, ap))
-		return (cleaner (format));
-	if (!format_string(format))
+		if (!convert2string(format, ap))
+			return (cleaner (format));
+		if (!format_string(format))
+			return (cleaner (format));
+	}
+	else if (!undefined_behavior(format))
 		return (cleaner (format));
 	k = display_parameter_buffer(format);
-	*str = *str + i + 1;
+	*str = *str + i;
+	if (**str)
+		*str = *str + 1;
 	cleaner (format);
 	return (k);
 }  
@@ -53,7 +60,7 @@ int     ft_printf(const char *str, ...)
 		else
 			i++;
 	}
-	k = k + i;
+	k += i;
 	display_static_buffer(&str, i);
 	va_end(ap);
 	return (k);

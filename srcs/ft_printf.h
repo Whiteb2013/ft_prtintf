@@ -39,6 +39,7 @@ int     ft_printf(const char *str, ...);
 int     get_type(const char *str, t_format *format);
 void    get_options(const char *str, t_format *format, va_list ap, int i);
 int     check_options(char c, char mode);
+int     check_type(char c);
 int     convert2string(t_format *format, va_list ap);
 char    *ft_itoa_base(unsigned long long b, size_t base);
 size_t  int_length(unsigned long long int b, unsigned int base);
@@ -55,5 +56,6 @@ int		apply_precision_int(t_format *format);
 int		apply_precision_float(t_format *format);
 int		format_string(t_format *format);
 int		cleaner(t_format *format);
+int		undefined_behavior(t_format *format);
 
 #endif

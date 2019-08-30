@@ -14,5 +14,5 @@ int		display_static_buffer(const char **str, int i)
 int		display_parameter_buffer(t_format *format)
 {
     write (1, format->content.string2show, format->length);
-	return ((int)format->length);
+    return ((int)format->length);
 }

@@ -15,6 +15,7 @@ SRC_FILES =	ft_printf.c \
 			sub_functions.c \
 			display.c \
 			formatting.c \
+			undefined_behavior.c \
 			cleaner.c
 
 SRC_LIB_FILES = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c \

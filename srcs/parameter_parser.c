@@ -76,11 +76,7 @@ int     get_type(const char *str, t_format *format)
 	while (str[i] && check_options(str[i], 'a'))
 		i++;
 	/* checking if we encountered type after options listing. If true - extracting parameter type, else - emergency exit */
-	if (check_type(str[i]))
-		format->type = str[i];
-	else
-		return (-1);
-	/* defining default paramter options for further analyzes */
+	format->type = str[i];
 	if (!apply_default_options(format))
 		return (-1);
 	return (i);
@@ -89,7 +85,7 @@ int     get_type(const char *str, t_format *format)
 /* extracting parameter options (flag, width, precision) */
 void    get_options(const char *str, t_format *format, va_list ap, int i)
 {
-	int     k;
+	int	k;
 
 	k = 0;
 	while (k < i)
