@@ -84,7 +84,7 @@ int     get_type(const char *str, t_format *format, va_list ap_root)
 }
 
 /* extracting parameter options (flag, width, precision) */
-void    get_options(const char *str, t_format *format, va_list ap, int i)
+void    get_options(const char *str, t_format *format, va_list ap, va_list ap_root, int i)
 {
 	int	k;
 
@@ -101,15 +101,16 @@ void    get_options(const char *str, t_format *format, va_list ap, int i)
 				//printf("\nva_arg = %i\n", va_arg(ap2, int));
 				//printf("\nwidth = %i\n", format->width);
 				format->width = format->width - 1;
+				*ap = *ap_root;
 				while (format->width)
 				{
 					//printf("\nwidth = %i\n", format->width);
-					va_arg(format->ap_root, void *);
+					va_arg(ap, void *);
 					//printf("\nva_arg = %i\n", va_arg(ap2, int));
 					format->width = format->width - 1;
 				}
 				k++;
-				*ap = *format->ap_root;
+				
 				//printf("\nwidth = %i\n", format->width);
 			}
 			//printf("\nva_arg = %i\n", va_arg(ap2, int));

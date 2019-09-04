@@ -28,7 +28,7 @@ int main()
     puts("");
     printf("%d:%d:%1$d:%d:%d\n", 1, 2, 3, 4, 5);
     puts("");
-    printf("%1$d:%3$*.*d:%d:%d:%d\n", 1, 2, 3, 4, 5);
+    printf("%1$d:%3$*.*d:%d:%d:%d:%d:%d\n", 1, 2, 3, 4, 5, 6, 7);
     puts("");
     // puts("printf");
     // printf("%1$10d:%2$10d:%03$d:%-4$d:%5$d\n", 1, 2, 3, 4, 5);
@@ -38,7 +38,7 @@ int main()
     puts("");
     ft_printf("%d:%d:%1$d:%d:%d\n", 1, 2, 3, 4, 5);
     puts("");
-    ft_printf("%1$d:%3$*.*d:%d:%d:%d\n", 1, 2, 3, 4, 5);
+    ft_printf("%1$d:%3$*.*d:%d:%d:%d:%d:%d\n", 1, 2, 3, 4, 5, 6, 7);
     //ft_printf("%1$d:%2$d:%3$d:%4$d:%5$d\n", 1, 2, 3, 4, 5);
     //ft_printf("%10.f\n", 12.34);
     puts("");

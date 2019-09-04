@@ -56,7 +56,7 @@ int		display_static_buffer(const char **str, int i);
 int		display_parameter_buffer(t_format *format);
 int     ft_printf(const char *str, ...);
 int     get_type(const char *str, t_format *format, va_list ap_root);
-void    get_options(const char *str, t_format *format, va_list ap, int i);
+void    get_options(const char *str, t_format *format, va_list ap, va_list ap_root, int i);
 int     check_options(char c, char mode);
 int     check_type(char c);
 int     convert2string(t_format *format, va_list ap);

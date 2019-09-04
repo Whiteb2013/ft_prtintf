@@ -6,7 +6,7 @@ char    *ft_itoa_base(unsigned long long int2convert, size_t base)
     size_t	i;
     char	values[16] = "0123456789abcdef";
     
-    printf("\nint2convert = %i\n", int2convert);
+    //printf("\nint2convert = %i\n", int2convert);
     i = int_length(int2convert, base);
     if (!(str = ft_strnew(i)))
         return (NULL);
@@ -17,6 +17,6 @@ char    *ft_itoa_base(unsigned long long int2convert, size_t base)
         int2convert = int2convert / base;
     }
     str[--i] = values[int2convert % base];
-    printf("\nstr = %s\n", str);
+    //printf("\nstr = %s\n", str);
     return (str);
 }

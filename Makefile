@@ -58,11 +58,11 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@ar rc $(NAME) $(OBJS)
+	@ranlib $(NAME)
 #$(NAME): lib bin
 #	@$(CC) $(CFLAGS) $(LFLAGS) $(OBJS) -L$(LIB_DIR) -lft -o $(NAME)
 #	@ar rc $(NAME) $(OBJS)
 #	@ar rc $(NAME) $(OBJS)
-#	@ranlib $(NAME)
 
 #lib:
 #	@make -C $(LIB_DIR)

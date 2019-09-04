@@ -17,7 +17,7 @@ int     extract_parameter(const char **str, va_list ap, va_list ap_root)
 		return (cleaner (format));
 	if (check_type(format->type))
 	{
-		get_options(*str, format, ap, i);
+		get_options(*str, format, ap, ap_root, i);
 	//printf ("format extracted. format->type = %c, format->flag = |%s|, format->width = %zu, format->precision = %zu\n", format->type, format->flag, format->width, format->precision);
 		if (!convert2string(format, ap))
 			return (cleaner (format));
