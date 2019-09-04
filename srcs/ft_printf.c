@@ -32,17 +32,6 @@ int     extract_parameter(const char **str, va_list ap, va_list ap_root)
 		*str = *str + 1;
 	cleaner (format);
 	return (k);
-}  
-
-int		ft_strcmp_second_son(const char *s1, const char *s2, size_t i)
-{
-	while ((*(unsigned char *)s1++ == *(unsigned char *)s2) && i > 0)
-	{
-		if (*(s2++) == 0)
-			return (0);
-		i--;
-	}
-	return (*(unsigned char *)--s1 - *(unsigned char *)s2);
 }
 
 void	set_color(const char *color, const char **str, int i)
@@ -53,19 +42,26 @@ void	set_color(const char *color, const char **str, int i)
 
 void	check_color(const char **str)
 {
-	if (!ft_strncmp(*str, "{red}", 5))
-	{
-		// write(1, "\033[22;31m", (size_t)8);
-        // *str = *str + 5;
-		set_color("\033[22;31m", str, 5);
-		//puts("OK");
-	}
+	if (!ft_strncmp(*str, "{black}", 7))
+		set_color("\x1b[30m", str, 7);
+	else if (!ft_strncmp(*str, "{red}", 5))
+		set_color("\x1b[31m", str, 5);
+	else if (!ft_strncmp(*str, "{green}", 7))
+		set_color("\x1b[32m", str, 7);
+	else if (!ft_strncmp(*str, "{yellow}", 8))
+		set_color("\x1b[33m", str, 8);
+	else if (!ft_strncmp(*str, "{blue}", 6))
+		set_color("\x1b[34m", str, 6);
+	else if (!ft_strncmp(*str, "{magenta}", 9))
+		set_color("\x1b[35m", str, 9);
+	else if (!ft_strncmp(*str, "{cyan}", 6))
+		set_color("\x1b[36m", str, 6);
+	else if (!ft_strncmp(*str, "{white}", 7))
+		set_color("\x1b[37m", str, 7);
+	else if (!ft_strncmp(*str, "{eoc}", 5))
+		set_color("\x1b[0m", str, 5);
 	else
-	{
 	 	display_static_buffer(str, 1);
-		//write(1, "{", (size_t)1);
-        //*str = *str + 1;
-	}
 }
 
 /* project function: returns an amount of displayed symbols */
