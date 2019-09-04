@@ -43,6 +43,7 @@ int main()
     //ft_printf("%10.f\n", 12.34);
     puts("");
     puts("");
+    ft_printf("some red{red}%s\n", "WOW");
 
     return (0);
 }

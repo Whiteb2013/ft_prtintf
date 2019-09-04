@@ -49,7 +49,6 @@ typedef struct  s_format
 	size_t      precision;
 	size_t      length;
 	t_content   content;
-	va_list		ap_root;
 }               t_format;
 
 int		display_static_buffer(const char **str, int i);

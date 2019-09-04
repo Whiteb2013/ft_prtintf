@@ -3,7 +3,6 @@
 /* defining default displaying options */
 int     apply_default_options(t_format *format, va_list ap_root)
 {
-	*format->ap_root = *ap_root;
 	if (!(format->length_flag = ft_strnew(2)))
 		return (0);
 	format->flag.minus = 'f';
