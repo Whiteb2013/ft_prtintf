@@ -1,8 +1,9 @@
 #include "ft_printf.h"
 
 /* defining default displaying options */
-int     apply_default_options(t_format *format)
+int     apply_default_options(t_format *format, va_list ap_root)
 {
+	*format->ap_root = *ap_root;
 	if (!(format->length_flag = ft_strnew(2)))
 		return (0);
 	format->flag.minus = 'f';
@@ -67,7 +68,7 @@ int     check_type(char c)
 }
 
 /* trying to take out parameter type: -1 - no type matches found, i - type found in i steps next to '%' */
-int     get_type(const char *str, t_format *format)
+int     get_type(const char *str, t_format *format, va_list ap_root)
 {
 	int     i;
 	
@@ -77,7 +78,7 @@ int     get_type(const char *str, t_format *format)
 		i++;
 	/* checking if we encountered type after options listing. If true - extracting parameter type, else - emergency exit */
 	format->type = str[i];
-	if (!apply_default_options(format))
+	if (!apply_default_options(format, ap_root))
 		return (-1);
 	return (i);
 }
@@ -90,6 +91,29 @@ void    get_options(const char *str, t_format *format, va_list ap, int i)
 	k = 0;
 	while (k < i)
 	{
+		if (str[k] >= '1' && str[k] <= '9')
+		{
+			format->width = ft_atoi(&str[k]);
+			k += int_length(format->width, 10);
+			//printf("\nstr[k] = %c\n", str[k]);
+			if (check_options(str[k], '$'))
+			{
+				//printf("\nva_arg = %i\n", va_arg(ap2, int));
+				//printf("\nwidth = %i\n", format->width);
+				format->width = format->width - 1;
+				while (format->width)
+				{
+					//printf("\nwidth = %i\n", format->width);
+					va_arg(format->ap_root, void *);
+					//printf("\nva_arg = %i\n", va_arg(ap2, int));
+					format->width = format->width - 1;
+				}
+				k++;
+				*ap = *format->ap_root;
+				//printf("\nwidth = %i\n", format->width);
+			}
+			//printf("\nva_arg = %i\n", va_arg(ap2, int));
+		}
 		//printf("str k = %s, char k = %c", str, str[k]);
 		if (str[k] == '*')
 		{

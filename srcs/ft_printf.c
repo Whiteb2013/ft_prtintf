@@ -1,16 +1,19 @@
 #include "ft_printf.h"
 
 /* extracting paramter and displaying settings: returns amount of displayed symbols or 0. 0 means that error encountered while exctracting*/
-int     extract_parameter(const char **str, va_list ap)
+int     extract_parameter(const char **str, va_list ap, va_list ap_root)
 {
 	int         i;
 	int			k;
 	t_format    *format;
 
+	//*format->ap_root = *ap;
+	//printf("\nva_arg = %i\n", va_arg(format->ap_root, int));
+
 	*str = *str + 1;
 	if (!(format = (t_format *)ft_memalloc(sizeof(t_format))))
 		return (0);
-	if ((i = get_type(*str, format)) < 0)
+	if ((i = get_type(*str, format, ap_root)) < 0)
 		return (cleaner (format));
 	if (check_type(format->type))
 	{
@@ -37,8 +40,11 @@ int     ft_printf(const char *str, ...)
 	int     k;
 	int     i;
 	va_list ap;
+	va_list	ap_root;
+	//va_list	ap2;
 	
 	va_start(ap, str);
+	*ap_root = *ap;
 	i = 0;
 	k = 0;
 	while (str[i])
@@ -48,7 +54,7 @@ int     ft_printf(const char *str, ...)
 				k = k + display_static_buffer(&str, i);
 				if (str[0] == '%')
 				{
-					if ((i = extract_parameter(&str, ap)) < 0)
+					if ((i = extract_parameter(&str, ap, ap_root)) < 0)
 					{
 						va_end(ap);
 						return (-1);
