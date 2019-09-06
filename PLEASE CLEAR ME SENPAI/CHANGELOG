@@ -1,3 +1,5 @@
-1. Добавлены length (h, hh, l, ll, L)
-2. Пофикшен отрицательный double
-3. Подредактировал функцию ft_itoa_base. Была ошибочка. Новая версия именована ft_itoa_base_2 и пока лежит в файле get_unformatted_string.c
+1. Разбил файл get_unformated_string на 2
+2. Перенес функцию apply_length в отдельный файл
+3. ap_root вернул в формат, так как норминет не пропускает 5 параметров в функции get_options
+4. вынес функцию try_dollar из get_options в отдельный файл
+5. 

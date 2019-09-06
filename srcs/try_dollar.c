@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_formatted_string.c                             :+:      :+:    :+:   */
+/*   try_dollar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmarin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/06 20:35:21 by gmarin            #+#    #+#             */
-/*   Updated: 2019/09/06 20:35:23 by gmarin           ###   ########.fr       */
+/*   Created: 2019/09/06 21:43:13 by gmarin            #+#    #+#             */
+/*   Updated: 2019/09/06 21:43:15 by gmarin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		format_string(t_format *format)
+int		try_dollar(const char *str, t_format *format, va_list ap, int k)
 {
-	int i;
-
-	i = -1;
-	if (format->precision_flag == 't' && !apply_precision(format))
-		return (0);
-	if (!apply_flags(format))
-		return (0);
-	if (!apply_width(format))
-		return (0);
-	if (format->type >= 'A' && format->type <= 'Z')
-		while (format->content.string2show[++i])
-			format->content.string2show[i] = \
-				ft_toupper(format->content.string2show[i]);
-	return (1);
+	if (str[k] >= '1' && str[k] <= '9')
+	{
+		format->width = ft_atoi(&str[k]);
+		k += int_length(format->width, 10);
+		if (check_options(str[k], '$'))
+		{
+			format->width = format->width - 1;
+			*ap = *format->ap_root;
+			while (format->width)
+			{
+				va_arg(ap, void *);
+				format->width = format->width - 1;
+			}
+			k++;
+		}
+	}
+	return (k);
 }

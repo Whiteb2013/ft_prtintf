@@ -7,8 +7,10 @@ SRC_FILES =	ft_printf.c \
 			parameter_parser.c \
 			check_options.c \
 			get_unformatted_string.c \
+			get_unformatted_string_2.c \
 			get_formatted_string.c \
 			apply_width.c \
+			apply_length.c \
 			apply_flags.c \
 			apply_precision.c \
 			ft_itoa_base.c \
@@ -16,6 +18,7 @@ SRC_FILES =	ft_printf.c \
 			display.c \
 			formatting.c \
 			undefined_behavior.c \
+			try_dollar.c \
 			cleaner.c
 
 SRC_LIB_FILES = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
@@ -54,7 +57,7 @@ all: $(NAME)
 #bin:
 #	@$(CC) $(CFLAGS) $(LFLAGS) -c $(SRCS)
 #	@$(CC) $(LFLAGS) -c $(SRCS)
-#	@$(CC) $(LFLAGS) -c $(SRCS) 
+#	@$(CC) $(LFLAGS) -c $(SRCS)
 
 $(NAME): $(OBJS)
 	@ar rc $(NAME) $(OBJS)
