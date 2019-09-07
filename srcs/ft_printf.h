@@ -34,6 +34,18 @@ typedef struct	s_format
 	va_list		ap_root;
 }				t_format;
 
+typedef union				u_dbl
+{
+	struct					s_union
+	{
+		unsigned long int	mantissa:64;
+		unsigned short int	exponent:15;
+		char				sign:1;
+	}						t_union;
+	long double				dbl;
+}							t_dbl;
+
+
 int		display_static_buffer(const char **str, int i);
 int		display_parameter_buffer(t_format *format);
 int		ft_printf(const char *str, ...);

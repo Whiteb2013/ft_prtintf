@@ -5,35 +5,57 @@
 
 int main()
 {
-    puts("");
-    ft_printf("YMCA {black}BLACK{red}RED{green}GREEN{yellow}YELLOW{blue}BLUE{magenta}MAGENTA{cyan}CYAN{white}WHITE{eoc}EOC\n");
+    //exceptions to handle
+	printf("%f", -0.0);
+	puts("");
+	ft_printf("%e", -1010.23456789);
+	puts("");
+	printf("%.20Lf", 101010.9999999L);
+	puts("");
+	ft_printf("%.20Lf", 101010.9999999L);
+	puts("");
+	printf("%f", +0.0);
+	puts("");
+	printf("%f", (double)1010/0);
+	puts("");
+	//
 
-    //printf "%40s\n" "${blue}This text is blue${normal}"
-    //printf ("%40s\n" "tput setaf 1This text is blue$");
-    //i = printf("%s\n", NULL);
-    //printf("\ni = %i\n", i);
-    // puts("test0");
-    // puts("printf");
+	printf("%e", 1010.23456789);
+	puts("");
+	printf("%E", 1010.23456789);
+	puts("");
+	printf("%#.0e", (double)-1010);
+	puts("");
+	printf("%e", -1010.23456789);
+	puts("");
+	printf("%.0e", -1010.23456789);
+	puts("");
+	printf("%10.10e", 101.23456789);
+	puts("");
+	printf("% 020.20e", 101.23456789);
     puts("");
-    printf("%1$d:%3$*.*d:%d:%3$d:%d\n", 1, 2, 3, 4, 5);
+	printf("% 020e", 101.23456789);
     puts("");
-    printf("%d:%d:%1$d:%d:%d\n", 1, 2, 3, 4, 5);
+	printf("% -20e", 101.23456789);
     puts("");
-    printf("%1$d:%3$*.*d:%d:%d:%d:%d:%d\n", 1, 2, 3, 4, 5, 6, 7);
+	printf("% -20e", 10111111111111112312412.2345678912412412412421);
     puts("");
-    // puts("printf");
-    // printf("%1$10d:%2$10d:%03$d:%-4$d:%5$d\n", 1, 2, 3, 4, 5);
-    // puts("");
-    puts("ft_printf");
-    ft_printf("%1$d:%3$*.*d:%d:%3$d:%d\n", 1, 2, 3, 4, 5);
+	printf("%g", 1010.23456789);
+	puts("");
+	printf("%g", -1010.23456789);
+	puts("");
+	printf("%.0g", -1010.23456789);
+	puts("");
+	printf("%10.10g", 101.23456789);
+	puts("");
+	printf("% 020.20g", 101.23456789);
     puts("");
-    ft_printf("%d:%d:%1$d:%d:%d\n", 1, 2, 3, 4, 5);
+	printf("% 020g", 101.23456789);
     puts("");
-    ft_printf("%1$d:%3$*.*d:%d:%d:%d:%d:%d\n", 1, 2, 3, 4, 5, 6, 7);
-    //ft_printf("%1$d:%2$d:%3$d:%4$d:%5$d\n", 1, 2, 3, 4, 5);
-    //ft_printf("%10.f\n", 12.34);
+	printf("% -20g", 101.23456789);
     puts("");
-    puts("");
+	printf("% -20g", 10111111111111112312412.2345678912412412412421);
+	puts("");
 
     return (0);
 }
@@ -47,3 +69,4 @@ int main()
 // //   ft_printf("%010d\n", 1);
 //   return (0);
 // }
+

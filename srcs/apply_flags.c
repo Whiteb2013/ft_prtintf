@@ -8,7 +8,7 @@ int		apply_hash(t_format *format)
 	else if (format->type == 'p' \
 		&& !(format->content.string2show = join_prefix("0x", format)))
         return (0);
-	else if (format->type == 'f' && !format->precision \
+	else if ((format->type == 'f' || format->type == 'F') && !format->precision \
 		&& !(format->content.string2show = join_postfix(format, ".")))
 		return (0);
 	else if (format->type == 'o' \
