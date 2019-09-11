@@ -32,18 +32,20 @@ int		convert_string2string(t_format *format, char *str)
 	return (1);
 }
 
+/*
+**	t_dbl					dbl;
+**
+**	dbl.dbl = (long double)a;
+**	printf("Value=%d\n", dbl.t_union.sign);
+**	printf("Value=%lu\n", dbl.t_union.mantissa);
+**	printf("Value=%d\n", dbl.t_union.exponent);
+*/
+
 int		convert_efloat2string(t_format *format, double a)
 {
 	long long int			integer;
 	long long int			decimal;
-	/*
-	t_dbl					dbl;
 
-	dbl.dbl = (long double)a;
-	printf("Value=%d\n", dbl.t_union.sign);
-	printf("Value=%lu\n", dbl.t_union.mantissa);
-	printf("Value=%d\n", dbl.t_union.exponent);
-	*/
 	if (a < 0)
 	{
 		a *= -1;

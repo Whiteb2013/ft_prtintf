@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   apply_precision.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gmarin <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/11 21:14:29 by gmarin            #+#    #+#             */
+/*   Updated: 2019/09/11 21:14:30 by gmarin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 int		apply_precision_string(t_format *format)
 {
 	if (format->length > format->precision)
-		if (!(format->content.string2show = ft_strndup(format->content.string2show, format->precision)))
+		if (!(format->content.string2show = \
+			ft_strndup(format->content.string2show, format->precision)))
 			return (0);
 	return (1);
 }
@@ -14,14 +27,14 @@ int		apply_precision_int(t_format *format)
 	size_t	i;
 
 	i = 0;
-	//printf("\n|Length = %zu, precision = %zu|\n", format->length, format->precision);
 	if (format->length < format->precision)
 	{
 		if (!(filler_str = ft_strnew(format->precision - format->length)))
 			return (0);
 		while (i < format->precision - format->length)
 			filler_str[i++] = '0';
-		format->content.string2show = join_strings(filler_str, format->content.string2show, format);
+		format->content.string2show = \
+			join_strings(filler_str, format->content.string2show, format);
 	}
 	if (!format->precision && !ft_strcmp(format->content.string2show, "0"))
 	{
@@ -30,7 +43,6 @@ int		apply_precision_int(t_format *format)
 			format->flag.hash = 'f';
 	}
 	format->flag.zero = 'f';
-	//free(filler_str);
 	return (1);
 }
 

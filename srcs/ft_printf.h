@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gmarin <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/11 21:04:19 by gmarin            #+#    #+#             */
+/*   Updated: 2019/09/11 21:04:22 by gmarin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
@@ -44,7 +56,6 @@ typedef union				u_dbl
 	}						t_union;
 	long double				dbl;
 }							t_dbl;
-
 
 int		display_static_buffer(const char **str, int i);
 int		display_parameter_buffer(t_format *format);

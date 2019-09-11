@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   apply_width.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gmarin <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/11 21:16:58 by gmarin            #+#    #+#             */
+/*   Updated: 2019/09/11 21:17:00 by gmarin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 int		apply_width(t_format *format)
@@ -14,14 +26,17 @@ int		apply_width(t_format *format)
 	{
 		if (!(filler_str = ft_strnew(format->width - format->length)))
 			return (0);
-		if (format->flag.zero == 't' && format->flag.minus == 'f' && format->type != 'c')
+		if (format->flag.zero == 't' && format->flag.minus == 'f' \
+			&& format->type != 'c')
 			c = '0';
 		while (i < format->width - format->length)
 			filler_str[i++] = c;
 		if (format->flag.minus == 't')
-			format->content.string2show = join_strings (format->content.string2show, filler_str, format);
+			format->content.string2show = \
+				join_strings(format->content.string2show, filler_str, format);
 		else
-			format->content.string2show = join_strings (filler_str, format->content.string2show, format);
+			format->content.string2show = join_strings(filler_str, \
+				format->content.string2show, format);
 		format->length = format->width;
 	}
 	return (1);

@@ -30,7 +30,7 @@ int		convert_int2string(t_format *format, long long int a, size_t base)
 
 int		convert_short2string(t_format *format, short a, size_t base)
 {
-	short					b;
+	short	b;
 
 	if (a < 0)
 	{
@@ -52,8 +52,8 @@ int		convert_short2string(t_format *format, short a, size_t base)
 
 int		convert_float2string(t_format *format, double a)
 {
-	long long int			integer;
-	long long int			decimal;
+	long long int	integer;
+	long long int	decimal;
 
 	if (a < 0)
 	{
