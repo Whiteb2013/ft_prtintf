@@ -16,7 +16,9 @@ char	*ft_itoa_base(unsigned long long int2convert, size_t base)
 {
 	char	*str;
 	size_t	i;
-	char	values[16] = "0123456789abcdef";
+	char	*values;
+
+	values = "0123456789abcdef";
 	i = int_length(int2convert, base);
 	if (!(str = ft_strnew(i)))
 		return (NULL);

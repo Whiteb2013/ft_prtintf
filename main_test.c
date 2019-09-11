@@ -3,28 +3,28 @@
 #include <wchar.h>
 #include <locale.h>
 
-int main()
-{
-	int str[8] = {0x00D8, 0x06D1, 0x00D8, 0x06D1, 0x00D8, 0x06D1, 0x00D8, 0x06D1};
-	setlocale(LC_ALL, "en_US.UTF-8");
-	int n, m;
-	int j = 0;
-
-	while (str[j])
-	{
-		ft_printf("C\n", str[j]);
-		++j;
-	}
-    return (0);
-}
-
-// int				main(void)
+// int main()
 // {
-//    ft_printf("%20.15d\n", 54321);
-// //   ft_printf("%-10d\n", 3);
-// //   ft_printf("% d\n", 3);
-// //   ft_printf("%+d\n", 3);
-// //   ft_printf("%010d\n", 1);
-//   return (0);
+// 	int str[8] = {0x00D8, 0x06D1, 0x00D8, 0x06D1, 0x00D8, 0x06D1, 0x00D8, 0x06D1};
+// 	setlocale(LC_ALL, "en_US.UTF-8");
+// 	int n, m;
+// 	int j = 0;
+
+// 	while (str[j])
+// 	{
+// 		ft_printf("C\n", str[j]);
+// 		++j;
+// 	}
+//     return (0);
 // }
+
+int				main(void)
+{
+   ft_printf("%20.15d\n", 54321);
+  ft_printf("%-10d\n", 3);
+  ft_printf("% d\n", 3);
+  ft_printf("%+d\n", 3);
+  ft_printf("%010d\n", 1);
+  return (0);
+}
 
