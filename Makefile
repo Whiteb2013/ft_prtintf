@@ -19,6 +19,7 @@ SRC_FILES =	ft_printf.c \
 			formatting.c \
 			undefined_behavior.c \
 			try_dollar.c \
+			utf8.c \
 			cleaner.c
 
 SRC_LIB_FILES = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c \

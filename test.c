@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
+// #include <wchar.h>
+// #include <locale.h>
 
 void    ft_putchar(char c)
 {
@@ -40,14 +42,14 @@ void    ft_putchar_UTF8(unsigned int c)
     }
 }
 
-void	ft_putstr(char const *s)
-{
-	while (s && *s)
-	{
-        write(1, &(*s), 1);
-        *s++;
-    }
-}
+// void	ft_putstr(char const *s)
+// {
+// 	while (s && *s)
+// 	{
+//         write(1, &(*s), 1);
+//         *s++;
+//     }
+// }
 
 //int    ft_putstr(unsigned char *s)
 int    ft_putstr_UTF8(char const *s)
@@ -67,41 +69,58 @@ int    ft_putstr_UTF8(char const *s)
 }
 
 int     main()
-{    
-    puts("printf %ls");
-    printf("%s", "asd");
+{
+    long int str_utf[4] = {0x00D8, 0x06D1, 0x2639, 0x1F6B5};
+    int str[6] = {80, 81, 82, 83, 84, 85};
+	//setlocale(LC_ALL, "en_US.UTF-8");
+	int n, m;
+	int j = 0;
+
+    while (str[j])
+	    ft_putchar_UTF8(str[j++]);
+    j = 0;
     puts("");
     puts("");
 
-    puts("putchar");
-    putchar(88);
+	while (str_utf[j])
+	    ft_putchar_UTF8(str_utf[j++]);
     puts("");
     puts("");
 
-    puts("putchar");
-    ft_putchar(88);
-    puts("");
-    puts("");
+    // puts("printf %ls");
+    // printf("%s", "asd");
+    // puts("");
+    // puts("");
 
-    puts("putchar");
-    ft_putchar_int(88);
-    puts("");
-    puts("");
-    
+    // puts("putchar");
+    // putchar(88);
+    // puts("");
+    // puts("");
+
+    // puts("putchar");
+    // ft_putchar(88);
+    // puts("");
+    // puts("");
+
+    // puts("putchar");
+    // ft_putchar_int(88);
+    // puts("");
+    // puts("");
+
     puts("putchar_UTF8");
     ft_putchar_UTF8(8750);
     puts("");
     puts("");
 
-    puts("ft_putstr");
-    ft_putstr("∮4∮∮");
-    puts("");
-    puts("");
+    // puts("ft_putstr");
+    // ft_putstr("∮4∮∮");
+    // puts("");
+    // puts("");
 
-    puts("printf");
-    printf("∮4∮∮");
-    puts("");
-    puts("");
-    
+    // puts("printf");
+    // printf("∮4∮∮");
+    // puts("");
+    // puts("");
+
     return 0;
 }

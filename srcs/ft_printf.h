@@ -74,6 +74,8 @@ int		apply_precision_int(t_format *format);
 int		apply_precision_float(t_format *format);
 int		format_string(t_format *format);
 int		try_dollar(const char *str, t_format *format, va_list ap, int k);
+void	ft_putchar_utf8(unsigned int c);
+void	ft_putstr_utf8(long int *str);
 int		cleaner(t_format *format);
 int		undefined_behavior(t_format *format);
 
