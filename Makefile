@@ -8,6 +8,7 @@ SRC_FILES =	ft_printf.c \
 			check_options.c \
 			get_unformatted_string.c \
 			get_unformatted_string_2.c \
+			convert_double.c \
 			get_formatted_string.c \
 			apply_width.c \
 			apply_length.c \

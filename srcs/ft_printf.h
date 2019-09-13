@@ -68,6 +68,8 @@ int		convert2string(t_format *format, va_list ap);
 int		convert_int2string(t_format *format, long long int a, size_t base);
 int		convert_short2string(t_format *format, short a, size_t base);
 int		convert_float2string(t_format *format, double a);
+int		convert_efloat2string(t_format *format, double a);
+int		convert_gfloat2string(t_format *format, double a);
 int		convert_pointer2string(t_format *format, long long int a);
 char	*ft_itoa_base(unsigned long long b, size_t base);
 size_t	int_length(unsigned long long int b, unsigned int base);
