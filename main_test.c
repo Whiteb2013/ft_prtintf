@@ -10,8 +10,13 @@ int main()
 	int n, m;
 	int j = 0;
 
+	j = printf("%S");
 	n = ft_printf("%C\n", 0x00D8);
 	m = ft_printf("%S\n", str);
+	printf("n = %d || m = %d || j = %d\n", n, m, j);
+	puts("");
+	n = printf("\n");
+	m = ft_printf("\n");
 	printf("n = %d || m = %d\n", n, m);
     return (0);
 }

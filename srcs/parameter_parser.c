@@ -33,6 +33,7 @@ int		apply_default_options(t_format *format, va_list ap_root)
 		format->precision = 6;
 	else
 		format->precision = 0;
+	format->length_utf8 = 0;
 	*format->ap_root = *ap_root;
 	return (1);
 }
