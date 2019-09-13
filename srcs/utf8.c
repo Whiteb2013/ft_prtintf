@@ -82,7 +82,7 @@ int		convert_char2utf8(t_format *format, int c)
 {
 	if (!(format->content.string2show = get_char_utf8(format, c)))
 		return (0);
-	format->length = 1;
+	format->length_utf8 = 1;
 	return (1);
 }
 
@@ -101,7 +101,7 @@ int		convert_string2utf8(t_format *format, int *str)
 			res = ft_strjoin(res, get_char_utf8(format, str[i++]));
 	}
 	printf("i = %d\n", i);
-	format->length = i; // maybe i + 1
+	format->length_utf8 = i; // maybe i + 1
 	//printf("format->content.string2show = %s\n", format->content.string2show);
 	if (!(format->content.string2show = ft_strdup((const char *)res)))
 		return (0);

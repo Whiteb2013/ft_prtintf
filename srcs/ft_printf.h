@@ -42,6 +42,7 @@ typedef struct	s_format
 	size_t		width;
 	size_t		precision;
 	size_t		length;
+	size_t		length_utf8;
 	t_content	content;
 	va_list		ap_root;
 }				t_format;
