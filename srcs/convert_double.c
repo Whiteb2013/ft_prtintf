@@ -6,6 +6,48 @@
 ** var "decimal" contains everything after separator
 */
 
+int		check_double_exceptions(t_format *format, t_dbl dbl)
+{
+	if (((dbl.t_union.mantissa >> 63) & 1) == 0)
+	{
+		if (((dbl.t_union.mantissa >> 62) & 1) == 0)
+		{
+			if (((dbl.t_union.mantissa >> 61) & 1) == 0)
+				format->content.string2show = ft_strdup("inf");
+			else
+				format->content.string2show = ft_strdup("nan");
+		}
+		else
+			format->content.string2show = ft_strdup("nan");
+	}
+	else
+	{
+		if (((dbl.t_union.mantissa >> 62) & 1) == 0)
+		{
+			if (((dbl.t_union.mantissa >> 61) & 1) == 0)
+				format->content.string2show = ft_strdup("inf");
+			else
+			{
+				format->content.string2show = ft_strdup("nan");
+				format->content.sign = '\0';
+			}
+		}
+		else
+		{
+			if (((dbl.t_union.mantissa >> 61) & 1) == 0)
+				format->content.string2show = ft_strdup("nan");
+			else
+			{
+				format->content.string2show = ft_strdup("nan");
+				format->content.sign = '\0';
+			}
+		}
+	}
+	if (!ft_strcmp(format->content.string2show, "nan") || !ft_strcmp(format->content.string2show, "inf"))
+		return (0);
+	return (1);
+}
+
 int		convert_float2string(t_format *format, double a)
 {
 	long long int	integer;
@@ -35,23 +77,35 @@ int		convert_efloat2string(t_format *format, double a)
 {
 	long long int			integer;
 	long long int			decimal;
-
+    short int           	exp_value;
 	t_dbl					dbl;
+	int						i;
+	char					str[65];
+	
 	dbl.dbl = (long double)a;
-	printf("Value=%d\n", dbl.t_union.sign);
-	//printf("Value=%lu\n", dbl.t_union.mantissa);
-	//printf("Value=%d\n", dbl.t_union.exponent);
+	i = 0;
+	while (i < 64)
+		{
+			if ((dbl.t_union.mantissa >> i) == 1)
+				str[i] = '1';
+			else
+				str[i] = '0';
+			i++;
+		}
+	str[64] = '\0';
+	//printf("%s\n", str);
+	if (dbl.t_union.exponent == 32767 && !check_double_exceptions(format, dbl))
+		return (1);
+	if ((exp_value = dbl.t_union.exponent - 16383) < 0)
+		integer = 0;
+	//printf("Value=%d\n", dbl.t_union.sign);
+	//printf("Mantissa =%lu\n", dbl.t_union.mantissa);
+	//printf("Exponent =%d\n", dbl.t_union.exponent);
 
-	if (a < 0)
-	{
-		a *= -1;
+	if (dbl.t_union.sign)
 		format->content.sign = '-';
-	}
-	while (a > 10)
-	{
-		a = a / 10;
-	}
-	integer = (long long int)a;
+	//else
+	//	integer = get_integer();
 	decimal = get_decimal(format->precision, a - integer, &integer);
 	if (format->precision)
 	{
@@ -68,7 +122,7 @@ int		convert_efloat2string(t_format *format, double a)
 
 int		convert_gfloat2string(t_format *format, double a)
 {
-	long long int			integer;
+    long long int			integer;
 	long long int			decimal;
 
 	if (a < 0)

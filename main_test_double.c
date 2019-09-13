@@ -5,7 +5,20 @@ int ft_printf(const char *str, ...);
 
 int main()
 {
-    printf("std:%f", 123.123);
+    printf("std:%.20f", 123123.6666666);
+    puts("");
+    ft_printf("cst:%.20f", 123123.6666666);
+    puts("");
+	/*
+	printf("std:%f", 1.123/0);
+    puts("");
+    ft_printf("cst:%e", 1.123/0);
+    puts("");
+	printf("std:%f", -0.0);
+    puts("");
+    ft_printf("cst:%e", -0.0);
+    puts("");
+	printf("std:%f", 123.123);
     puts("");
     ft_printf("cst:%e", 123.123);
     puts("");
@@ -13,10 +26,16 @@ int main()
     puts("");
     ft_printf("cst:%e", -123.123);
     puts("");
-	printf("std:%f", -0.0);
+	
+	printf("std:%f", -1.0);
     puts("");
-    ft_printf("cst:%e", -0.0);
+    ft_printf("cst:%e", -1.0);
     puts("");
+	printf("std:%f", -0.98);
+    puts("");
+    ft_printf("cst:%e", -0.98);
+    puts("");
+	*/
 
 	/*
 	printf("std:%#.0f", 123.123);
