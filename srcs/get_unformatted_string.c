@@ -61,6 +61,18 @@ int		convert2string(t_format *format, va_list ap)
 		res = convert_efloat2string(format, va_arg(ap, double));
 	else if (format->type == 'g' || format->type == 'G')
 		res = convert_gfloat2string(format, va_arg(ap, double));
-	format->length = ft_strlen(format->content.string2show);
+	else if (format->type == 'C')
+		res = convert_char2utf8(format, va_arg(ap, int));
+	else if (format->type == 'S')
+	{
+		//puts("OK");
+		res = convert_string2utf8(format, va_arg(ap, int *));
+	}
+	if (format->type != 'C' && format->type != 'S')
+	{
+		//puts("OK");
+		//printf("format->type = %c\n", format->type);
+		format->length = ft_strlen(format->content.string2show);
+	}
 	return (res);
 }

@@ -73,7 +73,7 @@ int		check_type(char c)
 	char	*type;
 	int		i;
 
-	type = "%cspdiouxXfFeEgG";
+	type = "%cspdiouxXfFeEgGCS";
 	i = 0;
 	while (type[i])
 	{
