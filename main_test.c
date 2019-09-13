@@ -10,14 +10,19 @@ int main()
 	int n, m;
 	int j = 0;
 
-	j = printf("%S");
+	//printf("test || %.0s\n", "abcd");
 	n = ft_printf("%C\n", 0x00D8);
-	m = ft_printf("%S\n", str);
-	printf("n = %d || m = %d || j = %d\n", n, m, j);
-	puts("");
-	n = printf("\n");
-	m = ft_printf("\n");
-	printf("n = %d || m = %d\n", n, m);
+	m = ft_printf("p9 %.9S\n", str);
+	m = ft_printf("p8 %.8S\n", str);
+	m = ft_printf("p7 %.7S\n", str);
+	m = ft_printf("p6 %.6S\n", str);
+	m = ft_printf("p5 %.5S\n", str);
+	m = ft_printf("p4 %.4S\n", str);
+	m = ft_printf("p3 %.3S\n", str);
+	m = ft_printf("p2 %.2S\n", str);
+	m = ft_printf("p1 %.1S\n", str);
+	m = ft_printf("p0 %.0S\n", str);
+	printf("len(C) = %d\nlen(S) = %d\n", n, m);
     return (0);
 }
 

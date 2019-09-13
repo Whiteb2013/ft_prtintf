@@ -91,8 +91,6 @@ int		try_dollar(const char *str, t_format *format, va_list ap, int k);
 void	ft_putchar_utf8(int c);
 int		convert_char2utf8(t_format *format, int c);
 int		convert_string2utf8(t_format *format, int *str);
-//int		convert_char2utf8(t_format *format, int a);
-//int		convert_string2utf8(t_format *format, int *str);
 int		cleaner(t_format *format);
 int		undefined_behavior(t_format *format);
 

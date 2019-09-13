@@ -19,10 +19,8 @@
 int		display_static_buffer(const char **str, int i)
 {
 	if (i)
-	{
 		write(1, *str, (size_t)i);
-		*str = *str + i;
-	}
+	*str = *str + i;
 	return (i);
 }
 

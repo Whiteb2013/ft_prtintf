@@ -90,42 +90,25 @@ int		convert_string2utf8(t_format *format, int *str)
 {
 	size_t	i;
 	char	*res;
-	char	*test;
 
-	i = -1;
-	if (str)
+	res = ft_strnew(0);
+	i = 0;
+	if (str && (format->precision_flag == 'f' || format->precision))
 	{
 		res = get_char_utf8(format, str[0]);
-		i = 1;
-		while (str[i])
-			res = ft_strjoin(res, get_char_utf8(format, str[i++]));
+		while (str[++i])
+		{
+			if (format->precision_flag == 't' && i == format->precision)
+				break ;
+			res = ft_strjoin(res, get_char_utf8(format, str[i]));
+		}
 	}
-	printf("i = %d\n", i);
-	format->length_utf8 = i; // maybe i + 1
-	//printf("format->content.string2show = %s\n", format->content.string2show);
+	format->length_utf8 = i;
 	if (!(format->content.string2show = ft_strdup((const char *)res)))
+	{
+		free(res);
 		return (0);
-	//res = ft_strjoin(res, "\0");
-	//printf("format->content.string2show = %s\n", format->content.string2show);
+	}
+	free(res);
 	return (1);
 }
-
-// int		convert_char2utf8(t_format *format, int a)
-// {
-// 	if (!(format->content.string2show = ft_strnew(1)))
-// 		return (0);
-// 	format->content.string2show[0] = (unsigned char)a;
-// 	return (1);
-// }
-
-// int		convert_string2utf8(t_format *format, int *str)
-// {
-// 	// if (!str)
-// 	// {
-// 	// 	if (!(format->content.string2show = ft_strdup("(null)")))
-// 	// 		return (0);
-// 	// }
-// 	// else if (!(format->content.string2show = ft_strdup(str)))
-// 	// 	return (0);
-// 	return (1);
-// }
