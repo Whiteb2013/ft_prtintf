@@ -1,13 +1,32 @@
 #include "ft_printf.h"
 
-unsigned long long int	get_integer(t_dbl dbl)
+int		get_integer(t_dbl dbl, unsigned long int *integer)
 {
 	short int	exponent;
-	
+	short int	fraction_length;
+
+	fraction_length = 64;
 	if ((exponent = dbl.t_union.exponent - 16383) < 0)
-		return (0);
-	else if (exponent < 64)
-		return (dbl.t_union.mantissa >> (63 - exponent));
+		*integer = 0;
+	else
+		while (exponent-- >= 0 && fraction_length-- > 0)
+			*integer = *integer * 2 + (((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L);
+	return (fraction_length);
+}
+
+int		get_decimal_2(t_dbl dbl, unsigned long int *decimal, short int fraction_length)
+{	
+	if (fraction_length < 0)
+		*decimal = 0;
+	else
+	{
+		while (fraction_length-- > 0)
+		{
+			*decimal = *decimal * 5 + (((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L);
+			//printf("fraction_length = %hd, byte = %d\n", fraction_length, ((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L);
+		}
+	}
+	return (1);
 }
 
 int		check_double_exceptions(t_format *format, t_dbl dbl)
@@ -42,7 +61,10 @@ int		check_double_exceptions(t_format *format, t_dbl dbl)
 		}
 	}
 	if (!ft_strcmp(format->content.string2show, "nan") || !ft_strcmp(format->content.string2show, "inf"))
+	{
+		format->content.sign = '\0';
 		return (0);
+	}
 	return (1);
 }
 
@@ -79,17 +101,18 @@ int		convert_float2string(t_format *format, double a)
 
 int		convert_efloat2string(t_format *format, double a)
 {
-	unsigned long long int	integer;
-	long long int			decimal;
-    short int           	exp_value;
-	t_dbl					dbl;
-	int						i;
-	char					str[65];
+	unsigned long int	integer;
+	unsigned long int	decimal;
+	t_dbl				dbl;
+	int					i;
+	char				str[65];
 	
 	dbl.dbl = (long double)a;
+	/*
 	printf("Value=%d\n", dbl.t_union.sign);
-	printf("Mantissa =%llu\n", dbl.t_union.mantissa);
+	printf("Mantissa =%lu\n", dbl.t_union.mantissa);
 	printf("Exponent =%d\n", dbl.t_union.exponent);
+	*/
 	i = 0;
 	while (i < 64)
 		{
@@ -100,14 +123,12 @@ int		convert_efloat2string(t_format *format, double a)
 			i++;
 		}
 	str[64] = '\0';
-	printf("%s\n", str);
+	//printf("%s\n", str);
 	if (dbl.t_union.exponent == 32767 && !check_double_exceptions(format, dbl))
 		return (1);
 	if (dbl.t_union.sign)
 		format->content.sign = '-';
-	integer = get_integer(dbl);
-	printf("ineger =%llu\n", integer);
-	decimal = get_decimal(format->precision, a - integer, &integer);
+	get_decimal_2(dbl, &decimal, get_integer(dbl, &integer));
 	if (format->precision)
 	{
 		if (!(format->content.string2show = ft_itoa_base(decimal, 10)))

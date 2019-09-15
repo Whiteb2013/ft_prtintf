@@ -51,7 +51,7 @@ typedef union					u_dbl
 {
 	struct						s_union
 	{
-		unsigned long long int	mantissa:64;
+		unsigned long int		mantissa:64;
 		unsigned short int		exponent:15;
 		char					sign:1;
 	}							t_union;
