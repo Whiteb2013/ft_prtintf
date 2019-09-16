@@ -34,7 +34,8 @@ int		apply_hash(t_format *format)
 
 int		apply_space(t_format *format)
 {
-	if (format->type != '%' && format->type != 'u' && format->type != 'c' && format->type != 'C'\
+	if (format->type != '%' && format->type != 'u' && format->type != 'c' && format->type != 'C' \
+		&& format->type != 's' && format->type != 'S' \
 		&& !(format->content.string2show = join_prefix(" ", format)))
 		return (0);
 	format->length = ft_strlen(format->content.string2show);
@@ -43,6 +44,8 @@ int		apply_space(t_format *format)
 
 int		apply_plus(t_format *format)
 {
+	if (format->type == 'c' || format->type == 'C' || format->type == 's' || format->type == 'S')
+		return (1);
 	if (format->type != 'u' && !(format->content.string2show = \
 		join_prefix(&format->content.sign, format)))
 		return (0);
@@ -52,10 +55,11 @@ int		apply_plus(t_format *format)
 
 int		apply_zero(t_format *format)
 {
-	if (format->type != 'c' && format->type != 'C' && (format->content.sign == '-' \
-		|| format->flag.plus == 't'))
+	if (format->type != 'c' && format->type != 'C' \
+		&& (format->content.sign == '-' || format->flag.plus == 't'))
 		format->length = ft_strlen(format->content.string2show) + 1;
-	if (!apply_width(format))
+	if (format->type != 'c' && format->type != 'C' \
+		&& format->type != 's' && format->type != 'S' && !apply_width(format))
 		return (0);
 	format->length = ft_strlen(format->content.string2show);
 	return (1);

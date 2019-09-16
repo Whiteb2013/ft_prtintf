@@ -14,8 +14,9 @@
 			"cwd": "${workspaceFolder}",
 			"environment": [],
 			"externalConsole": false,
-			"MIMode": "lldb",
-			"preLaunchTask": "built_ft_printf"
+			"MIMode": "gdb",
+			//"miDebuggerPath": "D://Program Files/JetBrains/CLion 2019.1/bin/gdb/win/gdb",
+			"preLaunchTask": "build_ft_printf"
 		}
 	]
 }

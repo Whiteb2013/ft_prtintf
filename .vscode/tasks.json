@@ -5,8 +5,9 @@
 	"tasks": [
 		{
 			"type": "shell",
-			"label": "built_ft_printf",
-			"command": "make re && gcc -g -I ./srcs -I ./libft main_test.c -L. -lftprintf -o printf",
+			"label": "build_ft_printf",
+			// "command": "make re && gcc -g -I ./srcs -I ./libft main_test.c -L. -lftprintf -o printf",
+			"command": "make",
 			"group": {
 				"kind": "build",
 				"isDefault": true

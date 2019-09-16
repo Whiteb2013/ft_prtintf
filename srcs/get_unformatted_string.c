@@ -64,15 +64,7 @@ int		convert2string(t_format *format, va_list ap)
 	else if (format->type == 'C')
 		res = convert_char2utf8(format, va_arg(ap, int));
 	else if (format->type == 'S')
-	{
-		//puts("OK");
 		res = convert_string2utf8(format, va_arg(ap, int *));
-	}
-	if (format->type != 'C' && format->type != 'S')
-	{
-		//puts("OK");
-		//printf("format->type = %c\n", format->type);
-		format->length = ft_strlen(format->content.string2show);
-	}
+	format->length = ft_strlen(format->content.string2show);
 	return (res);
 }
