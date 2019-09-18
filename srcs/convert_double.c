@@ -19,15 +19,17 @@ unsigned long int	*power(unsigned long int base, unsigned long int power, unsign
 {
 	int	i;
 	
-	i = 0;
 	res[0] = 1;
 	while (power-- > 0)
+	{
+		i = 0;
 		while (i < 4920)
 		{
 			res[i + 1] = res[i] * base / 1000000000;
 			res[i] = res[i] * base % 1000000000;
 			i++;
 		}
+	}
 	return (res);
 }
 
@@ -45,8 +47,10 @@ int		get_integer(t_dbl dbl, unsigned long int *integer)
 		while (exponent >= 0 && fraction_length-- > 0)
 		{
 			if (((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L)
+			{
 				power(2, exponent, res);
 				sum(integer, res);
+			}
 			exponent--;
 		}
 	return (fraction_length);
