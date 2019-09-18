@@ -1,16 +1,54 @@
 #include "ft_printf.h"
 
+unsigned long int	*sum(unsigned long int *a, unsigned long int *b)
+{
+	int	i;
+	unsigned long int res[4922];
+
+	i = 0;
+	while (i < 4921)
+	{
+		res[i + 1] = (res[i] + a[i] + b[i]) / 1000000000;
+		res[i] = (res[i] + a[i] + b[i]) % 1000000000;
+		i++;
+	}
+	return (res);
+}
+
+unsigned long int	*power(unsigned long int base, unsigned long int power, unsigned long *res)
+{
+	int	i;
+	
+	i = 0;
+	res[0] = 1;
+	while (power-- > 0)
+		while (i < 4920)
+		{
+			res[i + 1] = res[i] * base / 1000000000;
+			res[i] = res[i] * base % 1000000000;
+			i++;
+		}
+	return (res);
+}
+
 int		get_integer(t_dbl dbl, unsigned long int *integer)
 {
-	short int	exponent;
-	short int	fraction_length;
+	short int			exponent;
+	short int			fraction_length;
+	unsigned long int	res[4922];
 
+	printf("Here");
 	fraction_length = 64;
 	if ((exponent = dbl.t_union.exponent - 16383) < 0)
-		*integer = 0;
+		integer[0] = 0;
 	else
-		while (exponent-- >= 0 && fraction_length-- > 0)
-			*integer = *integer * 2 + (((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L);
+		while (exponent >= 0 && fraction_length-- > 0)
+		{
+			if (((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L)
+				power(2, exponent, res);
+				sum(integer, res);
+			exponent--;
+		}
 	return (fraction_length);
 }
 
@@ -101,8 +139,8 @@ int		convert_float2string(t_format *format, double a)
 
 int		convert_efloat2string(t_format *format, double a)
 {
-	unsigned long int	integer;
-	unsigned long int	decimal;
+	unsigned long int	integer[4922];
+	unsigned long int	decimal[4922];
 	t_dbl				dbl;
 	int					i;
 	char				str[65];
@@ -128,7 +166,9 @@ int		convert_efloat2string(t_format *format, double a)
 		return (1);
 	if (dbl.t_union.sign)
 		format->content.sign = '-';
-	get_decimal_2(dbl, &decimal, get_integer(dbl, &integer));
+	//get_integer(dbl, integer);
+	//get_decimal_2(dbl, decimal, get_integer(dbl, integer));
+	/* adopt with long calculations
 	if (format->precision)
 	{
 		if (!(format->content.string2show = ft_itoa_base(decimal, 10)))
@@ -139,6 +179,7 @@ int		convert_efloat2string(t_format *format, double a)
 	if (!(format->content.string2show = join_strings(\
 		ft_itoa_base(integer, 10), format->content.string2show, format)))
 		return (0);
+	*/
 	return (1);
 }
 
