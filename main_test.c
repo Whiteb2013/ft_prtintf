@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "ft_printf.h"
+#include "srcs/ft_printf.h"
 #include <wchar.h>
 #include <locale.h>
 
@@ -12,7 +12,7 @@ int main()
 	int a, b, c, d, e, f;
 	int j = 0;
 
-	//printf("test || %.0s\n", "abcd");
+	// printf("test || %.0s\n", "abcd");
 	// n = ft_printf("%C\n", 0x00D8);
 	// m = ft_printf("p9 %.9S\n", str);
 	// m = ft_printf("p8 %.8S\n", str);
@@ -25,19 +25,26 @@ int main()
 	// m = ft_printf("p1 %.1S\n", str);
 	// m = ft_printf("p0 %.0S\n", str);
 	// printf("len(C) = %d\nlen(S) = %d\n", n, m);
-	   n = printf("std: %2s -\n", "abc");
-	printf("len = %i\n", n);
-	n = ft_printf("ft_: %2s -\n", "abc");
-	printf("len = %i\n", n);
-	n = ft_printf("uni: %2S -\n", str2);
-	printf("len = %i\n", n);
-	   n = printf("std: %2c -\n", 'd');
-	printf("len = %i\n", n);
-	n = ft_printf("ft_: %2c -\n", 'd');
-	printf("len = %i\n", n);
-	n = ft_printf("uni: %2C -\n", 0x00D8);
-    printf("len = %i\n", n);
-	return (0);	
+
+	//    n = printf("std: %2s -\n", "abc");
+	// printf("len = %i\n", n);
+	// n = ft_printf("ft_: %2s -\n", "abc");
+	// printf("len = %i\n", n);
+	// n = ft_printf("uni: %2S -\n", str2);
+	// printf("len = %i\n", n);
+	//    n = printf("std: %2c -\n", 'd');
+	// printf("len = %i\n", n);
+	// n = ft_printf("ft_: %2c -\n", 'd');
+	// printf("len = %i\n", n);
+	// n = ft_printf("uni: %2C -\n", 0x00D8);
+    // printf("len = %i\n", n);
+
+	// ft_printf("ft_: %.3S -\n", str2);
+
+	n = printf("{% 03d}", 0);
+	m = ft_printf("{% 03d}", 0);
+	printf("\nn = %i\nm = %i\n", n ,m);
+	return (0);
 }
 
 // int				main(void)

@@ -18,7 +18,7 @@ unsigned long int	*sum(unsigned long int *a, unsigned long int *b)
 unsigned long int	*power(unsigned long int base, unsigned long int power, unsigned long *res)
 {
 	int	i;
-	
+
 	res[0] = 1;
 	while (power-- > 0)
 	{
@@ -57,7 +57,7 @@ int		get_integer(t_dbl dbl, unsigned long int *integer)
 }
 
 int		get_decimal_2(t_dbl dbl, unsigned long int *decimal, short int fraction_length)
-{	
+{
 	if (fraction_length < 0)
 		*decimal = 0;
 	else
@@ -148,7 +148,7 @@ int		convert_efloat2string(t_format *format, double a)
 	t_dbl				dbl;
 	int					i;
 	char				str[65];
-	
+
 	dbl.dbl = (long double)a;
 	/*
 	printf("Value=%d\n", dbl.t_union.sign);

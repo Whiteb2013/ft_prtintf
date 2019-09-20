@@ -14,9 +14,8 @@
 			"cwd": "${workspaceFolder}",
 			"environment": [],
 			"externalConsole": false,
-			"MIMode": "lldb"
-			// "MIMode": "gdb",
-			// "miDebuggerPath": "/Users/gmarin/.brew/bin/gdb"
+			"MIMode": "lldb",
+			"preLaunchTask": "build_ft_printf"
 		}
 	]
 }
