@@ -35,9 +35,17 @@ int		apply_hash(t_format *format)
 int		apply_space(t_format *format)
 {
 	if (format->type != '%' && format->type != 'u' && format->type != 'c' && format->type != 'C' \
-		&& format->type != 's' && format->type != 'S' \
-		&& !(format->content.string2show = join_prefix(" ", format)))
-		return (0);
+		&& format->type != 's' && format->type != 'S')
+	{
+		if (format->width)
+		{
+			format->width--;
+			if (!apply_width(format))
+				return (0);
+		}
+		if (!(format->content.string2show = join_prefix(" ", format)))
+			return (0);
+	}
 	format->length = ft_strlen(format->content.string2show);
 	return (1);
 }
