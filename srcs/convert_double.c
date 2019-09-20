@@ -1,55 +1,73 @@
 #include "ft_printf.h"
 
-unsigned long int	*sum(unsigned long int *a, unsigned long int *b)
+void	clean_exp(t_float *exp)
 {
-	int	i;
-	unsigned long int res[4922];
-
-	i = 0;
-	while (i < 4921)
-	{
-		res[i + 1] = (res[i] + a[i] + b[i]) / 1000000000;
-		res[i] = (res[i] + a[i] + b[i]) % 1000000000;
-		i++;
-	}
-	return (res);
+	while ((*exp).current_element >= 0)
+		(*exp).array[(*exp).current_element--] = 0;
 }
 
-unsigned long int	*power(unsigned long int base, unsigned long int power, unsigned long *res)
+void		sum(t_float *a, t_float *exp)
 {
 	int	i;
 
-	res[0] = 1;
+	i = 0;
+	while (i <= (*a).current_element || i <= (*exp).current_element)
+	{
+		(*a).array[i + 1] += ((*a).array[i] + (*exp).array[i]) / 1000000000;
+		(*a).array[i] = ((*a).array[i] + (*exp).array[i]) % 1000000000;
+		printf("Sum_a[%d] = %lu, exp[%d] = %lu\n", i, (*a).array[i], i, (*exp).array[i]);
+		i++;
+	}
+	if ((*a).array[i])
+		(*a).current_element = i;
+	else
+		(*a).current_element = i - 1;
+	clean_exp(exp);
+}
+
+t_float		*power(unsigned long int base, unsigned long int power, t_float *exp)
+{
+	int	i;
+	unsigned long int	mediator_next;
+	unsigned long int	mediator_prev;
+	
+	(*exp).array[0] = 1;
+	(*exp).current_element = 0;
 	while (power-- > 0)
 	{
 		i = 0;
-		while (i < 4920)
+		while (i <= (*exp).current_element)
 		{
-			res[i + 1] = res[i] * base / 1000000000;
-			res[i] = res[i] * base % 1000000000;
+			//организовать работу с переходящим остатком. Сначала умножить, затем прибавить разряд
+			if (!(*exp).array[i + 1])
+				(*exp).array[i + 1] =  (*exp).array[i] * base / 1000000000;
+			mediator_next = (*exp).array[i] * base / 1000000000;
+			(*exp).array[i] = ((*exp).array[i] * base + mediator_prev) % 1000000000;
+			mediator_prev = mediator_next;
 			i++;
 		}
-	}
-	return (res);
+		if ((*exp).array[i])
+			(*exp).current_element = i;
+		printf("Power_Elem[0] = %lu, elem[1] = %lu, elem_counter = %d\n", (*exp).array[0], (*exp).array[1], (*exp).current_element);
+		}
+	return (exp);
 }
 
-int		get_integer(t_dbl dbl, unsigned long int *integer)
+int		get_integer(t_dbl dbl, t_float *integer)
 {
 	short int			exponent;
 	short int			fraction_length;
-	unsigned long int	res[4922];
+	t_float				exp;
 
-	printf("Here");
 	fraction_length = 64;
-	if ((exponent = dbl.t_union.exponent - 16383) < 0)
-		integer[0] = 0;
-	else
+	(*integer).current_element = 0;
+	if ((exponent = dbl.t_union.exponent - 16383) >= 0)
 		while (exponent >= 0 && fraction_length-- > 0)
 		{
 			if (((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L)
 			{
-				power(2, exponent, res);
-				sum(integer, res);
+				power(2, exponent, &exp);
+				sum(integer, &exp);
 			}
 			exponent--;
 		}
@@ -57,7 +75,7 @@ int		get_integer(t_dbl dbl, unsigned long int *integer)
 }
 
 int		get_decimal_2(t_dbl dbl, unsigned long int *decimal, short int fraction_length)
-{
+{	
 	if (fraction_length < 0)
 		*decimal = 0;
 	else
@@ -143,12 +161,12 @@ int		convert_float2string(t_format *format, double a)
 
 int		convert_efloat2string(t_format *format, double a)
 {
-	unsigned long int	integer[4922];
-	unsigned long int	decimal[4922];
 	t_dbl				dbl;
+	t_float				integer;
+	t_float				decimal;
 	int					i;
 	char				str[65];
-
+	
 	dbl.dbl = (long double)a;
 	/*
 	printf("Value=%d\n", dbl.t_union.sign);
@@ -165,12 +183,19 @@ int		convert_efloat2string(t_format *format, double a)
 			i++;
 		}
 	str[64] = '\0';
-	//printf("%s\n", str);
+	printf("%s\n", str);
 	if (dbl.t_union.exponent == 32767 && !check_double_exceptions(format, dbl))
 		return (1);
 	if (dbl.t_union.sign)
 		format->content.sign = '-';
-	//get_integer(dbl, integer);
+	get_integer(dbl, &integer);
+	i = 0;
+	while (i <= integer.current_element)
+	{
+		printf("Int[%d] = %lu", i, integer.array[i]);
+		i++;
+	}
+	puts("");
 	//get_decimal_2(dbl, decimal, get_integer(dbl, integer));
 	/* adopt with long calculations
 	if (format->precision)
@@ -184,6 +209,7 @@ int		convert_efloat2string(t_format *format, double a)
 		ft_itoa_base(integer, 10), format->content.string2show, format)))
 		return (0);
 	*/
+	format->content.string2show = ft_strdup("TEST");
 	return (1);
 }
 

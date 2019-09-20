@@ -13,7 +13,7 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# include "libft.h"
+# include "../libft/libft.h"
 # include <stdarg.h>
 # include <stdio.h>
 
@@ -57,6 +57,13 @@ typedef union					u_dbl
 	}							t_union;
 	long double					dbl;
 }								t_dbl;
+
+typedef struct 					s_float
+{
+	unsigned long int			array[4922];
+	int							current_element;
+}								t_float;
+
 
 int		display_static_buffer(const char **str, int i);
 int		display_parameter_buffer(t_format *format);
