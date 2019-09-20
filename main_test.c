@@ -41,8 +41,12 @@ int main()
 
 	// ft_printf("ft_: %.3S -\n", str2);
 
-	n = printf("{% 03d}", 0);
+	   n = printf("{% 03d}", 0);
 	m = ft_printf("{% 03d}", 0);
+	printf("\nn = %i\nm = %i\n", n ,m);
+
+	n = printf("green");
+	m = ft_printf("{green}green{eoc}");
 	printf("\nn = %i\nm = %i\n", n ,m);
 	return (0);
 }
