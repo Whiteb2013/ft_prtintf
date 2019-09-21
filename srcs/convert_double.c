@@ -13,8 +13,8 @@ void		sum(t_float *a, t_float *exp)
 	i = 0;
 	while (i <= (*a).current_element || i <= (*exp).current_element)
 	{
-		(*a).array[i + 1] += ((*a).array[i] + (*exp).array[i]) / 1000000000;
-		(*a).array[i] = ((*a).array[i] + (*exp).array[i]) % 1000000000;
+		(*a).array[i + 1] += ((*a).array[i] + (*exp).array[i]) / BASE_LEN;
+		(*a).array[i] = ((*a).array[i] + (*exp).array[i]) % BASE_LEN;
 		printf("Sum_a[%d] = %lu, exp[%d] = %lu\n", i, (*a).array[i], i, (*exp).array[i]);
 		i++;
 	}
@@ -36,20 +36,25 @@ t_float		*power(unsigned long int base, unsigned long int power, t_float *exp)
 	while (power-- > 0)
 	{
 		i = 0;
+		mediator_prev = 0;
 		while (i <= (*exp).current_element)
 		{
 			//организовать работу с переходящим остатком. Сначала умножить, затем прибавить разряд
-			if (!(*exp).array[i + 1])
-				(*exp).array[i + 1] =  (*exp).array[i] * base / 1000000000;
-			mediator_next = (*exp).array[i] * base / 1000000000;
-			(*exp).array[i] = ((*exp).array[i] * base + mediator_prev) % 1000000000;
+			//if (!(*exp).array[i + 1])
+			//	(*exp).array[i + 1] =  (*exp).array[i] * base / BASE_LEN;
+			//else
+			mediator_next = (*exp).array[i] * base / BASE_LEN;
+			(*exp).array[i] = (mediator_prev + (*exp).array[i] * base) % BASE_LEN;
 			mediator_prev = mediator_next;
 			i++;
 		}
-		if ((*exp).array[i])
+		if (mediator_next)
+		{
+			(*exp).array[i] = mediator_next;
 			(*exp).current_element = i;
-		printf("Power_Elem[0] = %lu, elem[1] = %lu, elem_counter = %d\n", (*exp).array[0], (*exp).array[1], (*exp).current_element);
 		}
+		//printf("Power_Elem[0] = %lu, elem[1] = %lu, elem_counter = %d\n", (*exp).array[0], (*exp).array[1], (*exp).current_element);
+	}
 	return (exp);
 }
 
@@ -61,30 +66,29 @@ int		get_integer(t_dbl dbl, t_float *integer)
 
 	fraction_length = 64;
 	(*integer).current_element = 0;
-	if ((exponent = dbl.t_union.exponent - 16383) >= 0)
+	if ((exponent = dbl.t_union.exponent - EXP_DFLT) >= 0)
 		while (exponent >= 0 && fraction_length-- > 0)
 		{
 			if (((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L)
-			{
-				power(2, exponent, &exp);
-				sum(integer, &exp);
-			}
+				sum(integer, power(2, exponent, &exp));
 			exponent--;
 		}
 	return (fraction_length);
 }
 
-int		get_decimal_2(t_dbl dbl, unsigned long int *decimal, short int fraction_length)
+int		get_decimal_2(t_dbl dbl, t_float *decimal, short int fraction_length)
 {	
-	if (fraction_length < 0)
-		*decimal = 0;
-	else
+	short int			exponent;
+	t_float				exp;
+	
+	exponent = 1;
+	(*decimal).current_element = 0;
+	while (fraction_length-- > 0)
 	{
-		while (fraction_length-- > 0)
-		{
-			*decimal = *decimal * 5 + (((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L);
-			//printf("fraction_length = %hd, byte = %d\n", fraction_length, ((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L);
-		}
+		if (((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L)
+			sum(decimal, power(5, exponent, &exp));
+		exponent++;
+		//printf("fraction_length = %hd, byte = %d\n", fraction_length, ((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L);
 	}
 	return (1);
 }
@@ -188,7 +192,8 @@ int		convert_efloat2string(t_format *format, double a)
 		return (1);
 	if (dbl.t_union.sign)
 		format->content.sign = '-';
-	get_integer(dbl, &integer);
+	//get_integer(dbl, &integer);
+	get_decimal_2(dbl, &decimal, get_integer(dbl, &integer));
 	i = 0;
 	while (i <= integer.current_element)
 	{
@@ -196,7 +201,14 @@ int		convert_efloat2string(t_format *format, double a)
 		i++;
 	}
 	puts("");
-	//get_decimal_2(dbl, decimal, get_integer(dbl, integer));
+	i = 0;
+	while (i <= decimal.current_element)
+	{
+		printf("Dec[%d] = %lu", i, decimal.array[i]);
+		i++;
+	}
+	puts("");
+	
 	/* adopt with long calculations
 	if (format->precision)
 	{

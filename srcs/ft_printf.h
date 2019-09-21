@@ -12,6 +12,9 @@
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
+# define MAX_ELEM 300000
+# define BASE_LEN 10000
+# define EXP_DFLT 16383
 
 # include "../libft/libft.h"
 # include <stdarg.h>
@@ -60,7 +63,7 @@ typedef union					u_dbl
 
 typedef struct 					s_float
 {
-	unsigned long int			array[4922];
+	unsigned long int			array[MAX_ELEM];
 	int							current_element;
 }								t_float;
 
