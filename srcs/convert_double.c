@@ -236,6 +236,7 @@ int		convert_efloat2string(t_format *format, double a)
 	}
 	puts("");
 	*/
+	/*
 	if (format->precision)
 	{
 		if (!(format->content.string2show = ft_itoa_base(&decimal, 10)))
@@ -246,6 +247,8 @@ int		convert_efloat2string(t_format *format, double a)
 	if (!(format->content.string2show = join_strings(\
 		ft_itoa_base(integer, 10), format->content.string2show, format)))
 		return (0);
+	*/
+	format->content.string2show = ft_strdup ("Test");
 	return (1);
 }
 
