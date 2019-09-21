@@ -38,7 +38,7 @@ void		sum_decimal(t_float *a, t_float *exp)
 		mediator_next = (mediator_prev + (*a).array[i] * 10 + (*exp).array[i]) / BASE_LEN;
 		(*a).array[i] = (mediator_prev + (*a).array[i] * 10 + (*exp).array[i]) % BASE_LEN;
 		mediator_prev = mediator_next;
-		printf("Sum_a[%d] = %lu, exp[%d] = %lu\n", i, (*a).array[i], i, (*exp).array[i]);
+		//printf("Sum_a[%d] = %lu, exp[%d] = %lu\n", i, (*a).array[i], i, (*exp).array[i]);
 		i++;
 	}
 	if (mediator_next)
@@ -213,12 +213,13 @@ int		convert_efloat2string(t_format *format, double a)
 			i++;
 		}
 	str[64] = '\0';
-	printf("%s\n", str);
+	//printf("%s\n", str);
 	if (dbl.t_union.exponent == 32767 && !check_double_exceptions(format, dbl))
 		return (1);
 	if (dbl.t_union.sign)
 		format->content.sign = '-';
 	exponent = dbl.t_union.exponent - EXP_DFLT;
+	//cut according to precision 22.09.19
 	get_decimal_2(dbl, &decimal, get_integer(dbl, &integer, &exponent), &exponent);
 	/*
 	i = 0;
@@ -236,19 +237,16 @@ int		convert_efloat2string(t_format *format, double a)
 	}
 	puts("");
 	*/
-	/*
 	if (format->precision)
 	{
-		if (!(format->content.string2show = ft_itoa_base(&decimal, 10)))
+		if (!(format->content.string2show = ft_itoa_base_array(&decimal, 10)))
 			return (0);
 		if (!apply_precision_float(format))
 			return (0);
 	}
 	if (!(format->content.string2show = join_strings(\
-		ft_itoa_base(integer, 10), format->content.string2show, format)))
+		ft_itoa_base_array(&integer, 10), format->content.string2show, format)))
 		return (0);
-	*/
-	format->content.string2show = ft_strdup ("Test");
 	return (1);
 }
 

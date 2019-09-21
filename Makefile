@@ -8,7 +8,6 @@ SRC_FILES =	ft_printf.c \
 			check_options.c \
 			get_unformatted_string.c \
 			get_unformatted_string_2.c \
-			convert_double.c \
 			get_formatted_string.c \
 			apply_width.c \
 			apply_length.c \
@@ -21,7 +20,8 @@ SRC_FILES =	ft_printf.c \
 			undefined_behavior.c \
 			try_dollar.c \
 			utf8.c \
-			cleaner.c
+			cleaner.c \
+			convert_double.c
 
 SRC_LIB_FILES = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 				ft_memchr.c ft_memcmp.c ft_strlen.c ft_strdup.c ft_strcpy.c \

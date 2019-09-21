@@ -22,6 +22,28 @@ size_t	int_length(unsigned long long int b, unsigned int base)
 	return (++i);
 }
 
+size_t	int_length_array(t_float *array, unsigned int base)
+{
+	size_t			i;
+	unsigned int	b;
+	int				elem_counter;
+
+	i = 0;
+	b = 0;
+	elem_counter = 0;
+	while ((*array).current_element - elem_counter >= 0)
+	{
+		b = b * BASE_LEN + (*array).array[(*array).current_element - elem_counter];
+		while ((b / base))
+		{
+			b = b / base;
+			++i;
+		}
+		++elem_counter;
+	}
+	return (++i);
+}
+
 int		get_decimal(size_t precision, long double a, long long int *integer)
 {
 	int		decimal;

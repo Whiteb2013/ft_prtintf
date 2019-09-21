@@ -6,9 +6,9 @@ int ft_printf(const char *str, ...);
 
 int main()
 {
-    printf("std:%.200f", 123.666666);
+    printf("std:%.6f", 123.123);
     puts("");
-    ft_printf("cst:%.20e", 123.666666);
+    ft_printf("cst:%.6f", 123.123);
     puts("");
     /*
     printf("std:%.23f", 999364567890123456999000.6666666);
