@@ -14,10 +14,16 @@
 
 int		apply_precision_string(t_format *format)
 {
+	char	*tmp;
+
 	if (format->length > format->precision)
+	{
+		tmp = format->content.string2show;
 		if (!(format->content.string2show = \
 			ft_strndup(format->content.string2show, format->precision)))
 			return (0);
+		free(tmp);
+	}
 	return (1);
 }
 

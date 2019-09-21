@@ -12,13 +12,13 @@ int main()
 	int a, b, c, d, e, f;
 	int j = 0;
 
-	m = printf("%+s", "abcdefg");
-	printf(" || m= %d\n", m);
-	m = printf("%+s", "abcdefg");
+	m = printf("%010.5s", "abcdefg");
 	printf(" || m = %d\n", m);
-	m = printf("%+c", 'c');
+	m = printf("%05.10s", "abcdefg");
 	printf(" || m = %d\n", m);
-	m = printf("%+c", 'c');
+	m = printf("%010.5c", 'c');
+	printf(" || m = %d\n", m);
+	m = printf("%05.10c", 'c');
 	printf(" || m = %d\n", m);
 	puts("");
 
@@ -36,6 +36,11 @@ int main()
 	printf(" || m = %d\n", m);
 	m = ft_printf("%05.10S", str);
 	printf(" || m = %d\n", m);
+	m = ft_printf("%010.5C", 0x00D8);
+	printf(" || m = %d\n", m);
+	m = ft_printf("%05.10C", 0x00D8);
+	printf(" || m = %d\n", m);
+
 	m = ft_printf("%010.5C", 0x00D8);
 	printf(" || m = %d\n", m);
 	m = ft_printf("%05.10C", 0x00D8);
