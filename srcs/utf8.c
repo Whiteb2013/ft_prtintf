@@ -80,9 +80,17 @@ char	*get_char_utf8(t_format *format, int c)
 
 int		convert_char2utf8(t_format *format, int c)
 {
+	size_t tmp;
+
 	if (!(format->content.string2show = get_char_utf8(format, c)))
 		return (0);
 	format->length_utf8 = 1;
+	if (format->width)
+	{
+		tmp = format->width;
+		format->width += ft_strlen(format->content.string2show) - format->length_utf8;
+		format->length_utf8 = tmp;
+	}
 	return (1);
 }
 
@@ -98,7 +106,7 @@ int		convert_string2utf8(t_format *format, int *str)
 		res = get_char_utf8(format, str[0]);
 		while (str[++i])
 		{
-			if (format->precision_flag == 't' && i == format->precision)
+			if (i == format->precision)
 				break ;
 			res = ft_strjoin(res, get_char_utf8(format, str[i]));
 		}
@@ -108,6 +116,12 @@ int		convert_string2utf8(t_format *format, int *str)
 	{
 		free(res);
 		return (0);
+	}
+	if (format->length_utf8 < format->width)
+	{
+		i = format->width;
+		format->width += ft_strlen(format->content.string2show) - format->length_utf8;
+		format->length_utf8 = i;
 	}
 	free(res);
 	return (1);

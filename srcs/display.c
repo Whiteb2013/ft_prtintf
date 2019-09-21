@@ -21,7 +21,6 @@ int		display_static_buffer(const char **str, int i)
 	if (i)
 		write(1, *str, (size_t)i);
 	*str = *str + i;
-	//printf("\nstatic i = %i\n", i);
 	return (i);
 }
 
@@ -30,6 +29,5 @@ int		display_parameter_buffer(t_format *format)
 	write(1, format->content.string2show, format->length);
 	if (format->length_utf8)
 		return ((int)format->length_utf8);
-	//printf("\nlength = %i\n", (int)format->length);
 	return ((int)format->length);
 }

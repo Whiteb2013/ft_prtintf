@@ -12,19 +12,61 @@ int main()
 	int a, b, c, d, e, f;
 	int j = 0;
 
-	// printf("test || %.0s\n", "abcd");
-	// n = ft_printf("%C\n", 0x00D8);
-	// m = ft_printf("p9 %.9S\n", str);
-	// m = ft_printf("p8 %.8S\n", str);
-	// m = ft_printf("p7 %.7S\n", str);
-	// m = ft_printf("p6 %.6S\n", str);
-	// m = ft_printf("p5 %.5S\n", str);
-	// m = ft_printf("p4 %.4S\n", str);
-	// m = ft_printf("p3 %.3S\n", str);
-	// m = ft_printf("p2 %.2S\n", str);
-	// m = ft_printf("p1 %.1S\n", str);
-	// m = ft_printf("p0 %.0S\n", str);
-	// printf("len(C) = %d\nlen(S) = %d\n", n, m);
+	m = printf("%+s", "abcdefg");
+	printf(" || m= %d\n", m);
+	m = printf("%+s", "abcdefg");
+	printf(" || m = %d\n", m);
+	m = printf("%+c", 'c');
+	printf(" || m = %d\n", m);
+	m = printf("%+c", 'c');
+	printf(" || m = %d\n", m);
+	puts("");
+
+	m = ft_printf("%010.5s", "abcdefg");
+	printf(" || m = %d\n", m);
+	m = ft_printf("%05.10s", "abcdefg");
+	printf(" || m = %d\n", m);
+	m = ft_printf("%010.5c", 'c');
+	printf(" || m = %d\n", m);
+	m = ft_printf("%05.10c", 'c');
+	printf(" || m = %d\n", m);
+	puts("");
+
+	m = ft_printf("%010.5S", str);
+	printf(" || m = %d\n", m);
+	m = ft_printf("%05.10S", str);
+	printf(" || m = %d\n", m);
+	m = ft_printf("%010.5C", 0x00D8);
+	printf(" || m = %d\n", m);
+	m = ft_printf("%05.10C", 0x00D8);
+	printf(" || m = %d\n", m);
+	puts("");
+
+	// m = ft_printf("%C", 0x00D8);
+	// printf(" || m = %d\n", m);
+	// m = ft_printf("%C", 217);
+	// printf(" || m = %d\n", m);
+	// puts("");
+	// m = ft_printf("p9 %.9S", str);
+	// printf(" || m = %d\n", m);
+	// m = ft_printf("p8 %.8S", str);
+	// printf(" || m = %d\n", m);
+	// m = ft_printf("p7 %.7S", str);
+	// printf(" || m = %d\n", m);
+	// m = ft_printf("p6 %.6S", str);
+	// printf(" || m = %d\n", m);
+	// m = ft_printf("p5 %.5S", str);
+	// printf(" || m = %d\n", m);
+	// m = ft_printf("p4 %.4S", str);
+	// printf(" || m = %d\n", m);
+	// m = ft_printf("p3 %.3S", str);
+	// printf(" || m = %d\n", m);
+	// m = ft_printf("p2 %.2S", str);
+	// printf(" || m = %d\n", m);
+	// m = ft_printf("p1 %.1S", str);
+	// printf(" || m = %d\n", m);
+	// m = ft_printf("p0 %.0S", str);
+	// printf(" || m = %d\n", m);
 
 	//    n = printf("std: %2s -\n", "abc");
 	// printf("len = %i\n", n);
@@ -41,13 +83,13 @@ int main()
 
 	// ft_printf("ft_: %.3S -\n", str2);
 
-	   n = printf("{% 03d}", 0);
-	m = ft_printf("{% 03d}", 0);
-	printf("\nn = %i\nm = %i\n", n ,m);
+	//    n = printf("std: {%0 3d}\n", 0);
+	// m = ft_printf("ft_: {%0 3d}\n", 0);
+	//printf("\nn = %i\nm = %i\n", n ,m);
 
-	n = printf("green");
-	m = ft_printf("{green}green{eoc}");
-	printf("\nn = %i\nm = %i\n", n ,m);
+	// n = printf("green");
+	// m = ft_printf("{green}green{eoc}");
+	// printf("\nn = %i\nm = %i\n", n ,m);
 	return (0);
 }
 
