@@ -82,18 +82,9 @@ char	*get_char_utf8(t_format *format, int c)
 }
 */
 
-void	get_char_utf8(t_format *format, int c)
+char	*get_char_utf8_over_25_lines(t_format *format, int c, char *str)
 {
-	char	*str;
-	char	*tmp;
-
-	if (c < 0x80)
-	{
-		str = (char *)ft_memalloc(sizeof(char) * 2);
-		str[0] = c;
-		str[1] = '\0';
-	}
-	else if (c < 0x800)
+	if (c < 0x800)
 	{
 		str = (char *)ft_memalloc(sizeof(char) * 3);
 		str[0] = (c >> 6) | 0xC0;;
@@ -117,6 +108,22 @@ void	get_char_utf8(t_format *format, int c)
 		str[3] = (c & 0x3F) | 0x80;
 		str[4] = '\0';
 	}
+	return (str);
+}
+
+void	get_char_utf8(t_format *format, int c)
+{
+	char	*str;
+	char	*tmp;
+
+	if (c < 0x80)
+	{
+		str = (char *)ft_memalloc(sizeof(char) * 2);
+		str[0] = c;
+		str[1] = '\0';
+	}
+	else
+		str = get_char_utf8_over_25_lines(format, c, str);
 	if (!(format->content.string2show))
 		format->content.string2show = ft_strdup((const char *)str);
 	else
