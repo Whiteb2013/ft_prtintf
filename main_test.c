@@ -3,6 +3,8 @@
 #include <wchar.h>
 #include <locale.h>
 
+#define ULONG_MAX 0xFFFFFFFFUL
+
 int main()
 {
 	int str[8] = {0x00D8, 0x06D1, 0x00D8, 0x06D1, 0x00D8, 0x06D1, 0x00D8, 0};
@@ -12,40 +14,104 @@ int main()
 	int a, b, c, d, e, f;
 	int j = 0;
 
-	m = printf("%010.5s", "abcdefg");
-	printf(" || m = %d\n", m);
-	m = printf("%05.10s", "abcdefg");
-	printf(" || m = %d\n", m);
-	m = printf("%010.5c", 'c');
-	printf(" || m = %d\n", m);
-	m = printf("%05.10c", 'c');
-	printf(" || m = %d\n", m);
+	// m = printf("%010.5s", "abcdefg");
+	// printf(" || m = %d\n", m);
+	// m = printf("%05.10s", "abcdefg");
+	// printf(" || m = %d\n", m);
+	// m = printf("%010.5c", 'c');
+	// printf(" || m = %d\n", m);
+	// m = printf("%05.10c", 'c');
+	// printf(" || m = %d\n", m);
+	// puts("");
+
+	// m = ft_printf("%010.5s", "abcdefg");
+	// printf(" || m = %d\n", m);
+	// m = ft_printf("%05.10s", "abcdefg");
+	// printf(" || m = %d\n", m);
+	// m = ft_printf("%010.5c", 'c');
+	// printf(" || m = %d\n", m);
+	// m = ft_printf("%05.10c", 'c');
+	// printf(" || m = %d\n", m);
+	// puts("");
+
+	// m = ft_printf("%010.5S", str);
+	// printf(" || m = %d\n", m);
+	// m = ft_printf("%05.10S", str);
+	// printf(" || m = %d\n", m);
+	// m = ft_printf("%010.5C", 0x00D8);
+	// printf(" || m = %d\n", m);
+	// m = ft_printf("%05.10C", 0x00D8);
+	// printf(" || m = %d\n", m);
+
+	// m = ft_printf("%010.5C", 0x00D8);
+	// printf(" || m = %d\n", m);
+	// m = ft_printf("%05.10C", 0x00D8);
+	// printf(" || m = %d\n", m);
+	// puts("");
+
+// mouli test40
+	// m =    printf("%lo, %lo", 0ul, ULONG_MAX);
+	// printf(" || m = %d\n", m);
+	// m = ft_printf("%lo, %lo", 0ul, ULONG_MAX);
+	// printf(" || m = %d\n", m);
+	// puts("");
+
+	// m =    printf("%lx, %lx", 0ul, ULONG_MAX);
+	// printf(" || m = %d\n", m);
+	// m = ft_printf("%lx, %lx", 0ul, ULONG_MAX);
+	// printf(" || m = %d\n", m);
+	// puts("");
+
+	// m =    printf("%lX, %lX", 0ul, ULONG_MAX);
+	// printf(" || m = %d\n", m);
+	// m = ft_printf("%lX, %lX", 0ul, ULONG_MAX);
+	// printf(" || m = %d\n", m);
+	// puts("");
+//
+
+// mouli wildcard
+	// m = printf("%-3c", 0);
+	m = ft_printf("%-3c", 0);
+	// m =    printf("%-2c\n", 0);
+	// m = ft_printf("%-2c\n", 0);
 	puts("");
 
-	m = ft_printf("%010.5s", "abcdefg");
-	printf(" || m = %d\n", m);
-	m = ft_printf("%05.10s", "abcdefg");
-	printf(" || m = %d\n", m);
-	m = ft_printf("%010.5c", 'c');
-	printf(" || m = %d\n", m);
-	m = ft_printf("%05.10c", 'c');
-	printf(" || m = %d\n", m);
-	puts("");
+	// m =    printf("{%*c}", -15, 0);
+	// // printf(" || m = %d\n", m);
+	// m = ft_printf("{%*c}", -15, 0);
+	// // printf(" || m = %d\n", m);
+	// puts("");
 
-	m = ft_printf("%010.5S", str);
-	printf(" || m = %d\n", m);
-	m = ft_printf("%05.10S", str);
-	printf(" || m = %d\n", m);
-	m = ft_printf("%010.5C", 0x00D8);
-	printf(" || m = %d\n", m);
-	m = ft_printf("%05.10C", 0x00D8);
-	printf(" || m = %d\n", m);
+	// m =    printf("{%*c}", -15, '0');
+	// // printf(" || m = %d\n", m);
+	// m = ft_printf("{%*c}", -15, '0');
+	// // printf(" || m = %d\n", m);
+	// puts("");
 
-	m = ft_printf("%010.5C", 0x00D8);
-	printf(" || m = %d\n", m);
-	m = ft_printf("%05.10C", 0x00D8);
-	printf(" || m = %d\n", m);
-	puts("");
+	// m =    printf("{%*c}", -15, 'a');
+	// printf(" || m = %d\n", m);
+	// m = ft_printf("{%*c}", -15, 'a');
+	// printf(" || m = %d\n", m);
+	// puts("");
+
+	// m =    printf("{%05.*d}", -15, 42);
+	// printf(" || m = %d\n", m);
+	// m = ft_printf("{%05.*d}", -15, 42);
+	// printf(" || m = %d\n", m);
+	// puts("");
+
+	// m =    printf("{%05.*d}", -15, 42);
+	// printf(" || m = %d\n", m);
+	// m = ft_printf("{%05.*d}", -15, 42);
+	// printf(" || m = %d\n", m);
+	// puts("");
+
+	// m =    printf("{%05.20.-15d}", 42);
+	// printf(" || m = %d\n", m);
+	// m = ft_printf("{%05.20.-15d}", 42);
+	// printf(" || m = %d\n", m);
+	// puts("");
+//
 
 	// m = ft_printf("%C", 0x00D8);
 	// printf(" || m = %d\n", m);

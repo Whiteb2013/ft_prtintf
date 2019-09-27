@@ -116,6 +116,7 @@ int		get_type(const char *str, t_format *format, va_list ap_root)
 void	get_options(const char *str, t_format *format, va_list ap, int i)
 {
 	int	k;
+	int	wc_crutch;
 
 	k = 0;
 	while (k < i)
@@ -123,7 +124,15 @@ void	get_options(const char *str, t_format *format, va_list ap, int i)
 		k = try_dollar(str, format, ap, k);
 		if (str[k] == '*')
 		{
-			format->width = va_arg(ap, size_t);
+			wc_crutch = va_arg(ap, size_t);
+			if (wc_crutch < 0)
+			{
+				format->width = -wc_crutch;
+				format->flag.minus = 't';
+			}
+			else
+				format->width = wc_crutch;
+			// format->width = va_arg(ap, size_t);
 			k++;
 		}
 		else if (check_options(str[k], 'w'))
@@ -136,14 +145,40 @@ void	get_options(const char *str, t_format *format, va_list ap, int i)
 			format->precision_flag = 't';
 			if (k + 1 < i && str[k + 1] == '*')
 			{
-				format->precision = va_arg(ap, size_t);
+				// format->precision = va_arg(ap, int);
+				wc_crutch = va_arg(ap, size_t);
+				if (wc_crutch < 0)
+				{
+					if (format->type == 'f')
+						format->precision = 6;
+					else
+						format->precision = 0;
+					format->precision_flag = 'f';
+				}
+				else
+					format->precision = wc_crutch;
 				k += 2;
 			}
 			else
 			{
 				format->precision = ft_atoi(&str[++k]);
+				//printf("prec = %i\n", (int)format->precision);
 				k += int_length(format->precision, 10);
 			}
+			//printf("prec = %i\n", (int)format->precision);
+			if ((int)format->precision < 0)
+			{
+				//printf("prec = %i\n", (int)format->precision);
+				format->width = -1 * format->precision;
+				if (format->type == 'f')
+					format->precision = 6;
+				else
+					format->precision = 0;
+				format->precision_flag = 'f';
+				format->flag.minus = 't';
+			}
+			// printf("prec = %i\n", (int)format->precision);
+			// printf("width = %i\n", (int)format->width);
 		}
 		else if (check_options(str[k], 'f'))
 			k += extract_flag(&str[k], format);

@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch_printf",
+            "name": "Printf_Launch",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/printf",
@@ -14,8 +14,7 @@
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
-            "MIMode": "lldb",
-            "preLaunchTask": "build_printf"
+            "MIMode": "lldb"
         }
     ]
 }

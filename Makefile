@@ -43,7 +43,7 @@ SRCS += $(addprefix $(LIB_DIR)/,$(SRC_LIB_FILES))
 OBJS = $(SRC_FILES:.c=.o)
 OBJS += $(SRC_LIB_FILES:.c=.o)
 
-CC = gcc
+CC = gcc -g
 CFLAGS = -Wall -Wextra -Werror
 LFLAGS = -I ./libft/ -I ./srcs/
 
