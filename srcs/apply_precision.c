@@ -62,6 +62,12 @@ int		apply_precision_float(t_format *format)
 	return (1);
 }
 
+int		apply_precision_float_2(t_format *format, t_float *integer, t_float *decimal)
+{
+	
+	return (1);
+}
+
 int		apply_precision(t_format *format)
 {
 	if (format->type == 's' && !apply_precision_string(format))

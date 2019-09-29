@@ -33,7 +33,7 @@ size_t	int_length_array(t_float *array, unsigned int base)
 	elem_counter = 0;
 	while ((*array).current_element - elem_counter >= 0)
 	{
-		b = b * BASE_LEN + (*array).array[(*array).current_element - elem_counter];
+		b = b * BASE + (*array).array[(*array).current_element - elem_counter];
 		while ((b / base))
 		{
 			b = b / base;

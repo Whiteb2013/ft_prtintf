@@ -24,3 +24,13 @@ int		cleaner(t_format *format)
 	}
 	return (-1);
 }
+
+void	array_cleaner(t_float *array)
+{
+	int i;
+
+	i = 0;
+	while ((i < MAX_ELEM && *((*array).array + i)) || i <= (*array).current_element)
+		(*array).array[i++] = 0;
+	(*array).current_element = 0;
+}

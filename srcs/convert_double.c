@@ -13,8 +13,8 @@ void		sum_integer(t_float *a, t_float *exp)
 	i = 0;
 	while (i <= (*a).current_element || i <= (*exp).current_element)
 	{
-		(*a).array[i + 1] += ((*a).array[i] + (*exp).array[i]) / BASE_LEN;
-		(*a).array[i] = ((*a).array[i] + (*exp).array[i]) % BASE_LEN;
+		(*a).array[i + 1] += ((*a).array[i] + (*exp).array[i]) / BASE;
+		(*a).array[i] = ((*a).array[i] + (*exp).array[i]) % BASE;
 		//printf("Sum_a[%d] = %lu, exp[%d] = %lu\n", i, (*a).array[i], i, (*exp).array[i]);
 		i++;
 	}
@@ -22,7 +22,8 @@ void		sum_integer(t_float *a, t_float *exp)
 		(*a).current_element = i;
 	else
 		(*a).current_element = i - 1;
-	clean_exp(exp);
+	//check if may be cleaned earlier
+	array_cleaner(exp);
 }
 
 void		sum_decimal(t_float *a, t_float *exp)
@@ -35,8 +36,8 @@ void		sum_decimal(t_float *a, t_float *exp)
 	mediator_prev = 0;
 	while (i <= (*a).current_element || i <= (*exp).current_element)
 	{
-		mediator_next = (mediator_prev + (*a).array[i] * 10 + (*exp).array[i]) / BASE_LEN;
-		(*a).array[i] = (mediator_prev + (*a).array[i] * 10 + (*exp).array[i]) % BASE_LEN;
+		mediator_next = (mediator_prev + (*a).array[i] * 10 + (*exp).array[i]) / BASE;
+		(*a).array[i] = (mediator_prev + (*a).array[i] * 10 + (*exp).array[i]) % BASE;
 		mediator_prev = mediator_next;
 		//printf("Sum_a[%d] = %lu, exp[%d] = %lu\n", i, (*a).array[i], i, (*exp).array[i]);
 		i++;
@@ -48,7 +49,8 @@ void		sum_decimal(t_float *a, t_float *exp)
 	}
 	else
 		(*a).current_element = i - 1;
-	clean_exp(exp);
+	//check if may be cleaned earlier
+	array_cleaner(exp);
 }
 
 t_float		*power(unsigned long int base, short int power, t_float *exp)
@@ -56,9 +58,11 @@ t_float		*power(unsigned long int base, short int power, t_float *exp)
 	int	i;
 	unsigned long int	mediator_next;
 	unsigned long int	mediator_prev;
-	
+
+	array_cleaner(exp);
+	//moved to function array_cleaner
+	//(*exp).current_element = 0;
 	(*exp).array[0] = 1;
-	(*exp).current_element = 0;
 	while (power-- > 0)
 	{
 		i = 0;
@@ -69,8 +73,8 @@ t_float		*power(unsigned long int base, short int power, t_float *exp)
 			//if (!(*exp).array[i + 1])
 			//	(*exp).array[i + 1] =  (*exp).array[i] * base / BASE_LEN;
 			//else
-			mediator_next = (mediator_prev + (*exp).array[i] * base) / BASE_LEN;
-			(*exp).array[i] = (mediator_prev + (*exp).array[i] * base) % BASE_LEN;
+			mediator_next = (mediator_prev + (*exp).array[i] * base) / BASE;
+			(*exp).array[i] = (mediator_prev + (*exp).array[i] * base) % BASE;
 			mediator_prev = mediator_next;
 			i++;
 		}
@@ -89,31 +93,41 @@ int		get_integer(t_dbl dbl, t_float *integer, short int *exponent)
 	short int			fraction_length;
 	t_float				exp;
 
+	array_cleaner(integer);
 	fraction_length = 64;
-	(*integer).current_element = 0;
-	while (*exponent >= 0 && fraction_length-- > 0)
-	{
-		if (((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L)
-			sum_integer(integer, power(2, *exponent, &exp));
-		--*exponent;
-	}
+	//moved to function array_cleaner
+	//(*integer).current_element = 0;
+	if (*exponent != -EXP_DFLT)
+		while (*exponent >= 0 && fraction_length-- > 0)
+		{
+			if (((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L)
+				sum_integer(integer, power(2, *exponent, &exp));
+			--*exponent;
+		}
 	return (fraction_length);
 }
 
-int		get_decimal_2(t_dbl dbl, t_float *decimal, short int fraction_length, short int *exponent)
-{	
-	t_float				exp;
-	
-	*exponent = -*exponent;
-	(*decimal).current_element = 0;
-	while (fraction_length-- > 0)
+int		get_decimal_2(t_dbl dbl, t_float *decimal, short int fraction_length, short int exponent)
+{
+	t_float	exp;
+	double	a;
+
+	array_cleaner(decimal);
+	exponent = -exponent;
+	//moved to function array_cleaner
+	//(*decimal).current_element = 0;
+	if (exponent != EXP_DFLT)
 	{
-		if (((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L)
-			sum_decimal(decimal, power(5, *exponent, &exp));
-		else
-			sum_decimal(decimal, &exp);
-		++*exponent;
-		//printf("fraction_length = %hd, byte = %d\n", fraction_length, ((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L);
+		//a = define_leading_zeros();
+		while (fraction_length-- > 0)
+		{
+			if (((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L)
+				sum_decimal(decimal, power(5, exponent, &exp));
+			else
+				sum_decimal(decimal, &exp);
+			++exponent;
+			//printf("fraction_length = %hd, byte = %d\n", fraction_length, ((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L);
+		}
 	}
 	return (1);
 }
@@ -196,7 +210,7 @@ int		convert_efloat2string(t_format *format, double a)
 	int					i;
 	char				str[65];
 	short int			exponent;
-	
+
 	dbl.dbl = (long double)a;
 	/*
 	printf("Value=%d\n", dbl.t_union.sign);
@@ -213,15 +227,18 @@ int		convert_efloat2string(t_format *format, double a)
 			i++;
 		}
 	str[64] = '\0';
-	//printf("%s\n", str);
+	printf("%s\n", str);
 	if (dbl.t_union.exponent == 32767 && !check_double_exceptions(format, dbl))
 		return (1);
 	if (dbl.t_union.sign)
 		format->content.sign = '-';
 	exponent = dbl.t_union.exponent - EXP_DFLT;
-	//cut according to precision 22.09.19
-	get_decimal_2(dbl, &decimal, get_integer(dbl, &integer, &exponent), &exponent);
-	/*
+	printf("Exponent = %hd\n", exponent);
+	get_decimal_2(dbl, &decimal, get_integer(dbl, &integer, &exponent), exponent);
+	printf("Exponent = %hd\n", exponent);
+	printf("Leading zeros = %d\n", (int)((double)(-exponent) / 3.32));
+	if (!apply_precision_float_2(format, &integer, &decimal))
+		return (0);
 	i = 0;
 	while (i <= integer.current_element)
 	{
@@ -236,7 +253,7 @@ int		convert_efloat2string(t_format *format, double a)
 		i++;
 	}
 	puts("");
-	*/
+	/*
 	if (format->precision)
 	{
 		if (!(format->content.string2show = ft_itoa_base_array(&decimal, 10)))
@@ -244,6 +261,7 @@ int		convert_efloat2string(t_format *format, double a)
 		if (!apply_precision_float(format))
 			return (0);
 	}
+	*/
 	if (!(format->content.string2show = join_strings(\
 		ft_itoa_base_array(&integer, 10), format->content.string2show, format)))
 		return (0);

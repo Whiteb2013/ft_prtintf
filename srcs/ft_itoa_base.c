@@ -52,7 +52,7 @@ char	*ft_itoa_base_array(t_float *array, size_t base)
 	{
 		counter = 0;
 		int2convert = (*array).array[elem_counter];
-		while (!(counter++ / 4))
+		while (!(counter++ / BASE_LEN))
 		{
 			str[--i] = values[int2convert % base];
 			int2convert = int2convert / base;

@@ -13,7 +13,8 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 # define MAX_ELEM 300000
-# define BASE_LEN 10000
+# define BASE 10000
+# define BASE_LEN 4
 # define EXP_DFLT 16383
 
 # include "../libft/libft.h"
@@ -98,12 +99,14 @@ int		apply_precision(t_format *format);
 int		apply_precision_string(t_format *format);
 int		apply_precision_int(t_format *format);
 int		apply_precision_float(t_format *format);
+int		apply_precision_float_2(t_format *format, t_float *integer, t_float *decimal);
 int		format_string(t_format *format);
 int		try_dollar(const char *str, t_format *format, va_list ap, int k);
 void	ft_putchar_utf8(int c);
 int		convert_char2utf8(t_format *format, int c);
 int		convert_string2utf8(t_format *format, int *str);
 int		cleaner(t_format *format);
+void	array_cleaner(t_float *array);
 int		undefined_behavior(t_format *format);
 
 #endif
