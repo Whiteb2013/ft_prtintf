@@ -1,5 +1,20 @@
 #include "ft_printf.h"
 
+size_t	count_leading_zeros (double a, char sign)
+{
+	size_t	counter;
+
+	if (sign == '-')
+		a = -a;
+	counter = 0;
+	while (a < 0.1)
+	{
+		a *= 10;
+		counter++;
+	}
+	return (counter);
+}
+
 void	clean_exp(t_float *exp)
 {
 	while ((*exp).current_element >= 0)
@@ -210,6 +225,7 @@ int		convert_efloat2string(t_format *format, double a)
 	int					i;
 	char				str[65];
 	short int			exponent;
+	size_t				zero_counter;
 
 	dbl.dbl = (long double)a;
 	/*
@@ -233,10 +249,11 @@ int		convert_efloat2string(t_format *format, double a)
 	if (dbl.t_union.sign)
 		format->content.sign = '-';
 	exponent = dbl.t_union.exponent - EXP_DFLT;
+	zero_counter = count_leading_zeros(a, format->content.sign);
 	printf("Exponent = %hd\n", exponent);
 	get_decimal_2(dbl, &decimal, get_integer(dbl, &integer, &exponent), exponent);
 	printf("Exponent = %hd\n", exponent);
-	printf("Leading zeros = %d\n", (int)((double)(-exponent) / 3.32));
+	printf("Leading zeros = %zu\n", zero_counter);
 	if (!apply_precision_float_2(format, &integer, &decimal))
 		return (0);
 	i = 0;
