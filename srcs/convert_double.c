@@ -7,7 +7,7 @@ size_t	count_leading_zeros (double a, char sign)
 	if (sign == '-')
 		a = -a;
 	counter = 0;
-	while (a < 0.1)
+	while (a && a < 0.1)
 	{
 		a *= 10;
 		counter++;
@@ -124,11 +124,15 @@ int		get_integer(t_dbl dbl, t_float *integer, short int *exponent)
 
 int		get_decimal_2(t_dbl dbl, t_float *decimal, short int fraction_length, short int exponent)
 {
-	t_float	exp;
-	double	a;
+	t_float				exp;
+	unsigned long int	leading_zero_flag;
+	unsigned long int	mediator;
+	size_t				leading_zero_counter;
 
 	array_cleaner(decimal);
 	exponent = -exponent;
+	leading_zero_flag = 0;
+	leading_zero_counter = 0;
 	//moved to function array_cleaner
 	//(*decimal).current_element = 0;
 	if (exponent != EXP_DFLT)
@@ -138,13 +142,31 @@ int		get_decimal_2(t_dbl dbl, t_float *decimal, short int fraction_length, short
 		{
 			if (((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L)
 				sum_decimal(decimal, power(5, exponent, &exp));
+			//insert here leading zero check.
+			else if (!decimal->current_element && !decimal->array[0])
+			{
+				decimal->array[0] = 1;
+				leading_zero_flag = 1;
+			}
 			else
 				sum_decimal(decimal, &exp);
 			++exponent;
 			//printf("fraction_length = %hd, byte = %d\n", fraction_length, ((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L);
 		}
+		if (leading_zero_flag)
+		{
+			mediator = decimal->array[decimal->current_element];
+			while ((mediator /= 10))
+				leading_zero_flag *= 10;
+			decimal->array[decimal->current_element] -= leading_zero_flag;
+			while (decimal->array[decimal->current_element] < leading_zero_flag && leading_zero_flag > 1)
+			{
+				leading_zero_flag /= 10;
+				++leading_zero_counter;
+			}
+		}
 	}
-	return (1);
+	return (leading_zero_counter);
 }
 
 int		check_double_exceptions(t_format *format, t_dbl dbl)
@@ -251,10 +273,10 @@ int		convert_efloat2string(t_format *format, double a)
 	exponent = dbl.t_union.exponent - EXP_DFLT;
 	zero_counter = count_leading_zeros(a, format->content.sign);
 	printf("Exponent = %hd\n", exponent);
-	get_decimal_2(dbl, &decimal, get_integer(dbl, &integer, &exponent), exponent);
+	zero_counter += get_decimal_2(dbl, &decimal, get_integer(dbl, &integer, &exponent), exponent);
 	printf("Exponent = %hd\n", exponent);
 	printf("Leading zeros = %zu\n", zero_counter);
-	if (!apply_precision_float_2(format, &integer, &decimal))
+	if (!apply_precision_float_2(format, &integer, &decimal, zero_counter))
 		return (0);
 	i = 0;
 	while (i <= integer.current_element)

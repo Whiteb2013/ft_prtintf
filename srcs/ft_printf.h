@@ -99,7 +99,7 @@ int		apply_precision(t_format *format);
 int		apply_precision_string(t_format *format);
 int		apply_precision_int(t_format *format);
 int		apply_precision_float(t_format *format);
-int		apply_precision_float_2(t_format *format, t_float *integer, t_float *decimal);
+int		apply_precision_float_2(t_format *format, t_float *integer, t_float *decimal, size_t zero_counter);
 int		format_string(t_format *format);
 int		try_dollar(const char *str, t_format *format, va_list ap, int k);
 void	ft_putchar_utf8(int c);

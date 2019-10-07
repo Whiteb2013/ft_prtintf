@@ -62,9 +62,28 @@ int		apply_precision_float(t_format *format)
 	return (1);
 }
 
-int		apply_precision_float_2(t_format *format, t_float *integer, t_float *decimal)
+int		apply_precision_float_2(t_format *format, t_float *integer, t_float *decimal, size_t zero_counter)
 {
-	
+	size_t	decimal_counter;
+	size_t	first_elem_length;
+
+	first_elem_length = int_length(decimal->array[0], 10);
+	if (format->precision >= zero_counter + first_elem_length)
+	{
+		decimal->current_element = 1 + (format->precision - zero_counter - first_elem_length) / BASE_LEN;
+		decimal_counter = (format->precision - zero_counter - first_elem_length) % BASE_LEN;
+	}
+	else if (format->precision >= zero_counter)
+	{
+		decimal->current_element = 0;
+		decimal_counter = (format->precision - zero_counter) % BASE_LEN;
+	}
+	else
+	{
+		decimal->current_element = 0;
+		array_cleaner(decimal);
+	}
+	//apply rounding within array;
 	return (1);
 }
 
