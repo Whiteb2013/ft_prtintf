@@ -45,7 +45,7 @@ int		apply_precision_int(t_format *format)
 	if (!format->precision && !ft_strcmp(format->content.string2show, "0"))
 	{
 		ft_strclr(format->content.string2show);
-		if (format->type != 'o')
+		if (format->type != 'o' && format->type != 'p')
 			format->flag.hash = 'f';
 	}
 	format->flag.zero = 'f';
