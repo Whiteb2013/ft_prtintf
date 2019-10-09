@@ -1,5 +1,10 @@
 #include "ft_printf.h"
 
+int		rounding(t_float *decimal, size_t zero_counter, t_format *format)
+{
+	return (0);
+}
+
 size_t	count_leading_zeros (double a, char sign)
 {
 	size_t	counter;
@@ -39,6 +44,15 @@ void		sum_integer(t_float *a, t_float *exp)
 		(*a).current_element = i - 1;
 	//check if may be cleaned earlier
 	array_cleaner(exp);
+}
+
+void		sum_integer_const(t_float *a, unsigned long int value)
+{
+	t_float	b;
+
+	b.array[0] = value;
+	b.current_element = 0;
+	sum_integer(a, &b);
 }
 
 void		sum_decimal(t_float *a, t_float *exp)
@@ -276,8 +290,8 @@ int		convert_efloat2string(t_format *format, double a)
 	zero_counter += get_decimal_2(dbl, &decimal, get_integer(dbl, &integer, &exponent), exponent);
 	printf("Exponent = %hd\n", exponent);
 	printf("Leading zeros = %zu\n", zero_counter);
-	if (!apply_precision_float_2(format, &integer, &decimal, zero_counter))
-		return (0);
+	//if (!apply_precision_float_2(format, &integer, &decimal, zero_counter))
+	//	return (0);
 	i = 0;
 	while (i <= integer.current_element)
 	{
@@ -292,14 +306,16 @@ int		convert_efloat2string(t_format *format, double a)
 		i++;
 	}
 	puts("");
-	/*
-	if (format->precision)
-	{
-		if (!(format->content.string2show = ft_itoa_base_array(&decimal, 10)))
-			return (0);
-		if (!apply_precision_float(format))
-			return (0);
-	}
+	//rounding: 0 - applied, no impact, 1 - applied, impact on integer, 2 - applied, impact on leading zeros
+	if ((i = rounding(&decimal, zero_counter, format)) == 1)
+		sum_integer_const(&integer, 1);
+	else if (i == 2)
+		zero_counter--;
+	/*if (!(format->content.string2show = ft_itoa_base_array_precision(\
+		&decimal, 10, zero_counter, )))
+		return (0);
+	if (!apply_precision_float(format))
+		return (0);
 	*/
 	if (!(format->content.string2show = join_strings(\
 		ft_itoa_base_array(&integer, 10), format->content.string2show, format)))

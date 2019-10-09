@@ -66,11 +66,12 @@ int		apply_precision_float_2(t_format *format, t_float *integer, t_float *decima
 {
 	size_t	decimal_counter;
 	size_t	first_elem_length;
+	int		mediator;
 
 	first_elem_length = int_length(decimal->array[0], 10);
 	if (format->precision >= zero_counter + first_elem_length)
 	{
-		decimal->current_element = 1 + (format->precision - zero_counter - first_elem_length) / BASE_LEN;
+		mediator = decimal->current_element - (format->precision - zero_counter - first_elem_length) / BASE_LEN;
 		decimal_counter = (format->precision - zero_counter - first_elem_length) % BASE_LEN;
 	}
 	else if (format->precision >= zero_counter)
