@@ -1,7 +1,3 @@
->>>> Tests for ft_printf
-Source: github.com/yyang42/moulitest
-Legend: (.) Ok / (F) Fail / (S) Segfault / (B) Bus error / (T) Timeout / (A) Abort
-
 [ -------STARTING ALL UNIT TESTS------- ]
 >>>> 00_no_conv.spec.c ----------- [Ok !] ....
 >>>> 01_conv_s_simple.spec.c ----- [Ok !] ......
@@ -32,8 +28,8 @@ Legend: (.) Ok / (F) Fail / (S) Segfault / (B) Bus error / (T) Timeout / (A) Abo
 >>>> 71_precision_for_oOxX.spec.c  [Ok !] ...........................
 >>>> 72_precision_for_sS.spec.c -- [Ok !] .........
 >>>> 73_precision_for_cC.spec.c -- [Ok !] ...
->>>> 74_precision_for_p.spec.c --- [FAIL] F..... [FAIL] pNullPointer_zeroPrecision -> printf("%.0p, %.p", 0, 0)
->>>> 79_precision_mixed_with_flags [FAIL] ..F.F [FAIL] test_precision_p_zero -> printf("%.p, %.0p", 0, 0)
+>>>> 74_precision_for_p.spec.c --- [Ok !] ......
+>>>> 79_precision_mixed_with_flags [FAIL] ....F [FAIL] octal_precision_and_flagSharp -> printf("%#.3o", 1)
 >>>> 90_incomptbl_values_sdpi.spec [Ok !] .
 >>>> 91_incomptbl_values_uUSDcC.sp [FAIL] ...F [FAIL] test_hhu -> printf("%hhu / %hhu", SHRT_MAX - 42, SHRT_MAX - 4200)
 >>>> 92_incomptbl_values_oOxX.spec [FAIL] F.. [FAIL] test_octal_neg -> printf("%o, %ho, %hho", -42, -42, -42)
@@ -42,5 +38,3 @@ Legend: (.) Ok / (F) Fail / (S) Segfault / (B) Bus error / (T) Timeout / (A) Abo
 >>>> bonus_02_wildcard_multi.spec. [Ok !] .
 >>>> bonus_03_wildcard_flag_mix.sp [Ok !] ..
 [ ----------END OF UNIT TESTS---------- ]
-
->>>> Result: 27/38 test suites passed. 242/267 tests passed (dots).

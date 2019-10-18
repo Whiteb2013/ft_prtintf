@@ -228,7 +228,7 @@ int		check_double_exceptions(t_format *format, t_dbl dbl)
 ** var "decimal" contains everything after separator
 */
 
-int		convert_float2string(t_format *format, double a)
+int		convert_float2string(t_format *format, long double a)
 {
 	long long int	integer;
 	long long int	decimal;

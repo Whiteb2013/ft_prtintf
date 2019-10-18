@@ -2,8 +2,12 @@
 #include "srcs/ft_printf.h"
 #include <wchar.h>
 #include <locale.h>
+#include <limits.h>
 
-#define ULONG_MAX 0xFFFFFFFFUL
+// #define ULONG_MAX 0xFFFFFFFFUL
+// #define ULLONG_MAX 18446744073709551615ULL
+// #define SHRT_MAX 32767
+
 
 int main()
 {
@@ -13,6 +17,38 @@ int main()
 	int n, m;
 	int a, b, c, d, e, f;
 	int j = 0;
+
+	printf("%hhu / %hhu\n", SHRT_MAX - 42, SHRT_MAX - 4200);
+	ft_printf("%hhu / %hhu\n", SHRT_MAX - 42, SHRT_MAX - 4200);
+
+	// printf("{%f}\n{%lf}\n{%Lf}\n", -1444565444646.6465424242242454654, -1444565444646.6465424242242454654, -1444565444646.6465424242242454654l);
+	// ft_printf("{%f}\n{%lf}\n{%Lf}\n", -1444565444646.6465424242242454654, -1444565444646.6465424242242454654, -1444565444646.6465424242242454654l);
+
+	// m = printf("{%f}{%lf}{%Lf}", 1.42, 1.42, 1.42l);
+	// printf(" || m = %d\n", m);
+	// m = ft_printf("{%f}{%lf}{%Lf}", 1.42, 1.42, 1.42l);
+	// printf(" || m = %d\n", m);
+
+	// m = printf("{%f}\n{%lf}\n{%Lf}\n", 1444565444646.6465424242242, 1444565444646.6465424242242, 1444565444646.6465424242242l);
+	// printf(" || m = %d\n", m);
+	// m = ft_printf("{%f}\n{%lf}\n{%Lf}\n", 1444565444646.6465424242242, 1444565444646.6465424242242, 1444565444646.6465424242242l);
+	// printf(" || m = %d\n", m);
+
+	// printf("%llo\n", ULLONG_MAX);
+	// ft_printf("%llo\n", ULLONG_MAX);
+
+	// printf("%.0p, %.p\n", 0, 0);
+	// printf("std: {%*c}\n", -3, 0);
+	// // printf("%.p\n", 0, 0);
+	// // ft_printf("%.0p, %.p\n", 0, 0);
+	// ft_printf("ft_: {%*c}\n", -3, 0);
+	// ft_printf("%.p\n", 0, 0);
+	//printf("{%-15c}\n", 0);
+
+	// puts("");
+
+	// printf("%.5p\n", 0);
+	// ft_printf("%.5p\n", 0);
 
 	// m = printf("%010.5s", "abcdefg");
 	// printf(" || m = %d\n", m);
@@ -71,10 +107,10 @@ int main()
 
 // mouli wildcard
 	// m = printf("%-3c", 0);
-	m = ft_printf("%-3c", 0);
+	// m = ft_printf("%-3c", 0);
 	// m =    printf("%-2c\n", 0);
 	// m = ft_printf("%-2c\n", 0);
-	puts("");
+	//puts("");
 
 	// m =    printf("{%*c}", -15, 0);
 	// // printf(" || m = %d\n", m);

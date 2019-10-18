@@ -25,7 +25,7 @@ int		apply_hash(t_format *format)
 		&& !format->precision && \
 		!(format->content.string2show = join_postfix(format, ".")))
 		return (0);
-	else if (format->type == 'o' \
+	else if (format->type == 'o' && format->content.string2show[0] != '0' \
 		&& !(format->content.string2show = join_prefix("0", format)))
 		return (0);
 	format->length = ft_strlen(format->content.string2show);
