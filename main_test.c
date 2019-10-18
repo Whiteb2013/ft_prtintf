@@ -18,8 +18,20 @@ int main()
 	int a, b, c, d, e, f;
 	int j = 0;
 
-	printf("%hhu / %hhu\n", SHRT_MAX - 42, SHRT_MAX - 4200);
-	ft_printf("%hhu / %hhu\n", SHRT_MAX - 42, SHRT_MAX - 4200);
+	printf("%#o\n", 0);
+	ft_printf("%#o\n", 0);
+
+	// printf("%o, %ho, %hho\n", -42, -42, -42);
+	// ft_printf("%o, %ho, %hho\n", -42, -42, -42);
+
+	// printf("%hhu, %hhu\n", 0, UCHAR_MAX);
+	// ft_printf("%hhu, %hhu\n", 0, UCHAR_MAX);
+
+	// printf("%hu, %hu\n", 0, USHRT_MAX);
+	// ft_printf("%hu, %hu\n", 0, USHRT_MAX);
+
+	// printf("%hhu / %hhu\n", SHRT_MAX - 42, SHRT_MAX - 4200);
+	// ft_printf("%hhu / %hhu\n", SHRT_MAX - 42, SHRT_MAX - 4200);
 
 	// printf("{%f}\n{%lf}\n{%Lf}\n", -1444565444646.6465424242242454654, -1444565444646.6465424242242454654, -1444565444646.6465424242242454654l);
 	// ft_printf("{%f}\n{%lf}\n{%Lf}\n", -1444565444646.6465424242242454654, -1444565444646.6465424242242454654, -1444565444646.6465424242242454654l);

@@ -13,8 +13,6 @@
 >>>> 15_conv_X.spec.c ------------ [Ok !] .....
 >>>> 16_conv_c.spec.c ------------ [Ok !] ....
 >>>> 18_mix_all_previous.spec.c -- [Ok !] ..
->>>> 40_length_modif_l.spec.c ---- [FAIL] ...........FFF [FAIL] test_lo_long_unsigned_max -> printf("%lo, %lo", 0ul, ULONG_MAX)
->>>> 41_length_modif_ll.spec.c --- [FAIL] .......FFF [FAIL] test_llo_unsign_long_long_max -> printf("%llo, %llo", 0llu, ULLONG_MAX)
 >>>> 42_length_modif_h.spec.c ---- [FAIL] ......FFFF [FAIL] test_hu_max -> printf("%hu, %hu", 0, USHRT_MAX)
 >>>> 43_length_modif_hh.spec.c --- [FAIL] ..........FFFF.... [FAIL] test_hhu_max -> printf("%hhu, %hhu", 0, UCHAR_MAX)
 >>>> 50_min_width.spec.c --------- [Ok !] .........
@@ -29,12 +27,9 @@
 >>>> 72_precision_for_sS.spec.c -- [Ok !] .........
 >>>> 73_precision_for_cC.spec.c -- [Ok !] ...
 >>>> 74_precision_for_p.spec.c --- [Ok !] ......
->>>> 79_precision_mixed_with_flags [FAIL] ....F [FAIL] octal_precision_and_flagSharp -> printf("%#.3o", 1)
 >>>> 90_incomptbl_values_sdpi.spec [Ok !] .
 >>>> 91_incomptbl_values_uUSDcC.sp [FAIL] ...F [FAIL] test_hhu -> printf("%hhu / %hhu", SHRT_MAX - 42, SHRT_MAX - 4200)
 >>>> 92_incomptbl_values_oOxX.spec [FAIL] F.. [FAIL] test_octal_neg -> printf("%o, %ho, %hho", -42, -42, -42)
->>>> 93_conv_f.spec.c ------------ [FAIL] SSSS [SEGV] simple_small_nbr -> (null)
->>>> bonus_01_wildcard.spec.c ---- [FAIL] ....F........ [FAIL] c_minWidthNegative_zeroValue -> printf("{%*c}", -15, 0)
 >>>> bonus_02_wildcard_multi.spec. [Ok !] .
 >>>> bonus_03_wildcard_flag_mix.sp [Ok !] ..
 [ ----------END OF UNIT TESTS---------- ]
