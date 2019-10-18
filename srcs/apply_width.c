@@ -36,10 +36,11 @@ int		apply_width(t_format *format)
 			filler_str[i++] = c;
 		if (format->flag.minus == 't')
 			format->content.string2show = \
-				join_strings(format->content.string2show, filler_str, format);
+			join_strings(format->content.string2show, filler_str, format);
 		else
-			format->content.string2show = join_strings(filler_str, \
-				format->content.string2show, format);
+			format->content.string2show = \
+			join_strings(filler_str, format->content.string2show, format);
+		//printf("content = |%s| \n", format->content);
 		// next condition fix one error in basic tests (have to see this case to specify the condition)
 		if (format->type == 'c')
 			format->length = format->width;
