@@ -34,7 +34,8 @@ int		apply_hash(t_format *format)
 
 int		apply_space(t_format *format)
 {
-	if (format->type != '%' && format->type != 'u' && format->type != 'c' && format->type != 'C' \
+	if (format->type != '%' && format->type != 'u' && \
+		format->type != 'c' && format->type != 'C' \
 		&& format->type != 's' && format->type != 'S')
 	{
 		if (format->width)
@@ -52,7 +53,8 @@ int		apply_space(t_format *format)
 
 int		apply_plus(t_format *format)
 {
-	if (format->type == 'c' || format->type == 'C' || format->type == 's' || format->type == 'S')
+	if (format->type == 'c' || format->type == 'C' || \
+		format->type == 's' || format->type == 'S')
 		return (1);
 	if (format->type != 'u' && !(format->content.string2show = \
 		join_prefix(&format->content.sign, format)))

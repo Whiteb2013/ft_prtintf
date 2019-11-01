@@ -62,7 +62,8 @@ int		apply_precision_float(t_format *format)
 	return (1);
 }
 
-int		apply_precision_float_2(t_format *format, t_float *integer, t_float *decimal, size_t zero_counter)
+int		apply_precision_float_2(t_format *format, t_float *integer, \
+								t_float *decimal, size_t zero_counter)
 {
 	size_t	decimal_counter;
 	size_t	first_elem_length;
@@ -71,8 +72,10 @@ int		apply_precision_float_2(t_format *format, t_float *integer, t_float *decima
 	first_elem_length = int_length(decimal->array[0], 10);
 	if (format->precision >= zero_counter + first_elem_length)
 	{
-		mediator = decimal->current_element - (format->precision - zero_counter - first_elem_length) / BASE_LEN;
-		decimal_counter = (format->precision - zero_counter - first_elem_length) % BASE_LEN;
+		mediator = decimal->current_element - \
+			(format->precision - zero_counter - first_elem_length) / BASE_LEN;
+		decimal_counter = (format->precision - \
+			zero_counter - first_elem_length) % BASE_LEN;
 	}
 	else if (format->precision >= zero_counter)
 	{

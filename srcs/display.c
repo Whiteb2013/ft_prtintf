@@ -26,7 +26,8 @@ int		display_static_buffer(const char **str, int i)
 
 int		display_parameter_buffer(t_format *format)
 {
-	if (format->type == 'c' && format->flag.minus == 't' && format->content.string2show[format->length - 1] == '\0')
+	if (format->type == 'c' && format->flag.minus == 't' && \
+		format->content.string2show[format->length - 1] == '\0')
 	{
 		write(1, "\0", 1);
 		write(1, format->content.string2show, format->length - 1);

@@ -18,6 +18,7 @@ char	*ft_itoa_base(unsigned long long int2convert, size_t base)
 	size_t	i;
 	char	*values;
 
+	// printf("nmb = %lli\n", int2convert);
 	values = "0123456789abcdef";
 	i = int_length(int2convert, base);
 	if (!(str = ft_strnew(i)))

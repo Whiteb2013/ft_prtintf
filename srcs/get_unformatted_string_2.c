@@ -31,6 +31,7 @@ int		convert_int2string(t_format *format, long long a, size_t base)
 
 int		convert_intXO2string(t_format *format, unsigned long long a, size_t base)
 {
+	// printf("nmb = %lli\n", a);
 	if (!(format->content.string2show = ft_itoa_base(a, base)))
 		return (0);
 	return (1);

@@ -18,8 +18,17 @@ int main()
 	int a, b, c, d, e, f;
 	int j = 0;
 
-	printf("%#o\n", 0);
-	ft_printf("%#o\n", 0);
+	printf("%hhx, %hhx\n", 0, UCHAR_MAX + 42);
+	ft_printf("%hhx, %hhx\n", 0, UCHAR_MAX + 42);
+
+	printf("%hhx, %hhx\n", 0, UCHAR_MAX + 1);
+	ft_printf("%hhx, %hhx\n", 0, UCHAR_MAX + 1);
+
+	printf("%hhx, %hhx\n", 0, UCHAR_MAX);
+	ft_printf("%hhx, %hhx\n", 0, UCHAR_MAX);
+
+	printf("%hhx, %hhx\n", 0, UCHAR_MAX - 42);
+	ft_printf("%hhx, %hhx\n", 0, UCHAR_MAX - 42);
 
 	// printf("%o, %ho, %hho\n", -42, -42, -42);
 	// ft_printf("%o, %ho, %hho\n", -42, -42, -42);
