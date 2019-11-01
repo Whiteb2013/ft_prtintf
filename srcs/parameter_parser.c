@@ -5,15 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmarin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/06 20:37:24 by gmarin            #+#    #+#             */
-/*   Updated: 2019/09/06 20:37:26 by gmarin           ###   ########.fr       */
+/*   Created: 2019/11/01 21:23:28 by gmarin            #+#    #+#             */
+/*   Updated: 2019/11/01 21:23:35 by gmarin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 /*
-** defining default displaying options
+**	defining default displaying options
 */
 
 int		apply_default_options(t_format *format, va_list ap_root)
@@ -66,7 +66,7 @@ int		extract_flag(const char *str, t_format *format)
 }
 
 /*
-** checking if symbol matches any predefined format: 1 - true, 0 - false
+**	checking if symbol matches any predefined format: 1 - true, 0 - false
 */
 
 int		check_type(char c)
@@ -87,13 +87,14 @@ int		check_type(char c)
 }
 
 /*
-** trying to take out parameter type: -1 - no type matches found,
-** i - type found in i steps next to '%'
+**	trying to take out parameter type: -1 - no type matches found,
+**	i - type found in i steps next to '%'
 **
-** listing symbols while it looks like parameter options (flag/width/precision)
+**	listing symbols while it looks like parameter options
+**		(flag/width/precision)
 **
-** checking if we encountered type after options listing.
-** 		If true - extracting parameter type, else - emergency exit
+**	checking if we encountered type after options listing.
+**		If true - extracting parameter type, else - emergency exit
 */
 
 int		get_type(const char *str, t_format *format, va_list ap_root)
@@ -110,7 +111,7 @@ int		get_type(const char *str, t_format *format, va_list ap_root)
 }
 
 /*
-** extracting parameter options (flag, width, precision)
+**	extracting parameter options (flag, width, precision)
 */
 
 void	get_options(const char *str, t_format *format, va_list ap, int i)
@@ -132,7 +133,6 @@ void	get_options(const char *str, t_format *format, va_list ap, int i)
 			}
 			else
 				format->width = wc_crutch;
-			// format->width = va_arg(ap, size_t);
 			k++;
 		}
 		else if (check_options(str[k], 'w'))
@@ -145,7 +145,6 @@ void	get_options(const char *str, t_format *format, va_list ap, int i)
 			format->precision_flag = 't';
 			if (k + 1 < i && str[k + 1] == '*')
 			{
-				// format->precision = va_arg(ap, int);
 				wc_crutch = va_arg(ap, size_t);
 				if (wc_crutch < 0)
 				{
@@ -162,13 +161,10 @@ void	get_options(const char *str, t_format *format, va_list ap, int i)
 			else
 			{
 				format->precision = ft_atoi(&str[++k]);
-				//printf("prec = %i\n", (int)format->precision);
 				k += int_length(format->precision, 10);
 			}
-			//printf("prec = %i\n", (int)format->precision);
 			if ((int)format->precision < 0)
 			{
-				//printf("prec = %i\n", (int)format->precision);
 				format->width = -1 * format->precision;
 				if (format->type == 'f')
 					format->precision = 6;
@@ -177,8 +173,6 @@ void	get_options(const char *str, t_format *format, va_list ap, int i)
 				format->precision_flag = 'f';
 				format->flag.minus = 't';
 			}
-			// printf("prec = %i\n", (int)format->precision);
-			// printf("width = %i\n", (int)format->width);
 		}
 		else if (check_options(str[k], 'f'))
 			k += extract_flag(&str[k], format);

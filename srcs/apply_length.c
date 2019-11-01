@@ -22,7 +22,7 @@ int		apply_length_d(t_format *format, va_list ap)
 	else if (!ft_strcmp(format->length_flag, "l"))
 		return (convert_int2string(format, va_arg(ap, long), 10));
 	else if (!ft_strcmp(format->length_flag, "ll"))
-		return (convert_int2string(format, va_arg(ap, long long int), 10));
+		return (convert_int2string(format, va_arg(ap, long long), 10));
 	return (0);
 }
 
@@ -44,31 +44,30 @@ int		apply_length_u(t_format *format, va_list ap)
 int		apply_length_x(t_format *format, va_list ap)
 {
 	if (!ft_strcmp(format->length_flag, "h"))
-		return (convert_intXO2string(format, \
-			va_arg(ap, unsigned int), 16));
+		return (convert_xo2string(format, \
+			(unsigned short)(va_arg(ap, unsigned int)), 16));
 	else if (!ft_strcmp(format->length_flag, "hh"))
-		return (convert_intXO2string(format, (char)(va_arg(ap, unsigned int)), 16));
-		// return (convert_intXO2string(format, (va_arg(ap, unsigned int)), 16));
+		return (convert_xo2string(format, (unsigned char)(va_arg(ap, unsigned int)), 16));
 	else if (!ft_strcmp(format->length_flag, "l"))
-		return (convert_intXO2string(format, va_arg(ap, unsigned long), 16));
+		return (convert_xo2string(format, va_arg(ap, unsigned long), 16));
 	else if (!ft_strcmp(format->length_flag, "ll"))
-		return (convert_intXO2string(format, \
-				va_arg(ap, unsigned long long int), 16));
+		return (convert_xo2string(format, \
+				va_arg(ap, unsigned long long), 16));
 		return (0);
 }
 
 int		apply_length_o(t_format *format, va_list ap)
 {
 	if (!ft_strcmp(format->length_flag, "h"))
-		return (convert_intXO2string(format, \
+		return (convert_xo2string(format, \
 				(unsigned short)(va_arg(ap, unsigned int)), 8));
 	else if (!ft_strcmp(format->length_flag, "hh"))
-		return (convert_intXO2string(format, \
+		return (convert_xo2string(format, \
 				(unsigned char)(va_arg(ap, unsigned int)), 8));
 	else if (!ft_strcmp(format->length_flag, "l"))
-		return (convert_intXO2string(format, va_arg(ap, unsigned long), 8));
+		return (convert_xo2string(format, va_arg(ap, unsigned long), 8));
 	else if (!ft_strcmp(format->length_flag, "ll"))
-		return (convert_intXO2string(format, \
+		return (convert_xo2string(format, \
 				va_arg(ap, unsigned long long), 8));
 		return (0);
 }

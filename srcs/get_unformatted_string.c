@@ -32,16 +32,9 @@ int		convert_string2string(t_format *format, char *str)
 	return (1);
 }
 
-int		convert2string(t_format *format, va_list ap)
+int		convert2string_for_types(t_format *format, va_list ap, int res)
 {
-	int res;
-
-	res = 0;
-	if (format->type == '%')
-		res = convert_char2string(format, '%');
-	if (format->length_flag[0])
-		res = apply_length(format, ap);
-	else if (format->type == 'c')
+	if (format->type == 'c')
 		res = convert_char2string(format, va_arg(ap, int));
 	else if (format->type == 's')
 		res = convert_string2string(format, va_arg(ap, char *));
@@ -50,9 +43,9 @@ int		convert2string(t_format *format, va_list ap)
 	else if (format->type == 'd' || format->type == 'i')
 		res = convert_int2string(format, va_arg(ap, int), 10);
 	else if (format->type == 'x' || format->type == 'X')
-		res = convert_intXO2string(format, va_arg(ap, unsigned int), 16);
+		res = convert_xo2string(format, va_arg(ap, unsigned int), 16);
 	else if (format->type == 'o')
-		res = convert_intXO2string(format, va_arg(ap, unsigned int), 8);
+		res = convert_xo2string(format, va_arg(ap, unsigned int), 8);
 	else if (format->type == 'u')
 		res = convert_int2string(format, va_arg(ap, unsigned int), 10);
 	else if (format->type == 'f' || format->type == 'F')
@@ -65,6 +58,20 @@ int		convert2string(t_format *format, va_list ap)
 		res = convert_char2utf8(format, va_arg(ap, int));
 	else if (format->type == 'S')
 		res = convert_string2utf8(format, va_arg(ap, int *));
+	return (res);
+}
+
+int		convert2string(t_format *format, va_list ap)
+{
+	int res;
+
+	res = 0;
+	if (format->type == '%')
+		res = convert_char2string(format, '%');
+	if (format->length_flag[0])
+		res = apply_length(format, ap);
+	else
+		res = convert2string_for_types(format, ap, res);
 	format->length = ft_strlen(format->content.string2show);
 	return (res);
 }

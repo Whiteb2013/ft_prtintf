@@ -78,7 +78,7 @@ int		check_options(char c, char mode);
 int		check_type(char c);
 int		convert2string(t_format *format, va_list ap);
 int		convert_int2string(t_format *format, long long int a, size_t base);
-int		convert_intXO2string(t_format *format, unsigned long long a, size_t base);
+int		convert_xo2string(t_format *format, unsigned long long a, size_t base);
 int		convert_short2string(t_format *format, short a, size_t base);
 int		convert_float2string(t_format *format, long double a);
 int		convert_efloat2string(t_format *format, double a);

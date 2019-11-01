@@ -16,7 +16,6 @@ int		convert_int2string(t_format *format, long long a, size_t base)
 {
 	unsigned long long int	b;
 
-	// printf("a = %d\n", a);
 	if (a < 0LL && format->type != 'u')
 	{
 		format->content.sign = '-';
@@ -29,9 +28,8 @@ int		convert_int2string(t_format *format, long long a, size_t base)
 	return (1);
 }
 
-int		convert_intXO2string(t_format *format, unsigned long long a, size_t base)
+int		convert_xo2string(t_format *format, unsigned long long a, size_t base)
 {
-	// printf("nmb = %lli\n", a);
 	if (!(format->content.string2show = ft_itoa_base(a, base)))
 		return (0);
 	return (1);
