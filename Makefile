@@ -15,6 +15,7 @@ SRC_FILES =	ft_printf.c \
 			apply_precision.c \
 			ft_itoa_base.c \
 			sub_functions.c \
+			long_calc_math.c \
 			display.c \
 			formatting.c \
 			undefined_behavior.c \
