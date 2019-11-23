@@ -1,33 +1,43 @@
 #include "ft_printf.h"
 
+int		check_for_rounding(t_float *decimal, int array_elem_id, int digit_in_elem)
+{
+	unsigned long int	comp_base;
+
+	comp_base = BASE;
+	while (digit_in_elem--)
+		comp_base /= 10;
+	if (decimal->array[array_elem_id] % comp_base < comp_base / 2)
+		return (0);
+	return (1);
+}
+
 //rounding: 0 - applied, no impact, 1 - applied, impact on integer, 2 - applied, impact on leading zeros
 int		rounding(t_float *decimal, size_t zero_counter, t_format *format)
 {
 	size_t	first_elem_len;
 	int		array_elem_id;
-	size_t	digit_in_elem;
+	int		digit_in_elem;
 
 	if (format->precision < zero_counter)
 		return (0);
 	array_elem_id = decimal->current_element;
 	first_elem_len = int_length(decimal->array[array_elem_id], 10);
 	if (format->precision < zero_counter + first_elem_len)
-	{
 		digit_in_elem = format->precision - zero_counter;
-	}
 	else
 	{
 		if ((array_elem_id -= (format->precision - zero_counter - first_elem_len) / BASE_LEN + 1) < 0)
 			return (0);
 		digit_in_elem = (format->precision - zero_counter - first_elem_len) % BASE_LEN;
 	}
-	/*
-	23.10:
-	1) design value check. 0 - rounding is not required, 1 - rounding required
-	2) design sum_decimal. 0 - applied, no impact, 1 - applied, impact on integer, 2 - applied, impact on leading zeros
 	if (check_for_rounding(decimal, array_elem_id, digit_in_elem))
-		sum_decimal_const(decimal, 1, array_elem_id, digit_in_elem);
-	*/
+		if (sum_decimal_const(decimal, 1, array_elem_id, digit_in_elem))
+		{
+			if (zero_counter)
+				return (2);
+			return (1);
+		}
 	return (0);
 }
 
@@ -243,7 +253,10 @@ int		convert_efloat2string(t_format *format, double a)
 	puts("");
 	//rounding: 0 - applied, no impact, 1 - applied, impact on integer, 2 - applied, impact on leading zeros
 	if ((i = rounding(&decimal, zero_counter, format)) == 1)
+	{
+		// 24.11 design here decimal handling to remove excessive digit
 		sum_integer_const(&integer, 1);
+	}
 	else if (i == 2)
 		zero_counter--;
 	/*if (!(format->content.string2show = ft_itoa_base_array_precision(\

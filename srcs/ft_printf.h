@@ -91,7 +91,7 @@ size_t	int_length_array(t_float *array, unsigned int base);
 void	sum_integer(t_float *a, t_float *exp);
 void	sum_integer_const(t_float *a, unsigned long int value);
 void	sum_decimal(t_float *a, t_float *exp);
-void		sum_decimal_const(t_float *a, unsigned long int value, int array_elem_id, size_t digit_in_elem);
+int		sum_decimal_const(t_float *a, unsigned long int value, int array_elem_id, int digit_in_elem);
 t_float	*power(unsigned long int base, short int power, t_float *exp);
 int		get_decimal(size_t precision, long double a, long long int *integer);
 //int		get_decimal(size_t precision, long double a, int *integer);

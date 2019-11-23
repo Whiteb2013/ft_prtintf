@@ -56,6 +56,27 @@ void	sum_decimal(t_float *a, t_float *exp)
 	array_cleaner(exp);
 }
 
+int		sum_decimal_const(t_float *a, unsigned long int value, int array_elem_id, int digit_in_elem)
+{
+	t_float	b;
+
+	if (!digit_in_elem)
+	{
+		array_elem_id++;
+		digit_in_elem = BASE_LEN;
+	}
+	while (digit_in_elem++ != BASE_LEN)
+		value *= 10;
+	b.array[array_elem_id] = value;
+	b.current_element = array_elem_id;
+	value = a->array[a->current_element];
+	array_elem_id = a->current_element;
+	sum_integer(a, &b);
+	if (int_length(a->current_element, 10) > int_length(value, 10) || a->current_element > array_elem_id)
+		return (1);
+	return (0);
+}
+
 t_float	*power(unsigned long int base, short int power, t_float *exp)
 {
 	int	i;
@@ -89,13 +110,4 @@ t_float	*power(unsigned long int base, short int power, t_float *exp)
 		//printf("Power_Elem[0] = %lu, elem[1] = %lu, elem_counter = %d\n", (*exp).array[0], (*exp).array[1], (*exp).current_element);
 	}
 	return (exp);
-}
-
-void		sum_decimal_const(t_float *a, unsigned long int value, int array_elem_id, size_t digit_in_elem)
-{
-	t_float	b;
-
-	b.array[array_elem_id] = value;
-	b.current_element = 0;
-	sum_integer(a, &b);
 }
