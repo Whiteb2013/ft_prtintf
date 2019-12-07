@@ -72,8 +72,19 @@ int		sum_decimal_const(t_float *a, unsigned long int value, int array_elem_id, i
 	value = a->array[a->current_element];
 	array_elem_id = a->current_element;
 	sum_integer(a, &b);
-	if (int_length(a->current_element, 10) > int_length(value, 10) || a->current_element > array_elem_id)
+	if (a->current_element > array_elem_id)
+	{
+		a->current_element--;
 		return (1);
+	}
+	if (int_length(a->array[a->current_element], 10) > int_length(value, 10))
+	{
+		value = BASE;
+		while (int_length(value, 10) > int_length(a->array[a->current_element], 10))
+			value /= 10;
+		a->array[a->current_element] -= value;
+		return (1);
+	}
 	return (0);
 }
 

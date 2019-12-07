@@ -96,6 +96,9 @@ int							convert_pointer2string(\
 								t_format *format, long long int a);
 char						*ft_itoa_base(unsigned long long b, size_t base);
 char						*ft_itoa_base_array(t_float *array, size_t base);
+char						*ft_itoa_base_array_precision(\
+								t_float *array, size_t base, \
+								size_t zero_counter, size_t precision);
 size_t						int_length(\
 								unsigned long long int b, unsigned int base);
 size_t						int_length_array(t_float *array, unsigned int base);
