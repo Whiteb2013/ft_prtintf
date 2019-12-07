@@ -47,7 +47,8 @@ int		apply_length_x(t_format *format, va_list ap)
 		return (convert_xo2string(format, \
 			(unsigned short)(va_arg(ap, unsigned int)), 16));
 	else if (!ft_strcmp(format->length_flag, "hh"))
-		return (convert_xo2string(format, (unsigned char)(va_arg(ap, unsigned int)), 16));
+		return (convert_xo2string(format, \
+			(unsigned char)(va_arg(ap, unsigned int)), 16));
 	else if (!ft_strcmp(format->length_flag, "l"))
 		return (convert_xo2string(format, va_arg(ap, unsigned long), 16));
 	else if (!ft_strcmp(format->length_flag, "ll"))
