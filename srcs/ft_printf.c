@@ -18,7 +18,7 @@
 ** 0 means that error encountered while exctracting
 */
 
-int		extract_parameter(const char **str, va_list ap, va_list ap_root)
+int			extract_parameter(const char **str, va_list ap, va_list ap_root)
 {
 	int			i;
 	int			k;
@@ -47,13 +47,13 @@ int		extract_parameter(const char **str, va_list ap, va_list ap_root)
 	return (k);
 }
 
-void	set_color(const char *color, const char **str, int i)
+void		set_color(const char *color, const char **str, int i)
 {
 	write(1, color, ft_strlen(color));
 	*str = *str + i;
 }
 
-int		check_color(const char **str)
+int			check_color(const char **str)
 {
 	if (!ft_strncmp(*str, "{black}", 7))
 		set_color("\x1b[30m", str, 7);
@@ -81,21 +81,77 @@ int		check_color(const char **str)
 	return (0);
 }
 
+const char	*read_str(const char *str, \
+					va_list ap_array_that_is_crutch_bc_norm[2], int *i, int *k)
+{
+	while (str[*i])
+	{
+		if (str[*i] == '%' || str[*i] == '{' || *i == 255)
+		{
+			*k = *k + display_static_buffer(&str, *i);
+			if (str[0] == '{')
+				*k = *k + check_color(&str);
+			if (str[0] == '%')
+			{
+				if ((*i = extract_parameter(&str, \
+							ap_array_that_is_crutch_bc_norm[0], \
+							ap_array_that_is_crutch_bc_norm[1])) < 0)
+				{
+					va_end(ap_array_that_is_crutch_bc_norm[0]);
+					return (NULL);
+				}
+				*k = *k + *i;
+			}
+			*i = 0;
+		}
+		else
+			(*i)++;
+	}
+	return (str);
+}
+
 /*
 ** project function: returns an amount of displayed symbols
 */
 
-int		ft_printf(const char *str, ...)
+int			ft_printf(const char *str, ...)
 {
 	int			k;
 	int			i;
 	va_list		ap;
 	va_list		ap_root;
+	va_list		ap_array_that_is_crutch_bc_norm[2];
 
 	va_start(ap, str);
 	*ap_root = *ap;
+	*ap_array_that_is_crutch_bc_norm[0] = *ap;
+	*ap_array_that_is_crutch_bc_norm[1] = *ap_root;
 	i = 0;
 	k = 0;
+	if (!(str = read_str(str, ap_array_that_is_crutch_bc_norm, &i, &k)))
+		return (-1);
+	k += i;
+	display_static_buffer(&str, i);
+	va_end(ap);
+	return (k);
+}
+
+/*
+int			ft_printf_2(const char *str, ...)
+{
+	int			k;
+	int			i;
+	va_list		ap;
+	va_list		ap_root;
+	va_list		ap_array_that_is_crutch_bc_norm[2];
+
+	va_start(ap, str);
+	*ap_root = *ap;
+	*ap_array_that_is_crutch_bc_norm[0] = *ap;
+	*ap_array_that_is_crutch_bc_norm[1] = *ap_root;
+	i = 0;
+	k = 0;
+
 	while (str[i])
 	{
 		if (str[i] == '%' || str[i] == '{' || i == 255)
@@ -117,8 +173,10 @@ int		ft_printf(const char *str, ...)
 		else
 			i++;
 	}
+
 	k += i;
 	display_static_buffer(&str, i);
 	va_end(ap);
 	return (k);
 }
+*/
