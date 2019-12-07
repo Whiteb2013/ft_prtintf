@@ -12,107 +12,120 @@
 
 #include "ft_printf.h"
 
-// char	*get_char_utf8_over_25_lines(t_format *format, int c, char *str)
-// {
-// 	if (c < 0x800)
-// 	{
-// 		str = (char *)ft_memalloc(sizeof(char) * 3);
-// 		str[0] = (c >> 6) | 0xC0;
-// 		str[1] = (c & 0x3F) | 0x80;
-// 		str[2] = '\0';
-// 	}
-// 	else if (c < 0x10000)
-// 	{
-// 		str = (char *)ft_memalloc(sizeof(char) * 4);
-// 		str[0] = (c >> 12) | 0xE0;
-// 		str[1] = ((c >> 6) & 0x3F) | 0x80;
-// 		str[2] = (c & 0x3F) | 0x80;
-// 		str[3] = '\0';
-// 	}
-// 	else if (c < 0x110000)
-// 	{
-// 		str = (char *)ft_memalloc(sizeof(char) * 5);
-// 		str[0] = (c >> 18) | 0xF0;
-// 		str[1] = ((c >> 12) & 0x3F) | 0x80;
-// 		str[2] = ((c >> 6) & 0x3F) | 0x80;
-// 		str[3] = (c & 0x3F) | 0x80;
-// 		str[4] = '\0';
-// 	}
-// 	return (str);
-// }
+/*
+char	*get_char_utf8_over_25_lines(t_format *format, int c, char *str)
+{
+	if (c < 0x800)
+	{
+		str = (char *)ft_memalloc(sizeof(char) * 3);
+		str[0] = (c >> 6) | 0xC0;
+		str[1] = (c & 0x3F) | 0x80;
+		str[2] = '\0';
+	}
+	else if (c < 0x10000)
+	{
+		str = (char *)ft_memalloc(sizeof(char) * 4);
+		str[0] = (c >> 12) | 0xE0;
+		str[1] = ((c >> 6) & 0x3F) | 0x80;
+		str[2] = (c & 0x3F) | 0x80;
+		str[3] = '\0';
+	}
+	else if (c < 0x110000)
+	{
+		str = (char *)ft_memalloc(sizeof(char) * 5);
+		str[0] = (c >> 18) | 0xF0;
+		str[1] = ((c >> 12) & 0x3F) | 0x80;
+		str[2] = ((c >> 6) & 0x3F) | 0x80;
+		str[3] = (c & 0x3F) | 0x80;
+		str[4] = '\0';
+	}
+	return (str);
+}
 
-// void	get_char_utf8(t_format *format, int c)
-// {
-// 	char	*str;
-// 	char	*tmp;
+void	get_char_utf8(t_format *format, int c)
+{
+	char	*str;
+	char	*tmp;
 
-// 	if (c < 0x80)
-// 	{
-// 		str = (char *)ft_memalloc(sizeof(char) * 2);
-// 		str[0] = c;
-// 		str[1] = '\0';
-// 	}
-// 	else
-// 		str = get_char_utf8_over_25_lines(format, c, str);
-// 	if (!(format->content.string2show))
-// 		format->content.string2show = ft_strdup((const char *)str);
-// 	else
-// 	{
-// 		tmp = format->content.string2show;
-// 		format->content.string2show = ft_strjoin(tmp, str);
-// 		free(tmp);
-// 	}
-// 	free(str);
-// }
+	if (c < 0x80)
+	{
+		str = (char *)ft_memalloc(sizeof(char) * 2);
+		str[0] = c;
+		str[1] = '\0';
+	}
+	else
+		str = get_char_utf8_over_25_lines(format, c, str);
+	if (!(format->content.string2show))
+		format->content.string2show = ft_strdup((const char *)str);
+	else
+	{
+		tmp = format->content.string2show;
+		format->content.string2show = ft_strjoin(tmp, str);
+		free(tmp);
+	}
+	free(str);
+}
 
-// int		convert_char2utf8(t_format *format, int c)
-// {
-// 	size_t tmp;
+int		convert_char2utf8(t_format *format, int c)
+{
+	size_t tmp;
 
-// 	get_char_utf8(format, c);
-// 	format->length_utf8 = 1;
-// 	if (format->width)
-// 	{
-// 		tmp = format->width;
-// 		format->width += \
-// 			ft_strlen(format->content.string2show) - format->length_utf8;
-// 		format->length_utf8 = tmp;
-// 	}
-// 	return (1);
-// }
+	get_char_utf8(format, c);
+	format->length_utf8 = 1;
+	if (format->width)
+	{
+		tmp = format->width;
+		format->width += \
+			ft_strlen(format->content.string2show) - format->length_utf8;
+		format->length_utf8 = tmp;
+	}
+	return (1);
+}
 
-// int		convert_string2utf8(t_format *format, int *str)
-// {
-// 	size_t	i;
+int		convert_string2utf8(t_format *format, int *str)
+{
+	size_t	i;
 
-// 	i = 0;
-// 	if (str && (format->precision_flag == 'f' || format->precision))
-// 	{
-// 		get_char_utf8(format, str[0]);
-// 		while (str[++i])
-// 		{
-// 			if (i == format->precision)
-// 				break ;
-// 			get_char_utf8(format, str[i]);
-// 		}
-// 	}
-// 	format->length_utf8 = i;
-// 	if (format->length_utf8 < format->width)
-// 	{
-// 		i = format->width;
-// 		format->width += \
-// 			ft_strlen(format->content.string2show) - format->length_utf8;
-// 		format->length_utf8 = i;
-// 	}
-// 	return (1);
-// }
+	i = 0;
+	if (str && (format->precision_flag == 'f' || format->precision))
+	{
+		get_char_utf8(format, str[0]);
+		while (str[++i])
+		{
+			if (i == format->precision)
+				break ;
+			get_char_utf8(format, str[i]);
+		}
+	}
+	format->length_utf8 = i;
+	if (format->length_utf8 < format->width)
+	{
+		i = format->width;
+		format->width += \
+			ft_strlen(format->content.string2show) - format->length_utf8;
+		format->length_utf8 = i;
+	}
+	return (1);
+}
+*/
 
+void	add_char_to_string(t_format *format, char	*str)
+{
+	char	*tmp;
 
+	if (!(format->content.string2show))
+		format->content.string2show = ft_strdup((const char *)str);
+	else
+	{
+		tmp = format->content.string2show;
+		format->content.string2show = ft_strjoin(tmp, str);
+		free(tmp);
+	}
+}
 
 void	get_char_utf8(t_format *format, int c)
 {
 	char	str[5];
-	char	*tmp;
 
 	ft_bzero((void*)str, 5);
 	if (c < 0x80)
@@ -135,14 +148,7 @@ void	get_char_utf8(t_format *format, int c)
 		str[2] = ((c >> 6) & 0x3F) | 0x80;
 		str[3] = (c & 0x3F) | 0x80;
 	}
-	if (!(format->content.string2show))
-		format->content.string2show = ft_strdup((const char *)str);
-	else
-	{
-		tmp = format->content.string2show;
-		format->content.string2show = ft_strjoin(tmp, str);
-		free(tmp);
-	}
+	add_char_to_string(format, str);
 }
 
 int		convert_char2utf8(t_format *format, int c)
