@@ -69,3 +69,61 @@ char	*ft_itoa_base_array(t_float *array, size_t base)
 	str[--i] = values[int2convert % base];
 	return (str);
 }
+
+int		fill_first_elem(char *str, int i, t_float *array, size_t *dec_length)
+{
+	unsigned int	int2convert;
+	unsigned int	base;
+	char			*values;
+
+	values = "0123456789";
+	int2convert = array->array[array->current_element];
+	base = 1;
+	while (int_length(base, 10) < int_length(int2convert, 10))
+		base *= 10;
+	while (base && *dec_length--)
+	{
+		str[i++] = values[int2convert/base];
+		int2convert %= base;
+		base /= 10;
+	}
+	array->current_element--;
+	return (i);
+}
+
+char	*ft_itoa_base_array_precision(t_float *array, size_t base, size_t zero_counter, size_t precision)
+{
+	char			*str;
+	char			*values;
+	size_t			dec_length;
+	int				i;
+	unsigned int	int2convert;
+
+	values = "0123456789";
+	dec_length = int_length_array(array, base) + zero_counter;
+	if (precision < dec_length)
+		dec_length = precision;
+	if (!(str = ft_strnew(dec_length)))
+		return (NULL);
+	str[dec_length] = '\0';
+	i = 0;
+	while (zero_counter-- && dec_length--)
+		str[i++] = '0';
+	i = fill_first_elem(str, i, array, &dec_length);
+	printf("str = %s", str);
+	/*
+	while (array->current_element && dec_length)
+	{
+		int2convert = array->array[array->current_element];
+		base = BASE / 10;
+		while (base && dec_length--)
+		{
+			str[i++] = values[int2convert/base];
+			int2convert %= base;
+			base /= 10;
+		}
+		array->current_element--;
+	}
+	*/
+	return (str);
+}

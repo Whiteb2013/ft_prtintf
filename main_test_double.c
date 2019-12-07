@@ -14,7 +14,7 @@ int main()
 	puts("");
 	ft_printf("cst:%.28e", 0.1);
 	puts("");
-	printf("std:%.28f", 0.999);
+	printf("std:%.1f", 0.999);
 	puts("");
 	ft_printf("cst:%.28e", 0.999);
 	puts("");

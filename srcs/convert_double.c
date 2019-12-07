@@ -13,32 +13,32 @@ int		check_for_rounding(t_float *decimal, int array_elem_id, int digit_in_elem)
 }
 
 //rounding: 0 - applied, no impact, 1 - applied, impact on integer, 2 - applied, impact on leading zeros
-int		rounding(t_float *decimal, size_t zero_counter, t_format *format)
+void	rounding(t_float *decimal, t_float *integer, size_t *zero_counter, t_format *format)
 {
 	size_t	first_elem_len;
 	int		array_elem_id;
 	int		digit_in_elem;
 
-	if (format->precision < zero_counter)
-		return (0);
+	if (format->precision < *zero_counter)
+		return ;
 	array_elem_id = decimal->current_element;
 	first_elem_len = int_length(decimal->array[array_elem_id], 10);
-	if (format->precision < zero_counter + first_elem_len)
-		digit_in_elem = format->precision - zero_counter;
+	if (format->precision < *zero_counter + first_elem_len)
+		digit_in_elem = format->precision - *zero_counter;
 	else
 	{
-		if ((array_elem_id -= (format->precision - zero_counter - first_elem_len) / BASE_LEN + 1) < 0)
-			return (0);
-		digit_in_elem = (format->precision - zero_counter - first_elem_len) % BASE_LEN;
+		if ((array_elem_id -= (format->precision - *zero_counter - first_elem_len) / BASE_LEN + 1) < 0)
+			return ;
+		digit_in_elem = (format->precision - *zero_counter - first_elem_len) % BASE_LEN;
 	}
 	if (check_for_rounding(decimal, array_elem_id, digit_in_elem))
 		if (sum_decimal_const(decimal, 1, array_elem_id, digit_in_elem))
 		{
-			if (zero_counter)
-				return (2);
-			return (1);
+			if (*zero_counter)
+				--*zero_counter;
+			else
+				sum_integer_const(integer, 1);
 		}
-	return (0);
 }
 
 size_t	count_leading_zeros (double a, char sign)
@@ -252,19 +252,10 @@ int		convert_efloat2string(t_format *format, double a)
 	}
 	puts("");
 	//rounding: 0 - applied, no impact, 1 - applied, impact on integer, 2 - applied, impact on leading zeros
-	if ((i = rounding(&decimal, zero_counter, format)) == 1)
-	{
-		// 24.11 design here decimal handling to remove excessive digit
-		sum_integer_const(&integer, 1);
-	}
-	else if (i == 2)
-		zero_counter--;
-	/*if (!(format->content.string2show = ft_itoa_base_array_precision(\
-		&decimal, 10, zero_counter, )))
+	rounding(&decimal, &integer, &zero_counter, format);
+	if (!(format->content.string2show = ft_itoa_base_array_precision(\
+		&decimal, 10, zero_counter, format->precision)))
 		return (0);
-	if (!apply_precision_float(format))
-		return (0);
-	*/
 	if (!(format->content.string2show = join_strings(\
 		ft_itoa_base_array(&integer, 10), format->content.string2show, format)))
 		return (0);
