@@ -56,34 +56,62 @@ void	sum_decimal(t_float *a, t_float *exp)
 	array_cleaner(exp);
 }
 
-int		sum_decimal_const(t_float *a, unsigned long int value, int array_elem_id, int digit_in_elem)
+int		sum_decimal_const(t_float *a, size_t *zero_counter, int array_elem_id, int digit_in_elem)
 {
-	t_float	b;
+	t_float			b;
+	unsigned int	value;
+	unsigned int	base;
+	size_t			zero_plus;
 
-	if (!digit_in_elem)
+	value = 1;
+	if (a->current_element != array_elem_id)
 	{
-		array_elem_id++;
-		digit_in_elem = BASE_LEN;
+		if (!digit_in_elem)
+		{
+			array_elem_id++;
+			digit_in_elem = BASE_LEN;
+		}
+		while (digit_in_elem++ != BASE_LEN)
+			value *= 10;
 	}
-	while (digit_in_elem++ != BASE_LEN)
-		value *= 10;
+	else
+	{
+		base = int_length(a->array[a->current_element], 10);
+		//if (!digit_in_elem)
+		//	digit_in_elem = base;
+		while (digit_in_elem++ != base)
+			value *= 10;
+	}
 	b.array[array_elem_id] = value;
 	b.current_element = array_elem_id;
 	value = a->array[a->current_element];
 	array_elem_id = a->current_element;
 	sum_integer(a, &b);
-	if (a->current_element > array_elem_id)
+	if (a->current_element > array_elem_id || int_length(a->array[a->current_element], 10) > int_length(value, 10))
 	{
-		a->current_element--;
-		return (1);
-	}
-	if (int_length(a->array[a->current_element], 10) > int_length(value, 10))
-	{
-		value = BASE;
-		while (int_length(value, 10) > int_length(a->array[a->current_element], 10))
-			value /= 10;
-		a->array[a->current_element] -= value;
-		return (1);
+		if (*zero_counter)
+		{
+			(*zero_counter)--;
+			return (2);
+		}
+		else
+		{
+			if (a->current_element > array_elem_id)
+			{
+				a->array[a->current_element--] = 0;
+				zero_plus = int_length(value, 10) - int_length(a->array[a->current_element], 10);
+			}
+			else
+			{
+				base = BASE;
+				while (int_length(base, 10) > int_length(a->array[a->current_element], 10))
+					base /= 10;
+				a->array[a->current_element] -= base;
+				zero_plus = int_length(value, 10) - int_length(a->array[a->current_element], 10);
+			}
+			*zero_counter = zero_plus;
+			return (1);
+		}
 	}
 	return (0);
 }

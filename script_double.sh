@@ -6,8 +6,8 @@
 #    By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/07 19:27:55 by lgeorgin          #+#    #+#              #
-#    Updated: 2019/09/13 20:29:01 by lgeorgin         ###   ########.fr        #
+#    Updated: 2019/12/07 21:41:51 by lgeorgin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-make re && gcc -I ./srcs -I ./libft main_test_double.c -L. -lftprintf -o printf && make fclean && ./printf
+clear && make re && gcc -I ./srcs -I ./libft main_test_double.c -L. -lftprintf -o printf && make fclean && ./printf

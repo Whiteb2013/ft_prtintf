@@ -107,7 +107,7 @@ void						sum_integer_const(\
 								t_float *a, unsigned long int value);
 void						sum_decimal(t_float *a, t_float *exp);
 int							sum_decimal_const(t_float *a, \
-								unsigned long int value, int array_elem_id, \
+								size_t *zero_counter, int array_elem_id, \
 								int digit_in_elem);
 t_float						*power(\
 								unsigned long int base, short int power, \

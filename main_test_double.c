@@ -6,37 +6,40 @@ int ft_printf(const char *str, ...);
 
 int main()
 {
-	printf("std:%.28f", 1.005);
+	/*
+	printf("std:%.2f", 1.005);
 	puts("");
-	ft_printf("cst:%.28e", 1.005);
+	ft_printf("cst:%.2e", 1.005);
 	puts("");
-	printf("std:%.28f", 0.1);
+	printf("std:%.2f", 0.1);
 	puts("");
-	ft_printf("cst:%.28e", 0.1);
+	ft_printf("cst:%.2e", 0.1);
 	puts("");
-	printf("std:%.1f", 0.999);
+	printf("std:%.2f", 0.888);
 	puts("");
-	ft_printf("cst:%.28e", 0.999);
+	ft_printf("cst:%.2e", 0.888);
 	puts("");
-	printf("std:%.28f", 0.01);
+	printf("std:%.2f", 0.01);
 	puts("");
-	ft_printf("cst:%.28e", 0.01);
+	ft_printf("cst:%.2e", 0.01);
 	puts("");
-	printf("std:%.28f", 0.0999);
+
+	printf("std:%.2f", 0.098765);
 	puts("");
-	ft_printf("cst:%.28e", 0.0999);
+	ft_printf("cst:%.2e", 0.098765);
 	puts("");
-	printf("std:%.28f", 0.001);
+	printf("std:%.2f", 0.001);
 	puts("");
-	ft_printf("cst:%.28e", 0.001);
+	ft_printf("cst:%.2e", 0.001);
 	puts("");
-	printf("std:%.28f", 0.00999);
+	printf("std:%.2f", 0.000887);
 	puts("");
-	ft_printf("cst:%.28e", 0.00999);
+	ft_printf("cst:%.2e", 0.000887);
 	puts("");
-	printf("std:%.28f", 0.00000999);
+	*/
+	printf("std:%.2f", 0.00000999);
 	puts("");
-	ft_printf("cst:%.28e", 0.00000999);
+	ft_printf("cst:%.2e", 0.00000999);
 	puts("");
 	/*
 	printf("std:%.23f", 999364567890123456999000.6666666);
