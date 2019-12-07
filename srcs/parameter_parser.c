@@ -206,73 +206,73 @@ void	get_options(const char *str, t_format *format, va_list ap, int i)
 }
 
 /*
-void	get_options(const char *str, t_format *format, va_list ap, int i)
-{
-	int	k;
-	int	wc_crutch;
-	int	ap_array_that_is_crutch_bc_norm[3];
-
-	k = 0;
-	ap_array_that_is_crutch_bc_norm[0] = i;
-	ap_array_that_is_crutch_bc_norm[1] = k;
-	ap_array_that_is_crutch_bc_norm[2] = wc_crutch;
-
-	while (k < i)
-	{
-		k = try_dollar(str, format, ap, k);
-		if (str[k] == '*')
-		{
-			wc_crutch = va_arg(ap, size_t);
-			if (wc_crutch < 0)
-			{
-				format->width = -wc_crutch;
-				format->flag.minus = 't';
-			}
-			else
-				format->width = wc_crutch;
-			k++;
-		}
-		else if (check_options(str[k], 'w'))
-		{
-			format->width = ft_atoi(&str[k]);
-			k += int_length(format->width, 10);
-		}
-		else if (check_options(str[k], 'p'))
-		{
-			format->precision_flag = 't';
-			if (k + 1 < i && str[k + 1] == '*')
-			{
-				wc_crutch = va_arg(ap, size_t);
-				if (wc_crutch < 0)
-				{
-					if (format->type == 'f')
-						format->precision = 6;
-					else
-						format->precision = 0;
-					format->precision_flag = 'f';
-				}
-				else
-					format->precision = wc_crutch;
-				k += 2;
-			}
-			else
-			{
-				format->precision = ft_atoi(&str[++k]);
-				k += int_length(format->precision, 10);
-			}
-			if ((int)format->precision < 0)
-			{
-				format->width = -1 * format->precision;
-				if (format->type == 'f')
-					format->precision = 6;
-				else
-					format->precision = 0;
-				format->precision_flag = 'f';
-				format->flag.minus = 't';
-			}
-		}
-		else if (check_options(str[k], 'f'))
-			k += extract_flag(&str[k], format);
-	}
-}
+**void	get_options(const char *str, t_format *format, va_list ap, int i)
+**{
+**	int	k;
+**	int	wc_crutch;
+**	int	ap_array_that_is_crutch_bc_norm[3];
+**
+**	k = 0;
+**	ap_array_that_is_crutch_bc_norm[0] = i;
+**	ap_array_that_is_crutch_bc_norm[1] = k;
+**	ap_array_that_is_crutch_bc_norm[2] = wc_crutch;
+**
+**	while (k < i)
+**	{
+**		k = try_dollar(str, format, ap, k);
+**		if (str[k] == '*')
+**		{
+**			wc_crutch = va_arg(ap, size_t);
+**			if (wc_crutch < 0)
+**			{
+**				format->width = -wc_crutch;
+**				format->flag.minus = 't';
+**			}
+**			else
+**				format->width = wc_crutch;
+**			k++;
+**		}
+**		else if (check_options(str[k], 'w'))
+**		{
+**			format->width = ft_atoi(&str[k]);
+**			k += int_length(format->width, 10);
+**		}
+**		else if (check_options(str[k], 'p'))
+**		{
+**			format->precision_flag = 't';
+**			if (k + 1 < i && str[k + 1] == '*')
+**			{
+**				wc_crutch = va_arg(ap, size_t);
+**				if (wc_crutch < 0)
+**				{
+**					if (format->type == 'f')
+**						format->precision = 6;
+**					else
+**						format->precision = 0;
+**					format->precision_flag = 'f';
+**				}
+**				else
+**					format->precision = wc_crutch;
+**				k += 2;
+**			}
+**			else
+**			{
+**				format->precision = ft_atoi(&str[++k]);
+**				k += int_length(format->precision, 10);
+**			}
+**			if ((int)format->precision < 0)
+**			{
+**				format->width = -1 * format->precision;
+**				if (format->type == 'f')
+**					format->precision = 6;
+**				else
+**					format->precision = 0;
+**				format->precision_flag = 'f';
+**				format->flag.minus = 't';
+**			}
+**		}
+**		else if (check_options(str[k], 'f'))
+**			k += extract_flag(&str[k], format);
+**	}
+**}
 */
