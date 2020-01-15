@@ -40,7 +40,7 @@ void	sum_decimal(t_float *a, t_float *exp)
 
 	i = 0;
 	mediator_prev = 0;
-	while (i <= (*a).current_element || i <= (*exp).current_element)
+	while (i <= a->current_element || i <= exp->current_element)
 	{
 		mediator_next = (mediator_prev + (*a).array[i] * 10 + (*exp).array[i]) / BASE;
 		(*a).array[i] = (mediator_prev + (*a).array[i] * 10 + (*exp).array[i]) % BASE;

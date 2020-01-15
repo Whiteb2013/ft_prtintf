@@ -31,6 +31,6 @@ void	array_cleaner(t_float *array)
 
 	i = 0;
 	while (i <= MAX_ELEM)
-		(*array).array[i++] = 0;
-	(*array).current_element = 0;
+		array->array[i++] = 0;
+	array->current_element = 0;
 }
