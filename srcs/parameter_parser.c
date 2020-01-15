@@ -29,7 +29,7 @@ int		apply_default_options(t_format *format, va_list ap_root)
 	format->width = 0;
 	format->content.sign = '+';
 	format->zero_flag = 'f';
-	if (format->type == 'f')
+	if (format->type == 'f' || format->type == 'e' || format->type == 'g')
 		format->precision = 6;
 	else
 		format->precision = 0;

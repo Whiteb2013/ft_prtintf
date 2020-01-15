@@ -87,14 +87,12 @@ int		get_decimal_2(t_dbl dbl, t_float *decimal, short int fraction_length, short
 	size_t				leading_zero_counter;
 
 	array_cleaner(decimal);
+	//Issue detected with int part > 0 and following zeros. Implement etter handling via get_integer method
 	exponent = -exponent;
 	leading_zero_flag = 0;
 	leading_zero_counter = 0;
-	//moved to function array_cleaner
-	//(*decimal).current_element = 0;
 	if (exponent != EXP_DFLT)
 	{
-		//a = define_leading_zeros();
 		while (fraction_length-- > 0)
 		{
 			if (((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L)
@@ -202,8 +200,9 @@ int		convert_efloat2string(t_format *format, double a)
 	t_float				integer;
 	t_float				decimal;
 	int					i;
-	char				str[65];
+	//char				str[65];
 	short int			exponent;
+	int					fraction_length;
 	size_t				zero_counter;
 
 	dbl.dbl = (long double)a;
@@ -212,6 +211,7 @@ int		convert_efloat2string(t_format *format, double a)
 	printf("Mantissa =%lu\n", dbl.t_union.mantissa);
 	printf("Exponent =%d\n", dbl.t_union.exponent);
 	*/
+	/*
 	i = 0;
 	while (i < 64)
 		{
@@ -223,18 +223,18 @@ int		convert_efloat2string(t_format *format, double a)
 		}
 	str[64] = '\0';
 	printf("%s\n", str);
+	*/
 	if (dbl.t_union.exponent == 32767 && !check_double_exceptions(format, dbl))
 		return (1);
 	if (dbl.t_union.sign)
 		format->content.sign = '-';
 	exponent = dbl.t_union.exponent - EXP_DFLT;
 	zero_counter = count_leading_zeros(a, format->content.sign);
-	printf("Exponent = %hd\n", exponent);
-	zero_counter += get_decimal_2(dbl, &decimal, get_integer(dbl, &integer, &exponent), exponent);
-	printf("Exponent = %hd\n", exponent);
+	//printf("Exponent before get_int = %hd\n", exponent);
+	fraction_length = get_integer(dbl, &integer, &exponent);
+	zero_counter += get_decimal_2(dbl, &decimal, fraction_length, exponent);
+	/*
 	printf("Leading zeros = %zu\n", zero_counter);
-	//if (!apply_precision_float_2(format, &integer, &decimal, zero_counter))
-	//	return (0);
 	i = 0;
 	while (i <= integer.current_element)
 	{
@@ -249,6 +249,7 @@ int		convert_efloat2string(t_format *format, double a)
 		i++;
 	}
 	puts("");
+	*/
 	//rounding: 0 - applied, no impact, 1 - applied, impact on integer, 2 - applied, impact on leading zeros
 	rounding(&decimal, &integer, &zero_counter, format);
 	if (!(format->content.string2show = ft_itoa_base_array_precision(\

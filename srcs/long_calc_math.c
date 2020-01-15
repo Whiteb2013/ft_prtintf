@@ -2,20 +2,22 @@
 
 void	sum_integer(t_float *a, t_float *exp)
 {
-	int	i;
+	unsigned long int	sum;
+	int					i;
 
 	i = 0;
 	while (i <= (*a).current_element || i <= (*exp).current_element)
 	{
-		(*a).array[i + 1] += ((*a).array[i] + (*exp).array[i]) / BASE;
-		(*a).array[i] = ((*a).array[i] + (*exp).array[i]) % BASE;
-		//printf("Sum_a[%d] = %lu, exp[%d] = %lu\n", i, (*a).array[i], i, (*exp).array[i]);
+		sum = a->array[i] + exp->array[i];
+		a->array[i + 1] += sum / BASE;
+		a->array[i] = sum % BASE;
+		//printf("Sum_a[%d] = %lu, exp[%d] = %lu, sum/BASE = %lu\n", i, (*a).array[i], i, (*exp).array[i], sum / BASE);
 		i++;
 	}
-	if ((*a).array[i])
-		(*a).current_element = i;
+	if (a->array[i])
+		a->current_element = i;
 	else
-		(*a).current_element = i - 1;
+		a->current_element = i - 1;
 	//check if it was cleaned earlier
 	array_cleaner(exp);
 }
@@ -24,6 +26,7 @@ void	sum_integer_const(t_float *a, unsigned long int value)
 {
 	t_float	b;
 
+	array_cleaner(&b);
 	b.array[0] = value;
 	b.current_element = 0;
 	sum_integer(a, &b);
@@ -64,6 +67,7 @@ int		sum_decimal_const(t_float *a, size_t *zero_counter, int array_elem_id, int 
 	size_t			zero_plus;
 
 	value = 1;
+	array_cleaner(&b);
 	if (a->current_element != array_elem_id)
 	{
 		if (!digit_in_elem)
