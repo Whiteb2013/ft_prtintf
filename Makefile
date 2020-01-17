@@ -74,11 +74,14 @@ $(NAME): $(OBJS)
 #	@make -C $(LIB_DIR)
 
 clean:
-	@rm -rf *.o
+	@make clean -C $(LIB_DIR)
+#	@/bin/rm -f $(OBJ)
+	@rm -rf $(OBJS)
 #	@make -C $(LIB_DIR) clean
 
 fclean: clean
 	@rm -rf $(NAME)
+	@make fclean -C $(LIB_DIR)
 #	@rm -rf $(OBJS) $(NAME)
 #	@make -C $(LIB_DIR) fclean
 
