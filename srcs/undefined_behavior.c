@@ -12,10 +12,11 @@
 
 #include "ft_printf.h"
 
-int		undefined_behavior(t_format *format)
+int		undefined_behaviour(t_format *format, int *i, const char *str)
 {
 	if (!(format->content.string2show = ft_strdup(&format->type)))
 		return (0);
+	//add here string check to find out printf type 18.01
 	format->length = ft_strlen(format->content.string2show);
 	return (1);
 }

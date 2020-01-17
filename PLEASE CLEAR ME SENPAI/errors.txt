@@ -56,7 +56,7 @@ warning: zero-length gnu_printf format string [-Wformat-zero-length]
     puts("");
     puts("");
 
-//6 
+//6
     puts("test2");
     puts("printf");
     printf("% Z |test");
@@ -66,7 +66,7 @@ warning: zero-length gnu_printf format string [-Wformat-zero-length]
     puts("");
     puts("");
 
-//7  
+//7
     puts("test3");
     puts("printf");
     printf("% Z%s|test");
@@ -75,7 +75,7 @@ warning: zero-length gnu_printf format string [-Wformat-zero-length]
     ft_printf("% Z%s|test");
     puts("");
 
-//8 
+//8
     puts("test8");
     puts("printf");
     printf("%%   %|test");
@@ -433,7 +433,7 @@ warning: zero-length gnu_printf format string [-Wformat-zero-length]
     ft_printf("@moulitest: %.5u", 42);
     puts("");
     puts("");
-    
+
 //31
     puts("test0");
     puts("printf");
@@ -461,7 +461,7 @@ warning: zero-length gnu_printf format string [-Wformat-zero-length]
     ft_printf("%jhd", 9223372036854775807);
     puts("");
     puts("");
-    
+
 //32
     puts("test0");
     puts("printf");
@@ -535,3 +535,9 @@ warning: zero-length gnu_printf format string [-Wformat-zero-length]
     ft_printf("@main_ftprintf: %###-#0000 33...12..#0+0d", 256);
     puts("");
     puts("");
+
+//34
+    remove -g flag from makefile before uploading
+
+//35
+    change *.o objects cleaning approach inside clean rule (Makefile)

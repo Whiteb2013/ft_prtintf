@@ -37,7 +37,7 @@ int			extract_parameter(const char **str, va_list ap, va_list ap_root)
 		if (!format_string(format))
 			return (cleaner(format));
 	}
-	else if (!undefined_behavior(format))
+	else if (!undefined_behaviour(format, &i, *str))
 		return (cleaner(format));
 	k = display_parameter_buffer(format);
 	*str = *str + i;

@@ -115,8 +115,6 @@ t_float						*power(\
 int							get_decimal(\
 								size_t precision, long double a, \
 								long long int *integer);
-// int						get_decimal(\
-//								size_t precision, long double a, int *integer);
 char						*join_prefix(char *s1, t_format *format);
 char						*join_postfix(t_format *format, char *s2);
 char						*join_strings(char *s1, char *s2, t_format *format);
@@ -139,6 +137,6 @@ int							convert_char2utf8(t_format *format, int c);
 int							convert_string2utf8(t_format *format, int *str);
 int							cleaner(t_format *format);
 void						array_cleaner(t_float *array);
-int							undefined_behavior(t_format *format);
+int							undefined_behaviour(t_format *format, int *i, const char *str);
 
 #endif

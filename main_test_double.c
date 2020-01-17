@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include "ft_printf.h"
+#include "srcs/ft_printf.h"
 #include <math.h>
 
-int ft_printf(const char *str, ...);
+//int ft_printf(const char *str, ...);
 
 int main()
 {
