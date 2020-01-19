@@ -44,9 +44,9 @@ int		convert2string_for_types(t_format *format, va_list ap, int res)
 		res = convert_int2string(format, va_arg(ap, int), 10);
 	else if (format->type == 'x' || format->type == 'X')
 		res = convert_xo2string(format, va_arg(ap, unsigned int), 16);
-	else if (format->type == 'o')
+	else if (format->type == 'o' || format->type == 'O')
 		res = convert_xo2string(format, va_arg(ap, unsigned int), 8);
-	else if (format->type == 'u')
+	else if (format->type == 'u' || format->type == 'U')
 		res = convert_int2string(format, va_arg(ap, unsigned int), 10);
 	else if (format->type == 'f' || format->type == 'F')
 		res = convert_float2string(format, va_arg(ap, double));

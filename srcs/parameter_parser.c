@@ -29,7 +29,8 @@ int		apply_default_options(t_format *format, va_list ap_root)
 	format->width = 0;
 	format->content.sign = '+';
 	format->zero_flag = 'f';
-	if (format->type == 'f' || format->type == 'e' || format->type == 'g')
+	if (format->type == 'f' || format->type == 'e' || format->type == 'g' || \
+		format->type == 'F' || format->type == 'E' || format->type == 'G')
 		format->precision = 6;
 	else
 		format->precision = 0;
@@ -74,7 +75,7 @@ int		check_type(char c)
 	char	*type;
 	int		i;
 
-	type = "%cspdiouxXfFeEgGCS";
+	type = "%cCsSpdioOuUxXfFeEgG";
 	i = 0;
 	while (type[i])
 	{
@@ -100,10 +101,19 @@ int		check_type(char c)
 int		get_type(const char *str, t_format *format, va_list ap_root)
 {
 	int	i;
+	int mediator;
 
 	i = 0;
 	while (str[i] && check_options(str[i], 'a'))
 		i++;
+	if (str[i] && !check_type(str[i]))
+	{
+		mediator = i;
+		while (str[++mediator] && !check_type(str[mediator]) && ft_isalpha(str[mediator]))
+			;
+		if (check_type(str[mediator]) && str[mediator] != '%')
+			i = mediator;
+	}
 	format->type = str[i];
 	if (!apply_default_options(format, ap_root))
 		return (-1);
@@ -202,6 +212,8 @@ void	get_options(const char *str, t_format *format, va_list ap, int i)
 		}
 		else if (check_options(str[k], 'f'))
 			k += extract_flag(&str[k], format);
+		else
+			k++;
 	}
 }
 

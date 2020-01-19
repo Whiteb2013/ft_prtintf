@@ -11,9 +11,17 @@
 
 int main()
 {
-	printf("%jlx", 4294967295);
+	printf("%jjx", 4294967295);
 	puts("");
-	ft_printf("%jlx", 4294967295);
+	ft_printf("%jjx", 4294967295);
+	puts("");
+	printf("%jjxx%", 4294967295);
+	puts("");
+	ft_printf("%jjxx%", 4294967295);
+	puts("");
+	printf("%+x", 4294967295);
+	puts("");
+	ft_printf("%+x", 4294967295);
 	puts("");
 	return (0);
 }

@@ -137,6 +137,6 @@ int							convert_char2utf8(t_format *format, int c);
 int							convert_string2utf8(t_format *format, int *str);
 int							cleaner(t_format *format);
 void						array_cleaner(t_float *array);
-int							undefined_behaviour(t_format *format, int *i, const char *str);
+int							undefined_behaviour(t_format *format);
 
 #endif

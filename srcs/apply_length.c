@@ -77,18 +77,24 @@ int		apply_length(t_format *format, va_list ap)
 {
 	int res;
 
-	res = 0;
+	res = 1;
 	if (format->type == 'd' || format->type == 'i')
 		res = apply_length_d(format, ap);
-	else if (format->type == 'u')
+	else if (format->type == 'u' || format->type == 'U')
 		res = apply_length_u(format, ap);
 	else if (format->type == 'x' || format->type == 'X')
 		res = apply_length_x(format, ap);
-	else if (format->type == 'o')
+	else if (format->type == 'o' || format->type == 'O')
 		res = apply_length_o(format, ap);
-	else if (format->type == 'f' && !ft_strcmp(format->length_flag, "l"))
+	else if ((format->type == 'f' || format->type == 'F' || \
+		format->type == 'e' || format->type == 'E' || \
+		format->type == 'g' || format->type == 'G') && \
+		!ft_strcmp(format->length_flag, "l"))
 		res = convert_float2string(format, va_arg(ap, double));
-	else if (format->type == 'f' && !ft_strcmp(format->length_flag, "L"))
+	else if ((format->type == 'f' || format->type == 'F' || \
+		format->type == 'e' || format->type == 'E' || \
+		format->type == 'g' || format->type == 'G') && \
+		!ft_strcmp(format->length_flag, "L"))
 		res = convert_float2string(format, va_arg(ap, long double));
 	return (res);
 }

@@ -45,7 +45,7 @@ int		apply_precision_int(t_format *format)
 	if (!format->precision && !ft_strcmp(format->content.string2show, "0"))
 	{
 		ft_strclr(format->content.string2show);
-		if (format->type != 'o' && format->type != 'p')
+		if (format->type != 'o' && format->type != 'O' && format->type != 'p')
 			format->flag.hash = 'f';
 	}
 	format->flag.zero = 'f';
@@ -95,9 +95,9 @@ int		apply_precision(t_format *format)
 {
 	if (format->type == 's' && !apply_precision_string(format))
 		return (0);
-	if (format->type == 'i' || format->type == 'd' || format->type == 'o' \
-		|| format->type == 'x' || format->type == 'X' || format->type == 'u' \
-		|| format->type == 'p')
+	if (format->type == 'i' || format->type == 'd' || format->type == 'o' || \
+		format->type == 'O' || format->type == 'x' || format->type == 'X' ||
+		format->type == 'u' || format->type == 'U' || format->type == 'p')
 		if (!apply_precision_int(format))
 			return (0);
 	format->length = ft_strlen(format->content.string2show);

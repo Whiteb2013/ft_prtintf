@@ -22,12 +22,14 @@ int		apply_hash(t_format *format)
 		&& !(format->content.string2show = join_prefix("0x", format)))
 		return (0);
 	else if ((format->type == 'f' || format->type == 'F' || \
-		format->type == 'e' || format->type == 'g') \
+		format->type == 'e' || format->type == 'E' || \
+		format->type == 'g' || format->type == 'G') \
 		&& !format->precision && \
 		!(format->content.string2show = join_postfix(format, ".")))
 		return (0);
-	else if (format->type == 'o' && format->content.string2show[0] != '0' \
-		&& !(format->content.string2show = join_prefix("0", format)))
+	else if ((format->type == 'o' || format->type == 'O') && \
+		format->content.string2show[0] != '0' && \
+		!(format->content.string2show = join_prefix("0", format)))
 		return (0);
 	format->length = ft_strlen(format->content.string2show);
 	return (1);
@@ -35,9 +37,12 @@ int		apply_hash(t_format *format)
 
 int		apply_space(t_format *format)
 {
-	if (format->type != '%' && format->type != 'u' && \
-		format->type != 'c' && format->type != 'C' \
-		&& format->type != 's' && format->type != 'S')
+	if (format->type != 'u' && format->type != 'U' && \
+		format->type != 'c' && format->type != 'C' && \
+		format->type != 's' && format->type != 'S' && \
+		format->type != 'o' && format->type != 'O' && \
+		format->type != 'x' && format->type != 'X' && \
+		format->type != '%')
 	{
 		if (format->width)
 		{
@@ -57,7 +62,9 @@ int		apply_plus(t_format *format)
 	if (format->type == 'c' || format->type == 'C' || \
 		format->type == 's' || format->type == 'S')
 		return (1);
-	if (format->type != 'u' && !(format->content.string2show = \
+	if (format->type != 'u' && format->type != 'U' && \
+		format->type != 'x' && format->type != 'X' && \
+		!(format->content.string2show = \
 		join_prefix(&format->content.sign, format)))
 		return (0);
 	format->length = ft_strlen(format->content.string2show);
