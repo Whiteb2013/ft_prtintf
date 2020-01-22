@@ -48,12 +48,10 @@ int		convert2string_for_types(t_format *format, va_list ap, int res)
 		res = convert_xo2string(format, va_arg(ap, unsigned int), 8);
 	else if (format->type == 'u' || format->type == 'U')
 		res = convert_int2string(format, va_arg(ap, unsigned int), 10);
-	else if (format->type == 'f' || format->type == 'F')
-		res = convert_float2string(format, va_arg(ap, double));
-	else if (format->type == 'e' || format->type == 'E')
-		res = convert_efloat2string(format, va_arg(ap, double));
-	else if (format->type == 'g' || format->type == 'G')
-		res = convert_gfloat2string(format, va_arg(ap, double));
+	else if (format->type == 'f' || format->type == 'F' || \
+		format->type == 'e' || format->type == 'E' || \
+		format->type == 'g' || format->type == 'G')
+		res = convert_fge2string(format, va_arg(ap, double));
 	else if (format->type == 'C')
 		res = convert_char2utf8(format, va_arg(ap, int));
 	else if (format->type == 'S')

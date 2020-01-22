@@ -90,11 +90,11 @@ int		apply_length(t_format *format, va_list ap)
 		format->type == 'e' || format->type == 'E' || \
 		format->type == 'g' || format->type == 'G') && \
 		!ft_strcmp(format->length_flag, "l"))
-		res = convert_float2string(format, va_arg(ap, double));
+		res = convert_fge2string(format, va_arg(ap, double));
 	else if ((format->type == 'f' || format->type == 'F' || \
 		format->type == 'e' || format->type == 'E' || \
 		format->type == 'g' || format->type == 'G') && \
 		!ft_strcmp(format->length_flag, "L"))
-		res = convert_float2string(format, va_arg(ap, long double));
+		res = convert_fge2string(format, va_arg(ap, long double));
 	return (res);
 }

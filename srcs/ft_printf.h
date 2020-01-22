@@ -88,7 +88,7 @@ int							convert_xo2string(\
 								size_t base);
 int							convert_short2string(\
 								t_format *format, short a, size_t base);
-int							convert_float2string(\
+int							convert_fge2string(\
 								t_format *format, long double a);
 int							convert_efloat2string(t_format *format, double a);
 int							convert_gfloat2string(t_format *format, double a);
@@ -112,9 +112,10 @@ int							sum_decimal_const(t_float *a, \
 t_float						*power(\
 								unsigned long int base, short int power, \
 								t_float *exp);
-int							get_decimal(\
-								size_t precision, long double a, \
-								long long int *integer);
+int							get_decimal(t_dbl dbl, t_float *decimal, \
+								short int fraction_length, short int exponent);
+int							get_integer(t_dbl dbl, t_float *integer, \
+								short int *exponent);
 char						*join_prefix(char *s1, t_format *format);
 char						*join_postfix(t_format *format, char *s2);
 char						*join_strings(char *s1, char *s2, t_format *format);

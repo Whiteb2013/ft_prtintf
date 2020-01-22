@@ -18,7 +18,7 @@ void	sum_integer(t_float *a, t_float *exp)
 		a->current_element = i;
 	else
 		a->current_element = i - 1;
-	//check if it was cleaned earlier
+	//check if may be cleaned earlier
 	array_cleaner(exp);
 }
 
@@ -127,8 +127,6 @@ t_float	*power(unsigned long int base, short int power, t_float *exp)
 	unsigned long int	mediator_prev;
 
 	array_cleaner(exp);
-	//moved to function array_cleaner
-	//(*exp).current_element = 0;
 	(*exp).array[0] = 1;
 	while (power-- > 0)
 	{
@@ -136,10 +134,6 @@ t_float	*power(unsigned long int base, short int power, t_float *exp)
 		mediator_prev = 0;
 		while (i <= (*exp).current_element)
 		{
-			//организовать работу с переходящим остатком. Сначала умножить, затем прибавить разряд
-			//if (!(*exp).array[i + 1])
-			//	(*exp).array[i + 1] =  (*exp).array[i] * base / BASE_LEN;
-			//else
 			mediator_next = (mediator_prev + (*exp).array[i] * base) / BASE;
 			(*exp).array[i] = (mediator_prev + (*exp).array[i] * base) % BASE;
 			mediator_prev = mediator_next;

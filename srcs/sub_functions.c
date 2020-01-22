@@ -44,25 +44,63 @@ size_t	int_length_array(t_float *array, unsigned int base)
 	return (++i);
 }
 
-int		get_decimal(size_t precision, long double a, long long int *integer)
+int		get_integer(t_dbl dbl, t_float *integer, short int *exponent)
 {
-	int		decimal;
-	size_t	i;
+	short int			fraction_length;
+	t_float				exp;
 
-	decimal = 0;
-	i = 0;
-	while (i++ < precision)
-		a = a * 10;
-	decimal = (int)a;
-	if ((a - (int)a) * 10 > 5)
-	{
-		if (!precision)
+	fraction_length = 64;
+	if (*exponent != -EXP_DFLT)
+		while (*exponent >= 0 && fraction_length-- > 0)
 		{
-			*integer = *integer + 1;
-			return (0);
+			if (((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L)
+				sum_integer(integer, power(2, *exponent, &exp));
+			--*exponent;
 		}
-		return (decimal + 1);
+	return (fraction_length);
+}
+
+int		get_decimal(t_dbl dbl, t_float *decimal, short int fraction_length, short int exponent)
+{
+	t_float				exp;
+	unsigned long int	leading_zero_flag;
+	unsigned long int	mediator;
+	size_t				leading_zero_counter;
+
+	array_cleaner(&exp);
+	exponent = -exponent;
+	leading_zero_flag = 0;
+	leading_zero_counter = 0;
+	if (exponent != EXP_DFLT)
+	{
+		while (fraction_length-- > 0)
+		{
+			if (((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L)
+				sum_decimal(decimal, power(5, exponent, &exp));
+			//insert here leading zero check.
+			else if (!decimal->current_element && !decimal->array[0])
+			{
+				decimal->array[0] = 1;
+				leading_zero_flag = 1;
+			}
+			else
+				sum_decimal(decimal, &exp);
+			++exponent;
+			//printf("\ndecimal-> %d, exp-> %d", decimal->current_element, exp.current_element);
+			//printf("fraction_length = %hd, byte = %d\n", fraction_length, ((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L);
+		}
+		if (leading_zero_flag)
+		{
+			mediator = decimal->array[decimal->current_element];
+			while ((mediator /= 10))
+				leading_zero_flag *= 10;
+			decimal->array[decimal->current_element] -= leading_zero_flag;
+			while (decimal->array[decimal->current_element] < leading_zero_flag && leading_zero_flag > 1)
+			{
+				leading_zero_flag /= 10;
+				++leading_zero_counter;
+			}
+		}
 	}
-	else
-		return (decimal);
+	return (leading_zero_counter);
 }

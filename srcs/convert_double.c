@@ -39,6 +39,40 @@ void	rounding(t_float *decimal, t_float *integer, size_t *zero_counter, t_format
 			sum_integer_const(integer, 1);
 }
 
+void	e_rounding(t_float *decimal, t_float *integer, size_t *zero_counter, t_format *format)
+{
+	size_t	first_elem_len;
+	int		array_elem_id;
+	int		digit_in_elem;
+
+	array_elem_id = integer->current_element;
+	first_elem_len = int_length(integer->array[array_elem_id], 10);
+	if (format->precision < first_elem_len)
+		digit_in_elem = format->precision;
+	else if (format->precision < int_length_array(integer, 10))
+	{
+		array_elem_id = integer->current_element - (format->precision - first_elem_len) / BASE_LEN;
+		digit_in_elem = format->precision % BASE_LEN;
+	}
+	//here design integer rounding
+	if (format->precision < *zero_counter + int_length_array(integer, 10))
+		return ;
+	array_elem_id = decimal->current_element;
+	first_elem_len = int_length(decimal->array[array_elem_id], 10);
+	if (format->precision < *zero_counter + first_elem_len + int_length_array(integer, 10))
+		digit_in_elem = format->precision - int_length_array(integer, 10) - *zero_counter;
+	else
+	{
+		if ((array_elem_id -= (format->precision - int_length_array(integer, 10) - *zero_counter - first_elem_len) / BASE_LEN + 1) < 0)
+			return ;
+		digit_in_elem = (format->precision - int_length_array(integer, 10) - *zero_counter - first_elem_len) % BASE_LEN;
+	}
+	if (check_for_rounding(decimal, array_elem_id, digit_in_elem))
+		if (sum_decimal_const(decimal, zero_counter, array_elem_id, digit_in_elem) == 1)
+			sum_integer_const(integer, 1);
+}
+
+
 size_t	count_leading_zeros (double a, char sign)
 {
 	size_t	counter;
@@ -58,69 +92,6 @@ void	clean_exp(t_float *exp)
 {
 	while ((*exp).current_element >= 0)
 		(*exp).array[(*exp).current_element--] = 0;
-}
-
-int		get_integer(t_dbl dbl, t_float *integer, short int *exponent)
-{
-	short int			fraction_length;
-	t_float				exp;
-
-	fraction_length = 64;
-	//moved to function array_cleaner
-	//(*integer).current_element = 0;
-	if (*exponent != -EXP_DFLT)
-		while (*exponent >= 0 && fraction_length-- > 0)
-		{
-			if (((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L)
-				sum_integer(integer, power(2, *exponent, &exp));
-			--*exponent;
-		}
-	return (fraction_length);
-}
-
-int		get_decimal_2(t_dbl dbl, t_float *decimal, short int fraction_length, short int exponent)
-{
-	t_float				exp;
-	unsigned long int	leading_zero_flag;
-	unsigned long int	mediator;
-	size_t				leading_zero_counter;
-
-	array_cleaner(&exp);
-	exponent = -exponent;
-	leading_zero_flag = 0;
-	leading_zero_counter = 0;
-	if (exponent != EXP_DFLT)
-	{
-		while (fraction_length-- > 0)
-		{
-			if (((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L)
-				sum_decimal(decimal, power(5, exponent, &exp));
-			//insert here leading zero check.
-			else if (!decimal->current_element && !decimal->array[0])
-			{
-				decimal->array[0] = 1;
-				leading_zero_flag = 1;
-			}
-			else
-				sum_decimal(decimal, &exp);
-			++exponent;
-			//printf("\ndecimal-> %d, exp-> %d", decimal->current_element, exp.current_element);
-			//printf("fraction_length = %hd, byte = %d\n", fraction_length, ((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L);
-		}
-		if (leading_zero_flag)
-		{
-			mediator = decimal->array[decimal->current_element];
-			while ((mediator /= 10))
-				leading_zero_flag *= 10;
-			decimal->array[decimal->current_element] -= leading_zero_flag;
-			while (decimal->array[decimal->current_element] < leading_zero_flag && leading_zero_flag > 1)
-			{
-				leading_zero_flag /= 10;
-				++leading_zero_counter;
-			}
-		}
-	}
-	return (leading_zero_counter);
 }
 
 int		check_double_exceptions(t_format *format, t_dbl dbl)
@@ -168,26 +139,16 @@ int		check_double_exceptions(t_format *format, t_dbl dbl)
 ** var "decimal" contains everything after separator
 */
 
-int		convert_float2string(t_format *format, long double a)
+int		convert_f2string(t_format *format, t_dbl dbl, short int exponent, size_t zero_counter)
 {
-	t_dbl				dbl;
 	t_float				integer;
 	t_float				decimal;
-	short int			exponent;
 	int					fraction_length;
-	size_t				zero_counter;
 
-	dbl.dbl = (long double)a;
-	if (dbl.t_union.exponent == 32767 && !check_double_exceptions(format, dbl))
-		return (1);
-	if (dbl.t_union.sign)
-		format->content.sign = '-';
-	exponent = dbl.t_union.exponent - EXP_DFLT;
-	zero_counter = count_leading_zeros(a, format->content.sign);
 	array_cleaner(&integer);
-	fraction_length = get_integer(dbl, &integer, &exponent);
 	array_cleaner(&decimal);
-	zero_counter += get_decimal_2(dbl, &decimal, fraction_length, exponent);
+	fraction_length = get_integer(dbl, &integer, &exponent);
+	zero_counter += get_decimal(dbl, &decimal, fraction_length, exponent);
 	rounding(&decimal, &integer, &zero_counter, format);
 	if (!(format->content.string2show = ft_itoa_base_array_precision(\
 		&decimal, 10, zero_counter, format->precision)))
@@ -201,19 +162,73 @@ int		convert_float2string(t_format *format, long double a)
 	return (1);
 }
 
+int		convert_e2string(t_format *format, t_dbl dbl, short int exponent, size_t zero_counter)
+{
+	t_float				integer;
+	t_float				decimal;
+	int					fraction_length;
+
+	array_cleaner(&integer);
+	array_cleaner(&decimal);
+	fraction_length = get_integer(dbl, &integer, &exponent);
+	zero_counter += get_decimal(dbl, &decimal, fraction_length, exponent);
+	e_rounding(&decimal, &integer, &zero_counter, format);
+	if (!(format->content.string2show = ft_itoa_base_array_precision(\
+		&decimal, 10, zero_counter, format->precision)))
+		return (0);
+	if (format->precision && !(format->content.string2show = join_prefix(\
+		".", format)))
+		return (0);
+	if (!(format->content.string2show = join_strings(\
+		ft_itoa_base_array(&integer, 10), format->content.string2show, format)))
+		return (0);
+	return (1);
+}
+
+int		convert_g2string(t_format *format, t_dbl dbl, short int exponent, size_t zero_counter)
+{
+	return (1);
+}
+
+int		convert_fge2string(t_format *format, long double a)
+{
+	t_dbl				dbl;
+	short int			exponent;
+	size_t				zero_counter;
+
+	dbl.dbl = (long double)a;
+	if (dbl.t_union.exponent == 32767 && !check_double_exceptions(format, dbl))
+		return (1);
+	if (dbl.t_union.sign)
+		format->content.sign = '-';
+	exponent = dbl.t_union.exponent - EXP_DFLT;
+	zero_counter = count_leading_zeros(a, format->content.sign);
+	if (format->type == 'f' || format->type == 'F')
+	{
+		if (!convert_f2string(format, dbl, exponent, zero_counter))
+			return (0);
+	}
+	else if (format->type == 'e' || format->type == 'E')
+	{
+		if (!convert_e2string(format, dbl, exponent, zero_counter))
+			return (0);
+	}
+	return (1);
+}
+
+/* old fge2string
 int		convert_efloat2string(t_format *format, double a)
 {
 	t_dbl				dbl;
 	t_float				integer;
 	t_float				decimal;
-	//int					i;
-	//char				str[65];
+	int					i;
+	char				str[65];
 	short int			exponent;
 	int					fraction_length;
 	size_t				zero_counter;
 
 	dbl.dbl = (long double)a;
-	/*
 	printf("Value=%d\n", dbl.t_union.sign);
 	printf("Mantissa =%lu\n", dbl.t_union.mantissa);
 	printf("Exponent =%d\n", dbl.t_union.exponent);
@@ -228,19 +243,17 @@ int		convert_efloat2string(t_format *format, double a)
 		}
 	str[64] = '\0';
 	printf("%s\n", str);
-	*/
 	if (dbl.t_union.exponent == 32767 && !check_double_exceptions(format, dbl))
 		return (1);
 	if (dbl.t_union.sign)
 		format->content.sign = '-';
 	exponent = dbl.t_union.exponent - EXP_DFLT;
 	zero_counter = count_leading_zeros(a, format->content.sign);
-	//printf("Exponent before get_int = %hd\n", exponent);
+	printf("Exponent before get_int = %hd\n", exponent);
 	array_cleaner(&integer);
 	fraction_length = get_integer(dbl, &integer, &exponent);
 	array_cleaner(&decimal);
 	zero_counter += get_decimal_2(dbl, &decimal, fraction_length, exponent);
-	/*
 	printf("Leading zeros = %zu\n", zero_counter);
 	i = 0;
 	while (i <= integer.current_element)
@@ -256,7 +269,6 @@ int		convert_efloat2string(t_format *format, double a)
 		i++;
 	}
 	puts("");
-	*/
 	//rounding: 0 - applied, no impact, 1 - applied, impact on integer, 2 - applied, impact on leading zeros
 	rounding(&decimal, &integer, &zero_counter, format);
 	if (!(format->content.string2show = ft_itoa_base_array_precision(\
@@ -270,28 +282,4 @@ int		convert_efloat2string(t_format *format, double a)
 		return (0);
 	return (1);
 }
-
-int		convert_gfloat2string(t_format *format, double a)
-{
-    long long int			integer;
-	long long int			decimal;
-
-	if (a < 0)
-	{
-		a *= -1;
-		format->content.sign = '-';
-	}
-	integer = (long long int)a;
-	decimal = get_decimal(format->precision, a - integer, &integer);
-	if (format->precision)
-	{
-		if (!(format->content.string2show = ft_itoa_base(decimal, 10)))
-			return (0);
-		if (!apply_precision_float(format))
-			return (0);
-	}
-	if (!(format->content.string2show = join_strings(\
-		ft_itoa_base(integer, 10), format->content.string2show, format)))
-		return (0);
-	return (1);
-}
+*/
