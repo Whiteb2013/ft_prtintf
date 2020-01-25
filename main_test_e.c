@@ -6,21 +6,33 @@
 
 int main()
 {
-	printf("std:%.6e", -1.0);
+	printf("std:%.20e", 123456.6666666);
 	puts("");
-	ft_printf("cst:%.6e", -1.0);
+	ft_printf("cst:%.20e", 123456.6666666);
 	puts("");
-	printf("std:%.20e", 1.005);
+	printf("std:%e", -0.0);
 	puts("");
-	ft_printf("cst:%.20e", 1.005);
+	ft_printf("cst:%e", -0.0);
+	puts("");
+	printf("std:%.6e", 0.000887);
+	puts("");
+	ft_printf("cst:%.6e", 0.000887);
+	puts("");
+	printf("std:%e", 0.00000999);
+	puts("");
+	ft_printf("cst:%e", 0.00000999);
 	puts("");
 	printf("std:%.23e", 999364567890123456999000.6666666);
 	puts("");
 	ft_printf("cst:%.23e", 999364567890123456999000.6666666);
 	puts("");
-	printf("std:%e", -0.0);
+	printf("std:%.6e", -1.0);
 	puts("");
-	ft_printf("cst:%e", -0.0);
+	ft_printf("cst:%.6e", -1.0);
+	puts("");
+	printf("std:%+040.20e", 1.005);
+	puts("");
+	ft_printf("cst:%+040.20e", 1.005);
 	puts("");
 	printf("std:%.20e", 1.01);
 	puts("");
@@ -45,14 +57,6 @@ int main()
 	printf("std:%.28e", 0.001);
 	puts("");
 	ft_printf("cst:%.28e", 0.001);
-	puts("");
-	printf("std:%.6e", 0.000887);
-	puts("");
-	ft_printf("cst:%.6e", 0.000887);
-	puts("");
-	printf("std:%e", 0.00000999);
-	puts("");
-	ft_printf("cst:%e", 0.00000999);
 	puts("");
 	printf("std:%.21e", 123123.6666666);
 	puts("");
@@ -81,10 +85,6 @@ int main()
 	printf("std:%e", -123.123);
 	puts("");
 	ft_printf("cst:%e", -123.123);
-	puts("");
-	printf("std:%.20e", 123456.6666666);
-	puts("");
-	ft_printf("cst:%.20e", 123456.6666666);
 	puts("");
 	printf("std:%e", -0.98);
 	puts("");

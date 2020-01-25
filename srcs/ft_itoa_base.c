@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-char	*ft_itoa_base(unsigned long long int2convert, size_t base)
+char	*ft_itoa_base(unsigned long long int2convert, size_t base, size_t size)
 {
 	char	*str;
 	size_t	i;
@@ -21,6 +21,8 @@ char	*ft_itoa_base(unsigned long long int2convert, size_t base)
 	// printf("nmb = %lli\n", int2convert);
 	values = "0123456789abcdef";
 	i = int_length(int2convert, base);
+	if (i < size)
+		i = size;
 	if (!(str = ft_strnew(i)))
 		return (NULL);
 	str[i] = '\0';
@@ -30,6 +32,8 @@ char	*ft_itoa_base(unsigned long long int2convert, size_t base)
 		int2convert = int2convert / base;
 	}
 	str[--i] = values[int2convert % base];
+	while (i)
+		str[--i] = values[0];
 	return (str);
 }
 
@@ -91,6 +95,29 @@ int		fill_first_elem(char *str, int i, t_float *array, size_t precision)
 	return (i);
 }
 
+int		fill_first_elem_e(char *str, int i, t_float *array, size_t precision)
+{
+	unsigned int	int2convert;
+	unsigned int	base;
+	char			*values;
+
+	values = "0123456789abcdef";
+	int2convert = array->array[array->current_element];
+	base = 1;
+	while (int_length(base, 10) < int_length(int2convert, 10))
+		base *= 10;
+	while (base && i < precision)
+	{
+		str[i++] = values[int2convert/base];
+		int2convert %= base;
+		base /= 10;
+		if (i == 1)
+			str[i++] = '.';
+	}
+	array->current_element--;
+	return (i);
+}
+
 char	*ft_itoa_base_array_precision(t_float *array, size_t base, size_t zero_counter, size_t precision)
 {
 	char			*str;
@@ -123,6 +150,43 @@ char	*ft_itoa_base_array_precision(t_float *array, size_t base, size_t zero_coun
 		}
 		else
 			str[i++] = values[0];
+	}
+	return (str);
+}
+
+char	*ft_itoa_base_array_precision_e(t_float *array, size_t base, t_format *format)
+{
+	char			*str;
+	char			*values;
+	int				i;
+	unsigned int	int2convert;
+	size_t			size;
+
+	values = "0123456789abcdef";
+	size = int_length_array(array, base) - 1;
+	if (format->precision < size)
+		size = format->precision;
+	if (size + 2 > size)
+		size += 2;
+	if (!(str = ft_strnew(size)))
+		return (NULL);
+	str[size] = '\0';
+	i = fill_first_elem_e(str, 0, array, size);
+	while (i < size)
+	{
+		if (array->current_element >= 0)
+		{
+			int2convert = array->array[array->current_element];
+			base = BASE / 10;
+			while (base && size - i)
+			{
+				str[i] = values[int2convert/base];
+				int2convert %= base;
+				base /= 10;
+				i++;
+			}
+			array->current_element--;
+		}
 	}
 	return (str);
 }

@@ -16,60 +16,58 @@ int		check_for_rounding(t_float *decimal, int array_elem_id, int digit_in_elem)
 }
 
 //rounding: 0 - applied, no impact, 1 - applied, impact on integer, 2 - applied, impact on leading zeros
-void	rounding(t_float *decimal, t_float *integer, size_t *zero_counter, t_format *format)
+void	rounding(t_float *decimal, t_float *integer, size_t *zero_counter, size_t precision)
 {
 	size_t	first_elem_len;
 	int		array_elem_id;
 	int		digit_in_elem;
 
-	if (format->precision < *zero_counter)
+	if (precision < *zero_counter)
 		return ;
 	array_elem_id = decimal->current_element;
 	first_elem_len = int_length(decimal->array[array_elem_id], 10);
-	if (format->precision < *zero_counter + first_elem_len)
-		digit_in_elem = format->precision - *zero_counter;
+	if (precision < *zero_counter + first_elem_len)
+		digit_in_elem = precision - *zero_counter;
 	else
 	{
-		if ((array_elem_id -= (format->precision - *zero_counter - first_elem_len) / BASE_LEN + 1) < 0)
+		if ((array_elem_id -= (precision - *zero_counter - first_elem_len) / BASE_LEN + 1) < 0)
 			return ;
-		digit_in_elem = (format->precision - *zero_counter - first_elem_len) % BASE_LEN;
+		digit_in_elem = (precision - *zero_counter - first_elem_len) % BASE_LEN;
 	}
 	if (check_for_rounding(decimal, array_elem_id, digit_in_elem))
 		if (sum_decimal_const(decimal, zero_counter, array_elem_id, digit_in_elem) == 1)
 			sum_integer_const(integer, 1);
 }
 
-void	e_rounding(t_float *decimal, t_float *integer, size_t *zero_counter, t_format *format)
+int	e_rounding(t_float *decimal, t_float *integer, size_t *zero_counter, size_t precision)
 {
 	size_t	first_elem_len;
+	size_t	array_length;
 	int		array_elem_id;
 	int		digit_in_elem;
 
 	array_elem_id = integer->current_element;
 	first_elem_len = int_length(integer->array[array_elem_id], 10);
-	if (format->precision < first_elem_len)
-		digit_in_elem = format->precision;
-	else if (format->precision < int_length_array(integer, 10))
+	array_length = int_length_array(integer, 10) - 1;
+	if (precision < array_length)
 	{
-		array_elem_id = integer->current_element - (format->precision - first_elem_len) / BASE_LEN;
-		digit_in_elem = format->precision % BASE_LEN;
-	}
-	//here design integer rounding
-	if (format->precision < *zero_counter + int_length_array(integer, 10))
-		return ;
-	array_elem_id = decimal->current_element;
-	first_elem_len = int_length(decimal->array[array_elem_id], 10);
-	if (format->precision < *zero_counter + first_elem_len + int_length_array(integer, 10))
-		digit_in_elem = format->precision - int_length_array(integer, 10) - *zero_counter;
-	else
-	{
-		if ((array_elem_id -= (format->precision - int_length_array(integer, 10) - *zero_counter - first_elem_len) / BASE_LEN + 1) < 0)
-			return ;
-		digit_in_elem = (format->precision - int_length_array(integer, 10) - *zero_counter - first_elem_len) % BASE_LEN;
-	}
-	if (check_for_rounding(decimal, array_elem_id, digit_in_elem))
-		if (sum_decimal_const(decimal, zero_counter, array_elem_id, digit_in_elem) == 1)
+		if (precision + 1 < first_elem_len)
+			digit_in_elem = precision + 1;
+		else
+		{
+		array_elem_id -= (precision + 1 - first_elem_len) / BASE_LEN;
+		digit_in_elem = (precision + 1) % BASE_LEN;
+		}
+		if (check_for_rounding(integer, array_elem_id, digit_in_elem))
 			sum_integer_const(integer, 1);
+	}
+	else if (integer->array[array_elem_id])
+		rounding(decimal, integer, zero_counter, precision - array_elem_id);
+	else if (precision < precision + *zero_counter + 1)
+		rounding(decimal, integer, zero_counter, precision + *zero_counter + 1);
+	else
+		return (0);
+	return (1);
 }
 
 
@@ -149,7 +147,7 @@ int		convert_f2string(t_format *format, t_dbl dbl, short int exponent, size_t ze
 	array_cleaner(&decimal);
 	fraction_length = get_integer(dbl, &integer, &exponent);
 	zero_counter += get_decimal(dbl, &decimal, fraction_length, exponent);
-	rounding(&decimal, &integer, &zero_counter, format);
+	rounding(&decimal, &integer, &zero_counter, format->precision);
 	if (!(format->content.string2show = ft_itoa_base_array_precision(\
 		&decimal, 10, zero_counter, format->precision)))
 		return (0);
@@ -166,22 +164,44 @@ int		convert_e2string(t_format *format, t_dbl dbl, short int exponent, size_t ze
 {
 	t_float				integer;
 	t_float				decimal;
+	size_t				array_length;
+	int					power;
 	int					fraction_length;
 
 	array_cleaner(&integer);
 	array_cleaner(&decimal);
 	fraction_length = get_integer(dbl, &integer, &exponent);
 	zero_counter += get_decimal(dbl, &decimal, fraction_length, exponent);
-	e_rounding(&decimal, &integer, &zero_counter, format);
-	if (!(format->content.string2show = ft_itoa_base_array_precision(\
-		&decimal, 10, zero_counter, format->precision)))
-		return (0);
-	if (format->precision && !(format->content.string2show = join_prefix(\
-		".", format)))
-		return (0);
-	if (!(format->content.string2show = join_strings(\
-		ft_itoa_base_array(&integer, 10), format->content.string2show, format)))
-		return (0);
+	e_rounding(&decimal, &integer, &zero_counter, format->precision);
+	array_length = int_length_array(&integer, 10) - 1;
+	if (integer.array[integer.current_element])
+	{
+		if (!(format->content.string2show = ft_itoa_base_array_precision_e(\
+		&integer, 10, format)))
+			return (0);
+		if (array_length < format->precision)
+		{
+			if (!(format->content.string2show = join_strings(format->content.string2show, \
+			ft_itoa_base_array_precision(&decimal, 10, zero_counter, format->precision - array_length), format)))
+				return(0);
+		}
+		if (!(format->content.string2show = join_postfix(format, "e+")))
+			return (0);
+		if (!(format->content.string2show = join_strings(\
+			format->content.string2show, ft_itoa_base(array_length, 10, 2), format)))
+			return (0);
+	}
+	else
+	{
+		if (!(format->content.string2show = ft_itoa_base_array_precision_e(\
+		&decimal, 10, format)))
+			return (0);
+		if (!(format->content.string2show = join_postfix(format, "e-")))
+			return (0);
+		if (!(format->content.string2show = join_strings(\
+			format->content.string2show, ft_itoa_base(zero_counter + 1, 10, 2), format)))
+			return (0);
+	}
 	return (1);
 }
 

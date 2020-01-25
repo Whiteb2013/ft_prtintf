@@ -22,7 +22,6 @@ int		apply_hash(t_format *format)
 		&& !(format->content.string2show = join_prefix("0x", format)))
 		return (0);
 	else if ((format->type == 'f' || format->type == 'F' || \
-		format->type == 'e' || format->type == 'E' || \
 		format->type == 'g' || format->type == 'G') \
 		&& !format->precision && \
 		!(format->content.string2show = join_postfix(format, ".")))
