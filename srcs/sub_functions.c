@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sub_functions.c                                      :+:      :+:    :+: */
+/*   sub_functions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmarin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/06 21:53:16 by gmarin            #+#    #+#             */
-/*   Updated: 2019/09/06 21:53:19 by gmarin           ###   ########.fr       */
+/*   Created: 2020/01/26 19:40:29 by gmarin            #+#    #+#             */
+/*   Updated: 2020/01/26 19:40:32 by gmarin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ int		get_integer(t_dbl dbl, t_float *integer, short int *exponent)
 	return (fraction_length);
 }
 
-int		get_decimal(t_dbl dbl, t_float *decimal, short int fraction_length, short int *exponent)
+int		get_decimal(t_dbl dbl, t_float *decimal, \
+					short int fraction_length, short int *exponent)
 {
 	t_float				exp;
 	unsigned long int	leading_zero_flag;
@@ -92,7 +93,8 @@ int		get_decimal(t_dbl dbl, t_float *decimal, short int fraction_length, short i
 			while ((mediator /= 10))
 				leading_zero_flag *= 10;
 			decimal->array[decimal->current_element] -= leading_zero_flag;
-			while (decimal->array[decimal->current_element] < leading_zero_flag && leading_zero_flag > 1)
+			while (decimal->array[decimal->current_element] < \
+					leading_zero_flag && leading_zero_flag > 1)
 			{
 				leading_zero_flag /= 10;
 				++leading_zero_counter;
