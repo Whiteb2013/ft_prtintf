@@ -6,13 +6,13 @@
 
 int main()
 {
-	printf("std:%.6f", -1.0);
-	puts("");
-	ft_printf("cst:%.6f", -1.0);
-	puts("");
 	printf("std:%.20f", 1.005);
 	puts("");
 	ft_printf("cst:%.20f", 1.005);
+	puts("");
+	printf("std:%.6f", -1.0);
+	puts("");
+	ft_printf("cst:%.6f", -1.0);
 	puts("");
 	printf("std:%.23f", 999364567890123456999000.6666666);
 	puts("");

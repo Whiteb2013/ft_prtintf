@@ -105,6 +105,9 @@ char						*ft_itoa_base_array_precision_e(t_float *array, \
 size_t						int_length(\
 								unsigned long long int b, unsigned int base);
 size_t						int_length_array(t_float *array, unsigned int base);
+int							subroutine_1(t_format *format, va_list ap, int k);
+int							subroutine_2(const char *str, t_format *format, \
+								va_list ap, int ap_array_that_is_crutch_bc_norm[2]);
 void						sum_integer(t_float *a, t_float *exp);
 void						sum_integer_const(\
 								t_float *a, unsigned long int value);
@@ -128,10 +131,6 @@ int							apply_flags(t_format *format);
 int							apply_precision(t_format *format);
 int							apply_precision_string(t_format *format);
 int							apply_precision_int(t_format *format);
-int							apply_precision_float(t_format *format);
-int							apply_precision_float_2(\
-								t_format *format, t_float *integer, \
-								t_float *decimal, size_t zero_counter);
 int							format_string(t_format *format);
 int							try_dollar(\
 								const char *str, t_format *format, \

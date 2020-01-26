@@ -10,4 +10,4 @@
 #                                                                              #
 # **************************************************************************** #
 
-make re && gcc -I ./srcs -I ./libft main_test_e.c -L. -lftprintf -o printf && make fclean && ./printf
+clear && make re && gcc -I ./srcs -I ./libft main_test_g.c -L. -lftprintf -o printf && make fclean && ./printf

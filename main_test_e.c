@@ -6,13 +6,25 @@
 
 int main()
 {
-	printf("std:%.20e", 123456.6666666);
-	puts("");
-	ft_printf("cst:%.20e", 123456.6666666);
-	puts("");
 	printf("std:%e", -0.0);
 	puts("");
 	ft_printf("cst:%e", -0.0);
+	puts("");
+	printf("std:%#.0e", -1.0);
+	puts("");
+	ft_printf("cst:%#.0e", -1.0);
+	puts("");
+	printf("std:%.0e", -1.0);
+	puts("");
+	ft_printf("cst:%.0e", -1.0);
+	puts("");
+	printf("std:%.0e", 0.000887);
+	puts("");
+	ft_printf("cst:%.0e", 0.000887);
+	puts("");
+	printf("std:%.23e", 123456.6666666);
+	puts("");
+	ft_printf("cst:%.23e", 123456.6666666);
 	puts("");
 	printf("std:%.6e", 0.000887);
 	puts("");

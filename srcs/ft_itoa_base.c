@@ -95,12 +95,14 @@ int		fill_first_elem(char *str, int i, t_float *array, size_t precision)
 	return (i);
 }
 
-int		fill_first_elem_e(char *str, int i, t_float *array, size_t precision)
+int		fill_first_elem_e(char *str, t_float *array, size_t precision)
 {
 	unsigned int	int2convert;
 	unsigned int	base;
 	char			*values;
+	int				i;
 
+	i = 0;
 	values = "0123456789abcdef";
 	int2convert = array->array[array->current_element];
 	base = 1;
@@ -111,7 +113,7 @@ int		fill_first_elem_e(char *str, int i, t_float *array, size_t precision)
 		str[i++] = values[int2convert/base];
 		int2convert %= base;
 		base /= 10;
-		if (i == 1)
+		if (i == 1 && i < precision)
 			str[i++] = '.';
 	}
 	array->current_element--;
@@ -163,15 +165,19 @@ char	*ft_itoa_base_array_precision_e(t_float *array, size_t base, t_format *form
 	size_t			size;
 
 	values = "0123456789abcdef";
-	size = int_length_array(array, base) - 1;
-	if (format->precision < size)
-		size = format->precision;
-	if (size + 2 > size)
-		size += 2;
+	size = int_length_array(array, base);
+	if (format->precision < size - 1)
+		size = format->precision + 1;
+	if (format->precision || format->flag.hash == 't')
+	{
+		if (size + 1 < size)
+			return (NULL);
+		size++;
+	}
 	if (!(str = ft_strnew(size)))
 		return (NULL);
 	str[size] = '\0';
-	i = fill_first_elem_e(str, 0, array, size);
+	i = fill_first_elem_e(str, array, size);
 	while (i < size)
 	{
 		if (array->current_element >= 0)
