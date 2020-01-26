@@ -80,6 +80,7 @@ void						get_options(\
 								va_list ap, int i);
 int							check_options(char c, char mode);
 int							check_type(char c);
+int							check_double_exceptions(t_format *format, t_dbl dbl);
 int							convert2string(t_format *format, va_list ap);
 int							convert_int2string(\
 								t_format *format, long long int a, size_t base);
@@ -105,6 +106,10 @@ char						*ft_itoa_base_array_precision_e(t_float *array, \
 size_t						int_length(\
 								unsigned long long int b, unsigned int base);
 size_t						int_length_array(t_float *array, unsigned int base);
+void						rounding(t_float *decimal, t_float *integer, \
+								size_t *zero_counter, size_t precision);
+void						e_rounding(t_float *decimal, t_float *integer, \
+								size_t *zero_counter, size_t precision);
 int							subroutine_1(t_format *format, va_list ap, int k);
 int							subroutine_2(const char *str, t_format *format, \
 								va_list ap, \
