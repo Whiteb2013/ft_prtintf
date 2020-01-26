@@ -56,7 +56,7 @@ int	e_rounding(t_float *decimal, t_float *integer, size_t *zero_counter, size_t 
 		else
 		{
 		array_elem_id -= (precision + 1 - first_elem_len) / BASE_LEN;
-		digit_in_elem = (precision + 1) % BASE_LEN;
+		digit_in_elem = (precision + 1 - first_elem_len) % BASE_LEN;
 		}
 		if (check_for_rounding(integer, array_elem_id, digit_in_elem))
 			sum_integer_const(integer, 1);
@@ -191,6 +191,19 @@ int		convert_e2string(t_format *format, t_float *integer, t_float *decimal, size
 
 int		convert_g2string(t_format *format, t_float *integer, t_float *decimal, size_t zero_counter)
 {
+	if ((integer->array[integer->current_element] && int_length_array(integer, 10) <= format->precision) || \
+		(!integer->array[integer->current_element] && zero_counter < 4))
+		{
+			if (!convert_f2string(format, integer, decimal, zero_counter))
+				return (0);
+		}
+	else
+	{
+		if (format->precision)
+			format->precision--;
+		if (!convert_e2string(format, integer, decimal, zero_counter))
+			return (0);
+	}
 	return (1);
 }
 
@@ -219,7 +232,7 @@ int		convert_fge2string(t_format *format, long double a)
 		if (!convert_g2string(format, &integer, &decimal, zero_counter))
 			return (0);
 	}
-	if (format->type == 'f' || format->type == 'F')
+	else if (format->type == 'f' || format->type == 'F')
 	{
 		if (!convert_f2string(format, &integer, &decimal, zero_counter))
 			return (0);
