@@ -109,12 +109,6 @@ size_t	count_leading_zeros(double a, char sign)
 	return (counter);
 }
 
-void	clean_exp(t_float *exp)
-{
-	while ((*exp).current_element >= 0)
-		(*exp).array[(*exp).current_element--] = 0;
-}
-
 int		check_double_exceptions(t_format *format, t_dbl dbl)
 {
 	if (((dbl.t_union.mantissa >> 63) & 1L) == 0)
@@ -247,7 +241,6 @@ int		convert_fge2string(t_format *format, long double a)
 	t_dbl				dbl;
 	short int			exponent;
 	size_t				zero_counter;
-	int					fraction_length;
 
 	array_cleaner(&integer);
 	array_cleaner(&decimal);
@@ -258,8 +251,7 @@ int		convert_fge2string(t_format *format, long double a)
 		format->content.sign = '-';
 	exponent = dbl.t_union.exponent - EXP_DFLT;
 	zero_counter = count_leading_zeros(a, format->content.sign);
-	fraction_length = get_integer(dbl, &integer, &exponent);
-	zero_counter += get_decimal(dbl, &decimal, fraction_length, exponent);
+	zero_counter += get_decimal(dbl, &decimal, get_integer(dbl, &integer, &exponent), &exponent);
 	if (format->type == 'g' || format->type == 'G')
 	{
 		if (!convert_g2string(format, &integer, &decimal, zero_counter))
@@ -277,72 +269,3 @@ int		convert_fge2string(t_format *format, long double a)
 	}
 	return (1);
 }
-
-/* old fge2string
-int		convert_efloat2string(t_format *format, double a)
-{
-	t_dbl				dbl;
-	t_float				integer;
-	t_float				decimal;
-	int					i;
-	char				str[65];
-	short int			exponent;
-	int					fraction_length;
-	size_t				zero_counter;
-
-	dbl.dbl = (long double)a;
-	printf("Value=%d\n", dbl.t_union.sign);
-	printf("Mantissa =%lu\n", dbl.t_union.mantissa);
-	printf("Exponent =%d\n", dbl.t_union.exponent);
-	i = 0;
-	while (i < 64)
-		{
-			if (((dbl.t_union.mantissa >> i) & 1L) == 1L)
-				str[i] = '1';
-			else
-				str[i] = '0';
-			i++;
-		}
-	str[64] = '\0';
-	printf("%s\n", str);
-	if (dbl.t_union.exponent == 32767 && !check_double_exceptions(format, dbl))
-		return (1);
-	if (dbl.t_union.sign)
-		format->content.sign = '-';
-	exponent = dbl.t_union.exponent - EXP_DFLT;
-	zero_counter = count_leading_zeros(a, format->content.sign);
-	printf("Exponent before get_int = %hd\n", exponent);
-	array_cleaner(&integer);
-	fraction_length = get_integer(dbl, &integer, &exponent);
-	array_cleaner(&decimal);
-	zero_counter += get_decimal_2(dbl, &decimal, fraction_length, exponent);
-	printf("Leading zeros = %zu\n", zero_counter);
-	i = 0;
-	while (i <= integer.current_element)
-	{
-		printf("Int[%d] = %lu", i, integer.array[i]);
-		i++;
-	}
-	puts("");
-	i = 0;
-	while (i <= decimal.current_element)
-	{
-		printf("Dec[%d] = %lu", i, decimal.array[i]);
-		i++;
-	}
-	puts("");
-	//rounding: 0 - applied, no impact, 1 - applied, impact on integer,
-	//2 - applied, impact on leading zeros
-	rounding(&decimal, &integer, &zero_counter, format);
-	if (!(format->content.string2show = ft_itoa_base_array_precision(\
-		&decimal, 10, zero_counter, format->precision)))
-		return (0);
-	if (format->precision && !(format->content.string2show = join_prefix(\
-		".", format)))
-		return (0);
-	if (!(format->content.string2show = join_strings(\
-		ft_itoa_base_array(&integer, 10), format->content.string2show, format)))
-		return (0);
-	return (1);
-}
-*/

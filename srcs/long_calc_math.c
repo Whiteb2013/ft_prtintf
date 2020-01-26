@@ -81,8 +81,6 @@ int		sum_decimal_const(t_float *a, size_t *zero_counter, int array_elem_id, int 
 	else
 	{
 		base = int_length(a->array[a->current_element], 10);
-		//if (!digit_in_elem)
-		//	digit_in_elem = base;
 		while (digit_in_elem++ != base)
 			value *= 10;
 	}

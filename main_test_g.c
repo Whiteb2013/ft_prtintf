@@ -6,9 +6,9 @@
 
 int main()
 {
-	printf("std:%.4g", 123456.6666666);
+	printf("std:%.3g", 123456.6666666);
 	puts("");
-	ft_printf("cst:%.4g", 123456.6666666);
+	ft_printf("cst:%.3g", 123456.6666666);
 	puts("");
 	printf("std:%.4e", 123456.6666666);
 	puts("");

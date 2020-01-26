@@ -60,7 +60,7 @@ int		get_integer(t_dbl dbl, t_float *integer, short int *exponent)
 	return (fraction_length);
 }
 
-int		get_decimal(t_dbl dbl, t_float *decimal, short int fraction_length, short int exponent)
+int		get_decimal(t_dbl dbl, t_float *decimal, short int fraction_length, short int *exponent)
 {
 	t_float				exp;
 	unsigned long int	leading_zero_flag;
@@ -68,16 +68,15 @@ int		get_decimal(t_dbl dbl, t_float *decimal, short int fraction_length, short i
 	size_t				leading_zero_counter;
 
 	array_cleaner(&exp);
-	exponent = -exponent;
+	*exponent = -*exponent;
 	leading_zero_flag = 0;
 	leading_zero_counter = 0;
-	if (exponent != EXP_DFLT)
+	if (*exponent != EXP_DFLT)
 	{
 		while (fraction_length-- > 0)
 		{
 			if (((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L)
-				sum_decimal(decimal, power(5, exponent, &exp));
-			//insert here leading zero check.
+				sum_decimal(decimal, power(5, *exponent, &exp));
 			else if (!decimal->current_element && !decimal->array[0])
 			{
 				decimal->array[0] = 1;
@@ -85,9 +84,7 @@ int		get_decimal(t_dbl dbl, t_float *decimal, short int fraction_length, short i
 			}
 			else
 				sum_decimal(decimal, &exp);
-			++exponent;
-			//printf("\ndecimal-> %d, exp-> %d", decimal->current_element, exp.current_element);
-			//printf("fraction_length = %hd, byte = %d\n", fraction_length, ((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L);
+			++*exponent;
 		}
 		if (leading_zero_flag)
 		{

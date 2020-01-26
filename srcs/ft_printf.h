@@ -120,7 +120,7 @@ t_float						*power(\
 								unsigned long int base, short int power, \
 								t_float *exp);
 int							get_decimal(t_dbl dbl, t_float *decimal, \
-								short int fraction_length, short int exponent);
+								short int fraction_length, short int *exponent);
 int							get_integer(t_dbl dbl, t_float *integer, \
 								short int *exponent);
 char						*join_prefix(char *s1, t_format *format);
