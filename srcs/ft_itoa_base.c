@@ -87,7 +87,7 @@ int		fill_first_elem(char *str, int i, t_float *array, size_t precision)
 		base *= 10;
 	while (base && i < precision)
 	{
-		str[i++] = values[int2convert/base];
+		str[i++] = values[int2convert / base];
 		int2convert %= base;
 		base /= 10;
 	}
@@ -110,7 +110,7 @@ int		fill_first_elem_e(char *str, t_float *array, size_t precision)
 		base *= 10;
 	while (base && i < precision)
 	{
-		str[i++] = values[int2convert/base];
+		str[i++] = values[int2convert / base];
 		int2convert %= base;
 		base /= 10;
 		if (i == 1 && i < precision)
@@ -120,7 +120,8 @@ int		fill_first_elem_e(char *str, t_float *array, size_t precision)
 	return (i);
 }
 
-char	*ft_itoa_base_array_precision(t_float *array, size_t base, size_t zero_counter, size_t precision)
+char	*ft_itoa_base_array_precision(t_float *array, size_t base, \
+										size_t zero_counter, size_t precision)
 {
 	char			*str;
 	char			*values;
@@ -143,7 +144,7 @@ char	*ft_itoa_base_array_precision(t_float *array, size_t base, size_t zero_coun
 			base = BASE / 10;
 			while (base && precision - i)
 			{
-				str[i] = values[int2convert/base];
+				str[i] = values[int2convert / base];
 				int2convert %= base;
 				base /= 10;
 				i++;
@@ -156,7 +157,8 @@ char	*ft_itoa_base_array_precision(t_float *array, size_t base, size_t zero_coun
 	return (str);
 }
 
-char	*ft_itoa_base_array_precision_e(t_float *array, size_t base, t_format *format)
+char	*ft_itoa_base_array_precision_e(t_float *array, \
+										size_t base, t_format *format)
 {
 	char			*str;
 	char			*values;
@@ -186,7 +188,7 @@ char	*ft_itoa_base_array_precision_e(t_float *array, size_t base, t_format *form
 			base = BASE / 10;
 			while (base && size - i)
 			{
-				str[i] = values[int2convert/base];
+				str[i] = values[int2convert / base];
 				int2convert %= base;
 				base /= 10;
 				i++;
