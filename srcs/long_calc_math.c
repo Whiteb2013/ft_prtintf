@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   long_calc_math.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gmarin <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/26 19:23:21 by gmarin            #+#    #+#             */
+/*   Updated: 2020/01/26 19:23:26 by gmarin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 void	sum_integer(t_float *a, t_float *exp)
@@ -11,14 +23,14 @@ void	sum_integer(t_float *a, t_float *exp)
 		sum = a->array[i] + exp->array[i];
 		a->array[i + 1] += sum / BASE;
 		a->array[i] = sum % BASE;
-		//printf("Sum_a[%d] = %lu, exp[%d] = %lu, sum/BASE = %lu\n", i, (*a).array[i], i, (*exp).array[i], sum / BASE);
+		// printf("Sum_a[%d] = %lu, exp[%d] = %lu, sum/BASE = %lu\n", i, (*a).array[i], i, (*exp).array[i], sum / BASE);
 		i++;
 	}
 	if (a->array[i])
 		a->current_element = i;
 	else
 		a->current_element = i - 1;
-	//check if may be cleaned earlier
+	// check if may be cleaned earlier
 	array_cleaner(exp);
 }
 
@@ -34,7 +46,7 @@ void	sum_integer_const(t_float *a, unsigned long int value)
 
 void	sum_decimal(t_float *a, t_float *exp)
 {
-	int	i;
+	int					i;
 	unsigned long int	mediator_next;
 	unsigned long int	mediator_prev;
 
@@ -42,10 +54,12 @@ void	sum_decimal(t_float *a, t_float *exp)
 	mediator_prev = 0;
 	while (i <= a->current_element || i <= exp->current_element)
 	{
-		mediator_next = (mediator_prev + (*a).array[i] * 10 + (*exp).array[i]) / BASE;
-		(*a).array[i] = (mediator_prev + (*a).array[i] * 10 + (*exp).array[i]) % BASE;
+		mediator_next = \
+			(mediator_prev + (*a).array[i] * 10 + (*exp).array[i]) / BASE;
+		(*a).array[i] = \
+			(mediator_prev + (*a).array[i] * 10 + (*exp).array[i]) % BASE;
 		mediator_prev = mediator_next;
-		//printf("Sum_a[%d] = %lu, exp[%d] = %lu\n", i, (*a).array[i], i, (*exp).array[i]);
+		// printf("Sum_a[%d] = %lu, exp[%d] = %lu\n", i, (*a).array[i], i, (*exp).array[i]);
 		i++;
 	}
 	if (mediator_next)
@@ -55,11 +69,12 @@ void	sum_decimal(t_float *a, t_float *exp)
 	}
 	else
 		(*a).current_element = i - 1;
-	//check if may be cleaned earlier
+	// check if may be cleaned earlier
 	array_cleaner(exp);
 }
 
-int		sum_decimal_const(t_float *a, size_t *zero_counter, int array_elem_id, int digit_in_elem)
+int		sum_decimal_const(t_float *a, size_t *zero_counter, \
+							int array_elem_id, int digit_in_elem)
 {
 	t_float			b;
 	unsigned int	value;
@@ -89,7 +104,8 @@ int		sum_decimal_const(t_float *a, size_t *zero_counter, int array_elem_id, int 
 	value = a->array[a->current_element];
 	array_elem_id = a->current_element;
 	sum_integer(a, &b);
-	if (a->current_element > array_elem_id || int_length(a->array[a->current_element], 10) > int_length(value, 10))
+	if (a->current_element > array_elem_id || \
+		int_length(a->array[a->current_element], 10) > int_length(value, 10))
 	{
 		if (*zero_counter)
 		{
@@ -101,15 +117,18 @@ int		sum_decimal_const(t_float *a, size_t *zero_counter, int array_elem_id, int 
 			if (a->current_element > array_elem_id)
 			{
 				a->array[a->current_element--] = 0;
-				zero_plus = int_length(value, 10) - int_length(a->array[a->current_element], 10);
+				zero_plus = int_length(value, 10) - \
+								int_length(a->array[a->current_element], 10);
 			}
 			else
 			{
 				base = BASE;
-				while (int_length(base, 10) > int_length(a->array[a->current_element], 10))
+				while (int_length(base, 10) > \
+						int_length(a->array[a->current_element], 10))
 					base /= 10;
 				a->array[a->current_element] -= base;
-				zero_plus = int_length(value, 10) - int_length(a->array[a->current_element], 10);
+				zero_plus = int_length(value, 10) - \
+								int_length(a->array[a->current_element], 10);
 			}
 			*zero_counter = zero_plus;
 			return (1);
@@ -120,7 +139,7 @@ int		sum_decimal_const(t_float *a, size_t *zero_counter, int array_elem_id, int 
 
 t_float	*power(unsigned long int base, short int power, t_float *exp)
 {
-	int	i;
+	int					i;
 	unsigned long int	mediator_next;
 	unsigned long int	mediator_prev;
 
@@ -142,7 +161,7 @@ t_float	*power(unsigned long int base, short int power, t_float *exp)
 			(*exp).array[i] = mediator_next;
 			(*exp).current_element = i;
 		}
-		//printf("Power_Elem[0] = %lu, elem[1] = %lu, elem_counter = %d\n", (*exp).array[0], (*exp).array[1], (*exp).current_element);
+		// printf("Power_Elem[0] = %lu, elem[1] = %lu, elem_counter = %d\n", (*exp).array[0], (*exp).array[1], (*exp).current_element);
 	}
 	return (exp);
 }
