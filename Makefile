@@ -5,6 +5,7 @@ LIB_DIR = ./libft
 
 SRC_FILES =	ft_printf.c \
 			parameter_parser.c \
+			parameter_parser_subroutines.c \
 			check_options.c \
 			get_unformatted_string.c \
 			get_unformatted_string_2.c \

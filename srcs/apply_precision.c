@@ -52,45 +52,6 @@ int		apply_precision_int(t_format *format)
 	return (1);
 }
 
-int		apply_precision_float(t_format *format)
-{
-	format->length = ft_strlen(format->content.string2show);
-	if (!apply_precision_int(format))
-		return (0);
-	if (!(format->content.string2show = join_prefix(".", format)))
-		return (0);
-	return (1);
-}
-
-int		apply_precision_float_2(t_format *format, t_float *integer, \
-								t_float *decimal, size_t zero_counter)
-{
-	size_t	decimal_counter;
-	size_t	first_elem_length;
-	int		mediator;
-
-	first_elem_length = int_length(decimal->array[0], 10);
-	if (format->precision >= zero_counter + first_elem_length)
-	{
-		mediator = decimal->current_element - \
-			(format->precision - zero_counter - first_elem_length) / BASE_LEN;
-		decimal_counter = (format->precision - \
-			zero_counter - first_elem_length) % BASE_LEN;
-	}
-	else if (format->precision >= zero_counter)
-	{
-		decimal->current_element = 0;
-		decimal_counter = (format->precision - zero_counter) % BASE_LEN;
-	}
-	else
-	{
-		decimal->current_element = 0;
-		array_cleaner(decimal);
-	}
-	//apply rounding within array;
-	return (1);
-}
-
 int		apply_precision(t_format *format)
 {
 	if (format->type == 's' && !apply_precision_string(format))
