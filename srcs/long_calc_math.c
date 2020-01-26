@@ -32,13 +32,30 @@ void	sum_integer(t_float *a, t_float *exp)
 	array_cleaner(exp);
 }
 
-void	sum_integer_const(t_float *a, unsigned long int value)
+void	sum_integer_const(t_float *a, int array_elem_id, int digit_in_elem, unsigned long int value)
 {
-	t_float	b;
+	t_float			b;
+	unsigned int	base;
 
 	array_cleaner(&b);
-	b.array[0] = value;
-	b.current_element = 0;
+	if (a->current_element != array_elem_id)
+	{
+		if (!digit_in_elem)
+		{
+			array_elem_id++;
+			digit_in_elem = BASE_LEN;
+		}
+		while (digit_in_elem++ != BASE_LEN)
+			value *= 10;
+	}
+	else
+	{
+		base = int_length(a->array[a->current_element], 10);
+		while (digit_in_elem++ != base)
+			value *= 10;
+	}
+	b.array[array_elem_id] = value;
+	b.current_element = array_elem_id;
 	sum_integer(a, &b);
 }
 
@@ -72,36 +89,16 @@ void	sum_decimal(t_float *a, t_float *exp)
 int		sum_decimal_const(t_float *a, size_t *zero_counter, \
 							int array_elem_id, int digit_in_elem)
 {
-	t_float			b;
-	unsigned int	value;
+	unsigned int	current_value;
+	unsigned int	top_element;
 	unsigned int	base;
 	size_t			zero_plus;
 
-	value = 1;
-	array_cleaner(&b);
-	if (a->current_element != array_elem_id)
-	{
-		if (!digit_in_elem)
-		{
-			array_elem_id++;
-			digit_in_elem = BASE_LEN;
-		}
-		while (digit_in_elem++ != BASE_LEN)
-			value *= 10;
-	}
-	else
-	{
-		base = int_length(a->array[a->current_element], 10);
-		while (digit_in_elem++ != base)
-			value *= 10;
-	}
-	b.array[array_elem_id] = value;
-	b.current_element = array_elem_id;
-	value = a->array[a->current_element];
-	array_elem_id = a->current_element;
-	sum_integer(a, &b);
-	if (a->current_element > array_elem_id || \
-		int_length(a->array[a->current_element], 10) > int_length(value, 10))
+	top_element = a->current_element;
+	current_value = a->array[top_element];
+	sum_integer_const(a, array_elem_id, digit_in_elem, 1);
+	if (a->current_element > top_element || \
+		int_length(a->array[a->current_element], 10) > int_length(current_value, 10))
 	{
 		if (*zero_counter)
 		{
@@ -110,10 +107,10 @@ int		sum_decimal_const(t_float *a, size_t *zero_counter, \
 		}
 		else
 		{
-			if (a->current_element > array_elem_id)
+			if (a->current_element > top_element)
 			{
 				a->array[a->current_element--] = 0;
-				zero_plus = int_length(value, 10) - \
+				zero_plus = int_length(current_value, 10) - \
 								int_length(a->array[a->current_element], 10);
 			}
 			else
@@ -123,7 +120,7 @@ int		sum_decimal_const(t_float *a, size_t *zero_counter, \
 						int_length(a->array[a->current_element], 10))
 					base /= 10;
 				a->array[a->current_element] -= base;
-				zero_plus = int_length(value, 10) - \
+				zero_plus = int_length(current_value, 10) - \
 								int_length(a->array[a->current_element], 10);
 			}
 			*zero_counter = zero_plus;

@@ -12,19 +12,19 @@
 
 #include "ft_printf.h"
 
-int		check_for_rounding(t_float *decimal, int array_elem_id, \
+int		check_for_rounding(t_float *array, int array_elem_id, \
 							int digit_in_elem)
 {
 	unsigned long int	comp_base;
 
 	comp_base = BASE;
-	if (array_elem_id == decimal->current_element)
+	if (array_elem_id == array->current_element)
 		while ((int_length(comp_base, 10) - \
-				int_length(decimal->array[array_elem_id], 10)) > 1)
+				int_length(array->array[array_elem_id], 10)) > 1)
 			comp_base /= 10;
 	while (digit_in_elem--)
 		comp_base /= 10;
-	if (decimal->array[array_elem_id] % comp_base < comp_base / 2)
+	if (array->array[array_elem_id] % comp_base < comp_base / 2)
 		return (0);
 	return (1);
 }
@@ -59,10 +59,10 @@ void	rounding(t_float *decimal, t_float *integer, \
 	if (check_for_rounding(decimal, array_elem_id, digit_in_elem))
 		if (sum_decimal_const(decimal, zero_counter, \
 			array_elem_id, digit_in_elem) == 1)
-			sum_integer_const(integer, 1);
+			sum_integer_const(integer, 0, 4, 1);
 }
 
-void	e_rounding(t_float *decimal, t_float *integer, \
+void	e_rounding(t_float *array, t_float *integer, \
 					size_t *zero_counter, size_t precision)
 {
 	size_t	first_elem_len;
@@ -79,14 +79,15 @@ void	e_rounding(t_float *decimal, t_float *integer, \
 			digit_in_elem = precision + 1;
 		else
 		{
-			array_elem_id -= (precision + 1 - first_elem_len) / BASE_LEN;
+			if ((array_elem_id -= (precision + 1 - first_elem_len) / BASE_LEN + 1) < 0)
+				return ;
 			digit_in_elem = (precision + 1 - first_elem_len) % BASE_LEN;
 		}
 		if (check_for_rounding(integer, array_elem_id, digit_in_elem))
-			sum_integer_const(integer, 1);
+			sum_integer_const(integer, array_elem_id, digit_in_elem, 1);
 	}
 	else if (integer->array[array_elem_id])
-		rounding(decimal, integer, zero_counter, precision - array_length);
+		rounding(array, integer, zero_counter, precision - array_length);
 	else if (precision < precision + *zero_counter + 1)
-		rounding(decimal, integer, zero_counter, precision + *zero_counter + 1);
+		rounding(array, integer, zero_counter, precision + *zero_counter + 1);
 }

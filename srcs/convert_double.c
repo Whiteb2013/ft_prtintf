@@ -97,10 +97,16 @@ int		convert_e2string(t_format *format, t_float *integer, \
 int		convert_g2string(t_format *format, t_float *integer, \
 							t_float *decimal, size_t zero_counter)
 {
-	if ((integer->array[integer->current_element] && \
-			int_length_array(integer, 10) <= format->precision) || \
+	size_t		array_len;
+
+	array_len = int_length_array(integer, 10);
+	if (!format->precision)
+		format->precision = 1;
+	if ((integer->array[integer->current_element] && array_len <= format->precision) || \
 		(!integer->array[integer->current_element] && zero_counter < 4))
 	{
+		if (format->precision >= array_len && integer->array[integer->current_element])
+			format->precision -= array_len;
 		if (!convert_f2string(format, integer, decimal, zero_counter))
 			return (0);
 	}
@@ -111,6 +117,10 @@ int		convert_g2string(t_format *format, t_float *integer, \
 		if (!convert_e2string(format, integer, decimal, zero_counter))
 			return (0);
 	}
+	//if there is a '.' encountered within a string &&
+	//format->flag.hash == 'f' &&
+	//last symbol is 0
+	//=> remove symbol
 	return (1);
 }
 

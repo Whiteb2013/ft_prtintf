@@ -108,15 +108,15 @@ size_t						int_length(\
 size_t						int_length_array(t_float *array, unsigned int base);
 void						rounding(t_float *decimal, t_float *integer, \
 								size_t *zero_counter, size_t precision);
-void						e_rounding(t_float *decimal, t_float *integer, \
+void						e_rounding(t_float *array, t_float *integer, \
 								size_t *zero_counter, size_t precision);
 int							subroutine_1(t_format *format, va_list ap, int k);
 int							subroutine_2(const char *str, t_format *format, \
 								va_list ap, \
 								int ap_array_that_is_crutch_bc_norm[2]);
 void						sum_integer(t_float *a, t_float *exp);
-void						sum_integer_const(\
-								t_float *a, unsigned long int value);
+void						sum_integer_const(t_float *a, int array_elem_id, \
+								int digit_in_elem, unsigned long int value);
 void						sum_decimal(t_float *a, t_float *exp);
 int							sum_decimal_const(t_float *a, \
 								size_t *zero_counter, int array_elem_id, \
