@@ -1,12 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   convert_double.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gmarin <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/26 18:49:53 by gmarin            #+#    #+#             */
+/*   Updated: 2020/01/26 18:50:31 by gmarin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-int		check_for_rounding(t_float *decimal, int array_elem_id, int digit_in_elem)
+int		check_for_rounding(t_float *decimal, int array_elem_id, \
+							int digit_in_elem)
 {
 	unsigned long int	comp_base;
 
 	comp_base = BASE;
 	if (array_elem_id == decimal->current_element)
-		while ((int_length(comp_base, 10) - int_length(decimal->array[array_elem_id], 10)) > 1)
+		while ((int_length(comp_base, 10) - \
+				int_length(decimal->array[array_elem_id], 10)) > 1)
 			comp_base /= 10;
 	while (digit_in_elem--)
 		comp_base /= 10;
@@ -15,8 +29,15 @@ int		check_for_rounding(t_float *decimal, int array_elem_id, int digit_in_elem)
 	return (1);
 }
 
-//rounding: 0 - applied, no impact, 1 - applied, impact on integer, 2 - applied, impact on leading zeros
-void	rounding(t_float *decimal, t_float *integer, size_t *zero_counter, size_t precision)
+/*
+** rounding:
+** 0 - applied, no impact
+** 1 - applied, impact on integer
+** 2 - applied, impact on leading zeros
+*/
+
+void	rounding(t_float *decimal, t_float *integer, \
+					size_t *zero_counter, size_t precision)
 {
 	size_t	first_elem_len;
 	int		array_elem_id;
@@ -30,16 +51,19 @@ void	rounding(t_float *decimal, t_float *integer, size_t *zero_counter, size_t p
 		digit_in_elem = precision - *zero_counter;
 	else
 	{
-		if ((array_elem_id -= (precision - *zero_counter - first_elem_len) / BASE_LEN + 1) < 0)
+		if ((array_elem_id -= (precision - *zero_counter - first_elem_len) /\
+				BASE_LEN + 1) < 0)
 			return ;
 		digit_in_elem = (precision - *zero_counter - first_elem_len) % BASE_LEN;
 	}
 	if (check_for_rounding(decimal, array_elem_id, digit_in_elem))
-		if (sum_decimal_const(decimal, zero_counter, array_elem_id, digit_in_elem) == 1)
+		if (sum_decimal_const(decimal, zero_counter, \
+			array_elem_id, digit_in_elem) == 1)
 			sum_integer_const(integer, 1);
 }
 
-int	e_rounding(t_float *decimal, t_float *integer, size_t *zero_counter, size_t precision)
+int		e_rounding(t_float *decimal, t_float *integer, \
+					size_t *zero_counter, size_t precision)
 {
 	size_t	first_elem_len;
 	size_t	array_length;
@@ -55,8 +79,8 @@ int	e_rounding(t_float *decimal, t_float *integer, size_t *zero_counter, size_t 
 			digit_in_elem = precision + 1;
 		else
 		{
-		array_elem_id -= (precision + 1 - first_elem_len) / BASE_LEN;
-		digit_in_elem = (precision + 1 - first_elem_len) % BASE_LEN;
+			array_elem_id -= (precision + 1 - first_elem_len) / BASE_LEN;
+			digit_in_elem = (precision + 1 - first_elem_len) % BASE_LEN;
 		}
 		if (check_for_rounding(integer, array_elem_id, digit_in_elem))
 			sum_integer_const(integer, 1);
@@ -70,8 +94,7 @@ int	e_rounding(t_float *decimal, t_float *integer, size_t *zero_counter, size_t 
 	return (1);
 }
 
-
-size_t	count_leading_zeros (double a, char sign)
+size_t	count_leading_zeros(double a, char sign)
 {
 	size_t	counter;
 
@@ -123,7 +146,8 @@ int		check_double_exceptions(t_format *format, t_dbl dbl)
 				format->content.string2show = ft_strdup("nan");
 		}
 	}
-	if (!ft_strcmp(format->content.string2show, "nan") || !ft_strcmp(format->content.string2show, "inf"))
+	if (!ft_strcmp(format->content.string2show, "nan") || \
+		!ft_strcmp(format->content.string2show, "inf"))
 	{
 		format->content.sign = '\0';
 		return (0);
@@ -137,7 +161,8 @@ int		check_double_exceptions(t_format *format, t_dbl dbl)
 ** var "decimal" contains everything after separator
 */
 
-int		convert_f2string(t_format *format, t_float *integer, t_float *decimal, size_t zero_counter)
+int		convert_f2string(t_format *format, t_float *integer, \
+							t_float *decimal, size_t zero_counter)
 {
 	rounding(decimal, integer, &zero_counter, format->precision);
 	if (!(format->content.string2show = ft_itoa_base_array_precision(\
@@ -152,27 +177,32 @@ int		convert_f2string(t_format *format, t_float *integer, t_float *decimal, size
 	return (1);
 }
 
-int		convert_e2string(t_format *format, t_float *integer, t_float *decimal, size_t zero_counter)
+int		convert_e2string(t_format *format, t_float *integer, \
+							t_float *decimal, size_t zero_counter)
 {
 	size_t				array_length;
 
 	e_rounding(decimal, integer, &zero_counter, format->precision);
 	array_length = int_length_array(integer, 10) - 1;
-	if (integer->array[integer->current_element] || !decimal->array[decimal->current_element])
+	if (integer->array[integer->current_element] || \
+		!decimal->array[decimal->current_element])
 	{
 		if (!(format->content.string2show = ft_itoa_base_array_precision_e(\
 		integer, 10, format)))
 			return (0);
 		if (array_length < format->precision)
 		{
-			if (!(format->content.string2show = join_strings(format->content.string2show, \
-			ft_itoa_base_array_precision(decimal, 10, zero_counter, format->precision - array_length), format)))
-				return(0);
+			if (!(format->content.string2show = \
+					join_strings(format->content.string2show, \
+					ft_itoa_base_array_precision(decimal, 10, zero_counter, \
+					format->precision - array_length), format)))
+				return (0);
 		}
 		if (!(format->content.string2show = join_postfix(format, "e+")))
 			return (0);
-		if (!(format->content.string2show = join_strings(\
-			format->content.string2show, ft_itoa_base(array_length, 10, 2), format)))
+		if (!(format->content.string2show = \
+				join_strings(format->content.string2show, \
+				ft_itoa_base(array_length, 10, 2), format)))
 			return (0);
 	}
 	else
@@ -182,21 +212,24 @@ int		convert_e2string(t_format *format, t_float *integer, t_float *decimal, size
 			return (0);
 		if (!(format->content.string2show = join_postfix(format, "e-")))
 			return (0);
-		if (!(format->content.string2show = join_strings(\
-			format->content.string2show, ft_itoa_base(zero_counter + 1, 10, 2), format)))
+		if (!(format->content.string2show = \
+				join_strings(format->content.string2show, \
+				ft_itoa_base(zero_counter + 1, 10, 2), format)))
 			return (0);
 	}
 	return (1);
 }
 
-int		convert_g2string(t_format *format, t_float *integer, t_float *decimal, size_t zero_counter)
+int		convert_g2string(t_format *format, t_float *integer, \
+							t_float *decimal, size_t zero_counter)
 {
-	if ((integer->array[integer->current_element] && int_length_array(integer, 10) <= format->precision) || \
+	if ((integer->array[integer->current_element] && \
+			int_length_array(integer, 10) <= format->precision) || \
 		(!integer->array[integer->current_element] && zero_counter < 4))
-		{
-			if (!convert_f2string(format, integer, decimal, zero_counter))
-				return (0);
-		}
+	{
+		if (!convert_f2string(format, integer, decimal, zero_counter))
+			return (0);
+	}
 	else
 	{
 		if (format->precision)
@@ -298,7 +331,8 @@ int		convert_efloat2string(t_format *format, double a)
 		i++;
 	}
 	puts("");
-	//rounding: 0 - applied, no impact, 1 - applied, impact on integer, 2 - applied, impact on leading zeros
+	//rounding: 0 - applied, no impact, 1 - applied, impact on integer,
+	//2 - applied, impact on leading zeros
 	rounding(&decimal, &integer, &zero_counter, format);
 	if (!(format->content.string2show = ft_itoa_base_array_precision(\
 		&decimal, 10, zero_counter, format->precision)))
