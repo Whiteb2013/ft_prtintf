@@ -71,7 +71,6 @@ typedef struct				s_float
 int							display_static_buffer(const char **str, int i);
 int							display_parameter_buffer(t_format *format);
 int							ft_printf(const char *str, ...);
-// int						ft_printf_2(const char *str, ...);
 int							get_type(\
 								const char *str, t_format *format, \
 								va_list ap_root);
@@ -80,7 +79,8 @@ void						get_options(\
 								va_list ap, int i);
 int							check_options(char c, char mode);
 int							check_type(char c);
-int							check_double_exceptions(t_format *format, t_dbl dbl);
+int							check_double_exceptions(t_format *format, \
+								t_dbl dbl);
 int							convert2string(t_format *format, va_list ap);
 int							convert_int2string(\
 								t_format *format, long long int a, size_t base);

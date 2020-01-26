@@ -44,7 +44,9 @@ int		convert_f2string(t_format *format, t_float *integer, \
 		".", format)))
 		return (0);
 	if (!(format->content.string2show = join_strings(\
-		ft_itoa_base_array(integer, 10), format->content.string2show, format)))
+		ft_itoa_base_array_precision(integer, 10, 0, \
+		int_length_array(integer, 10)), \
+		format->content.string2show, format)))
 		return (0);
 	return (1);
 }
@@ -129,7 +131,8 @@ int		convert_fge2string(t_format *format, long double a)
 		format->content.sign = '-';
 	exponent = dbl.t_union.exponent - EXP_DFLT;
 	zero_counter = count_leading_zeros(a, format->content.sign);
-	zero_counter += get_decimal(dbl, &decimal, get_integer(dbl, &integer, &exponent), &exponent);
+	zero_counter += get_decimal(dbl, &decimal, \
+		get_integer(dbl, &integer, &exponent), &exponent);
 	if (format->type == 'g' || format->type == 'G')
 	{
 		if (!convert_g2string(format, &integer, &decimal, zero_counter))

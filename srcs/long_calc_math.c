@@ -23,14 +23,12 @@ void	sum_integer(t_float *a, t_float *exp)
 		sum = a->array[i] + exp->array[i];
 		a->array[i + 1] += sum / BASE;
 		a->array[i] = sum % BASE;
-		// printf("Sum_a[%d] = %lu, exp[%d] = %lu, sum/BASE = %lu\n", i, (*a).array[i], i, (*exp).array[i], sum / BASE);
 		i++;
 	}
 	if (a->array[i])
 		a->current_element = i;
 	else
 		a->current_element = i - 1;
-	// check if may be cleaned earlier
 	array_cleaner(exp);
 }
 
@@ -59,7 +57,6 @@ void	sum_decimal(t_float *a, t_float *exp)
 		(*a).array[i] = \
 			(mediator_prev + (*a).array[i] * 10 + (*exp).array[i]) % BASE;
 		mediator_prev = mediator_next;
-		// printf("Sum_a[%d] = %lu, exp[%d] = %lu\n", i, (*a).array[i], i, (*exp).array[i]);
 		i++;
 	}
 	if (mediator_next)
@@ -69,7 +66,6 @@ void	sum_decimal(t_float *a, t_float *exp)
 	}
 	else
 		(*a).current_element = i - 1;
-	// check if may be cleaned earlier
 	array_cleaner(exp);
 }
 
@@ -161,7 +157,6 @@ t_float	*power(unsigned long int base, short int power, t_float *exp)
 			(*exp).array[i] = mediator_next;
 			(*exp).current_element = i;
 		}
-		// printf("Power_Elem[0] = %lu, elem[1] = %lu, elem_counter = %d\n", (*exp).array[0], (*exp).array[1], (*exp).current_element);
 	}
 	return (exp);
 }
