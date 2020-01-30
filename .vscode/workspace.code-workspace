@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "C:\\Users\\a_fedorov\\Desktop\\ft_printf_2"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"bitset": "c",
+			"algorithm": "c",
+			"climits": "c"
+		}
+	}
+}

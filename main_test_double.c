@@ -14,6 +14,10 @@ int main()
 	puts("");
 	ft_printf("cst:%.6f", -1.0);
 	puts("");
+	printf("std:%.6f", -0.001);
+	puts("");
+	ft_printf("cst:%.6f", -0.001);
+	puts("");
 	printf("std:%.23f", 999364567890123456999000.6666666);
 	puts("");
 	ft_printf("cst:%.23f", 999364567890123456999000.6666666);

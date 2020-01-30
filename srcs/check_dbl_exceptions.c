@@ -19,35 +19,56 @@ int		check_double_exceptions(t_format *format, t_dbl dbl)
 		if (((dbl.t_union.mantissa >> 62) & 1L) == 0)
 		{
 			if (((dbl.t_union.mantissa >> 61) & 1L) == 0)
-				format->content.string2show = ft_strdup("inf");
+			{
+				if (!(format->content.string2show = ft_strdup("inf")))
+					return (0);
+			}
 			else
-				format->content.string2show = ft_strdup("nan");
+			{
+				if (!(format->content.string2show = ft_strdup("nan")))
+					return (0);
+			}
 		}
 		else
-			format->content.string2show = ft_strdup("nan");
+		{
+			if (!(format->content.string2show = ft_strdup("nan")))
+				return (0);
+		}
 	}
 	else
 	{
 		if (((dbl.t_union.mantissa >> 62) & 1L) == 0)
 		{
 			if (((dbl.t_union.mantissa >> 61) & 1L) == 0)
-				format->content.string2show = ft_strdup("inf");
+			{
+				if (!(format->content.string2show = ft_strdup("inf")))
+					return (0);
+			}
 			else
-				format->content.string2show = ft_strdup("nan");
+			{
+				if (!(format->content.string2show = ft_strdup("nan")))
+					return (0);
+			}
 		}
 		else
 		{
 			if (((dbl.t_union.mantissa >> 61) & 1L) == 0)
-				format->content.string2show = ft_strdup("nan");
+			{
+				if (!(format->content.string2show = ft_strdup("nan")))
+					return (0);
+			}
 			else
-				format->content.string2show = ft_strdup("nan");
+			{
+				if (!(format->content.string2show = ft_strdup("nan")))
+					return (0);
+			}
 		}
 	}
 	if (!ft_strcmp(format->content.string2show, "nan") || \
 		!ft_strcmp(format->content.string2show, "inf"))
 	{
 		format->content.sign = '\0';
-		return (0);
+		return (1);
 	}
-	return (1);
+	return (2);
 }

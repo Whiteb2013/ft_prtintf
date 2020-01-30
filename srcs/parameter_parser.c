@@ -101,19 +101,19 @@ int		check_type(char c)
 int		get_type(const char *str, t_format *format, va_list ap_root)
 {
 	int	i;
-	int mediator;
+	int posible_type_pos;
 
 	i = 0;
 	while (str[i] && check_options(str[i], 'a'))
 		i++;
 	if (str[i] && !check_type(str[i]))
 	{
-		mediator = i;
-		while (str[++mediator] && !check_type(str[mediator]) && \
-					ft_isalpha(str[mediator]))
+		posible_type_pos = i;
+		while (str[++posible_type_pos] && !check_type(str[posible_type_pos]) \
+				&& ft_isalpha(str[posible_type_pos]))
 			;
-		if (check_type(str[mediator]) && str[mediator] != '%')
-			i = mediator;
+		if (check_type(str[posible_type_pos]) && str[posible_type_pos] != '%')
+			i = posible_type_pos;
 	}
 	format->type = str[i];
 	if (!apply_default_options(format, ap_root))
