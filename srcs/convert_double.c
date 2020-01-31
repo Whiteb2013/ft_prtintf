@@ -12,11 +12,25 @@
 
 #include "ft_printf.h"
 
-//void remove_trailing_zeros
-	//if there is a '.' encountered within a string &&
-	//format->flag.hash == 'f' &&
-	//last symbol is 0
-	//=> remove symbol
+void	remove_trailing_zeros(t_format *format)
+{
+	size_t	str_len;
+
+	format->length = ft_strlen(format->content.string2show);
+	if ((format->type == 'g' || format->type == 'G') && \
+			format->flag.hash == 'f')
+	{
+		if (ft_strrchr(format->content.string2show, '.'))
+		{
+			str_len = format->length - 1;
+			while (format->content.string2show[str_len] == '0')
+				format->content.string2show[str_len--] = '\0';
+			if (format->content.string2show[str_len] == '.')
+				format->content.string2show[str_len--] = '\0';
+			format->length = str_len + 1;
+		}
+	}
+}
 
 /*
 ** in the next function
@@ -39,7 +53,7 @@ int		convert_f2string(t_format *format, t_float *integer, \
 		int_length_array(integer, 10)), \
 		format->content.string2show, format)))
 		return (0);
-	//remove trailing zeros for g type
+	remove_trailing_zeros(format);
 	return (1);
 }
 
@@ -60,7 +74,7 @@ int		convert_e2string_positive(t_format *format, t_float *integer, \
 				format->precision - array_length), format)))
 			return (0);
 	}
-	//remove trailing zeros for g type
+	remove_trailing_zeros(format);
 	if (!(format->content.string2show = join_postfix(format, "e+")))
 		return (0);
 	if (!(format->content.string2show = \
@@ -76,7 +90,7 @@ int		convert_e2string_negative(t_format *format, t_float *decimal, \
 	if (!(format->content.string2show = ft_itoa_base_array_precision_e(\
 	decimal, 10, format)))
 		return (0);
-	//remove trailing zeros for g type
+	remove_trailing_zeros(format);
 	if (!(format->content.string2show = join_postfix(format, "e-")))
 		return (0);
 	if (!(format->content.string2show = \
