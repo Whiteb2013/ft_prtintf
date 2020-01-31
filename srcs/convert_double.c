@@ -194,13 +194,13 @@ int		convert_fge2string(t_format *format, long double a)
 	array_cleaner(&integer);
 	array_cleaner(&decimal);
 	dbl.dbl = (long double)a;
-	if (dbl.t_union.exponent == 32767)
-		if (!(exponent = check_double_exceptions(format, dbl)))
-			return (0);
-		else if (exponent == 1)
-			return (1);
 	if (dbl.t_union.sign)
 		format->content.sign = '-';
+	if (dbl.t_union.exponent == 32767)
+		if (!check_double_exceptions(format, dbl))
+			return (0);
+		else
+			return (1);
 	exponent = dbl.t_union.exponent - EXP_DFLT;
 	zero_counter = get_decimal(dbl, &decimal, \
 		get_integer(dbl, &integer, &exponent), &exponent);
