@@ -16,6 +16,7 @@
 # define BASE 10000
 # define BASE_LEN 4
 # define EXP_DFLT 16383
+# define EXP_EXCPN 32767
 
 # include "../libft/libft.h"
 # include <stdarg.h>
@@ -77,6 +78,10 @@ int							get_type(\
 void						get_options(\
 								const char *str, t_format *format, \
 								va_list ap, int i);
+size_t						get_decimal(t_dbl dbl, t_float *decimal, \
+								short int fraction_length, short int *exponent);
+int							get_integer(t_dbl dbl, t_float *integer, \
+								short int *exponent);
 int							check_options(char c, char mode);
 int							check_type(char c);
 int							check_double_exceptions(t_format *format, \
@@ -106,9 +111,9 @@ char						*ft_itoa_base_array_precision_e(t_float *array, \
 size_t						int_length(\
 								unsigned long long int b, unsigned int base);
 size_t						int_length_array(t_float *array, unsigned int base);
-void						rounding(t_float *decimal, t_float *integer, \
+void						rounding(t_float *integer, t_float *decimal, \
 								size_t *zero_counter, size_t precision);
-void						e_rounding(t_float *array, t_float *integer, \
+void						e_rounding(t_float *integer, t_float *decimal, \
 								size_t *zero_counter, size_t precision);
 int							subroutine_1(t_format *format, va_list ap, int k);
 int							subroutine_2(const char *str, t_format *format, \
@@ -124,10 +129,6 @@ int							sum_decimal_const(t_float *a, \
 t_float						*power(\
 								unsigned long int base, short int power, \
 								t_float *exp);
-size_t						get_decimal(t_dbl dbl, t_float *decimal, \
-								short int fraction_length, short int *exponent);
-int							get_integer(t_dbl dbl, t_float *integer, \
-								short int *exponent);
 char						*join_prefix(char *s1, t_format *format);
 char						*join_postfix(t_format *format, char *s2);
 char						*join_strings(char *s1, char *s2, t_format *format);

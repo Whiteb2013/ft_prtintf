@@ -36,7 +36,7 @@ int		check_for_rounding(t_float *array, int array_elem_id, \
 ** 2 - applied, impact on leading zeros
 */
 
-void	rounding(t_float *decimal, t_float *integer, \
+void	rounding(t_float *integer, t_float *decimal, \
 					size_t *zero_counter, size_t precision)
 {
 	size_t	first_elem_len;
@@ -51,7 +51,7 @@ void	rounding(t_float *decimal, t_float *integer, \
 		digit_in_elem = precision - *zero_counter;
 	else
 	{
-		if ((array_elem_id -= (precision - *zero_counter - first_elem_len) /\
+		if ((array_elem_id -= (precision - *zero_counter - first_elem_len) / \
 				BASE_LEN + 1) < 0)
 			return ;
 		digit_in_elem = (precision - *zero_counter - first_elem_len) % BASE_LEN;
@@ -62,7 +62,7 @@ void	rounding(t_float *decimal, t_float *integer, \
 			sum_integer_const(integer, 0, 4, 1);
 }
 
-void	e_rounding(t_float *array, t_float *integer, \
+void	e_rounding(t_float *integer, t_float *decimal, \
 					size_t *zero_counter, size_t precision)
 {
 	size_t	first_elem_len;
@@ -79,7 +79,8 @@ void	e_rounding(t_float *array, t_float *integer, \
 			digit_in_elem = precision + 1;
 		else
 		{
-			if ((array_elem_id -= (precision + 1 - first_elem_len) / BASE_LEN + 1) < 0)
+			if ((array_elem_id -= (precision + 1 - first_elem_len) / \
+					BASE_LEN + 1) < 0)
 				return ;
 			digit_in_elem = (precision + 1 - first_elem_len) % BASE_LEN;
 		}
@@ -87,7 +88,7 @@ void	e_rounding(t_float *array, t_float *integer, \
 			sum_integer_const(integer, array_elem_id, digit_in_elem, 1);
 	}
 	else if (integer->array[array_elem_id])
-		rounding(array, integer, zero_counter, precision - array_length);
+		rounding(integer, decimal, zero_counter, precision - array_length);
 	else if (precision < precision + *zero_counter + 1)
-		rounding(array, integer, zero_counter, precision + *zero_counter + 1);
+		rounding(integer, decimal, zero_counter, precision + *zero_counter + 1);
 }

@@ -32,7 +32,8 @@ void	sum_integer(t_float *a, t_float *exp)
 	array_cleaner(exp);
 }
 
-void	sum_integer_const(t_float *a, int array_elem_id, int digit_in_elem, unsigned long int value)
+void	sum_integer_const(t_float *a, int array_elem_id, \
+							int digit_in_elem, unsigned long int value)
 {
 	t_float			b;
 	unsigned int	base;
@@ -98,7 +99,8 @@ int		sum_decimal_const(t_float *a, size_t *zero_counter, \
 	current_value = a->array[top_element];
 	sum_integer_const(a, array_elem_id, digit_in_elem, 1);
 	if (a->current_element > top_element || \
-		int_length(a->array[a->current_element], 10) > int_length(current_value, 10))
+			int_length(a->array[a->current_element], 10) > \
+				int_length(current_value, 10))
 	{
 		if (*zero_counter)
 		{

@@ -174,6 +174,14 @@ int main()
 	puts("");
 	ft_printf("cst:%#10.6g", -1.123/0);
 	puts("");
+	printf("std:%#10.6g", 0.0/0.0);
+	puts("");
+	ft_printf("cst:%#10.6g", 0.0/0.0);
+	puts("");
+	printf("std:%#10.6g", -0.0/0.0);
+	puts("");
+	ft_printf("cst:%#10.6g", -0.0/0.0);
+	puts("");
 	printf("std:%g", 123.123);
 	puts("");
 	ft_printf("cst:%g", 123.123);

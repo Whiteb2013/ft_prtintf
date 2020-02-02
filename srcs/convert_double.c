@@ -41,7 +41,7 @@ void	remove_trailing_zeros(t_format *format)
 int		convert_f2string(t_format *format, t_float *integer, \
 							t_float *decimal, size_t zero_counter)
 {
-	rounding(decimal, integer, &zero_counter, format->precision);
+	rounding(integer, decimal, &zero_counter, format->precision);
 	if (!(format->content.string2show = ft_itoa_base_array_precision(\
 		decimal, 10, zero_counter, format->precision)))
 		return (0);
@@ -97,12 +97,13 @@ int		convert_e2string_negative(t_format *format, t_float *decimal, \
 			join_strings(format->content.string2show, \
 			ft_itoa_base(zero_counter + 1, 10, 2), format)))
 		return (0);
+	return (1);
 }
 
 int		convert_e2string(t_format *format, t_float *integer, \
 							t_float *decimal, size_t zero_counter)
 {
-	e_rounding(decimal, integer, &zero_counter, format->precision);
+	e_rounding(integer, decimal, &zero_counter, format->precision);
 	if (integer->array[integer->current_element] || \
 		!decimal->array[decimal->current_element])
 	{
@@ -128,7 +129,8 @@ int		convert_g2string_as_f2str(t_format *format, t_float *integer, \
 		format->precision -= array_len;
 	else if (!integer->array[integer->current_element])
 	{
-		if (format->precision <= zero_counter && zero_counter < zero_counter + 1)
+		if (format->precision <= zero_counter \
+				&& zero_counter < zero_counter + 1)
 			format->precision = zero_counter + 1;
 		else if (format->precision + zero_counter >= format->precision)
 			format->precision += zero_counter;
@@ -210,12 +212,14 @@ int		convert_fge2string(t_format *format, long double a)
 	dbl.dbl = (long double)a;
 	if (dbl.t_union.sign)
 		format->content.sign = '-';
-	if (dbl.t_union.exponent == 32767)
+	exponent = dbl.t_union.exponent - EXP_DFLT;
+	if ((exponent != -EXP_DFLT && ((dbl.t_union.mantissa >> 63) & 1L) == 0L) \
+			|| exponent == EXP_EXCPN - EXP_DFLT)
+	{
 		if (!check_double_exceptions(format, dbl))
 			return (0);
-		else
-			return (1);
-	exponent = dbl.t_union.exponent - EXP_DFLT;
+		return (1);
+	}
 	zero_counter = get_decimal(dbl, &decimal, \
 		get_integer(dbl, &integer, &exponent), &exponent);
 	if (!select_double_type(format, &integer, &decimal, zero_counter))

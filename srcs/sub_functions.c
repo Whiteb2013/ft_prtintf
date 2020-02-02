@@ -54,7 +54,7 @@ int		get_integer(t_dbl dbl, t_float *integer, short int *exponent)
 		while (*exponent >= 0 && fraction_length-- > 0)
 		{
 			((dbl.t_union.mantissa >> fraction_length) & 1L) == 1L ? \
-				sum_integer(integer, power(2, *exponent, &exp)) : 0 ;
+				sum_integer(integer, power(2, *exponent, &exp)) : 0;
 			--*exponent;
 		}
 	return (fraction_length);
@@ -118,7 +118,7 @@ size_t	get_decimal(t_dbl dbl, t_float *decimal, \
 	if (*exponent != EXP_DFLT && fraction_length > 0)
 	{
 		if (*exponent > 3 || (*exponent == 1 && \
-			((dbl.t_union.mantissa >> fraction_length - 1) & 1L) == 0L))
+			((dbl.t_union.mantissa >> (fraction_length - 1) & 1L) == 0L)))
 			flag = detect_leading_zero(decimal, &fraction_length, \
 			exponent, &exp);
 		while (fraction_length-- > 0)
