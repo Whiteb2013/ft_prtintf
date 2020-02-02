@@ -77,7 +77,7 @@ int		apply_length(t_format *format, va_list ap)
 {
 	int res;
 
-	res = 1;
+	res = 0;
 	if (format->type == 'd' || format->type == 'i')
 		res = apply_length_d(format, ap);
 	else if (format->type == 'u' || format->type == 'U')
@@ -90,11 +90,11 @@ int		apply_length(t_format *format, va_list ap)
 		format->type == 'e' || format->type == 'E' || \
 		format->type == 'g' || format->type == 'G') && \
 		!ft_strcmp(format->length_flag, "l"))
-		res = convert_fge2string(format, va_arg(ap, double));
+		res = convert_double2string(format, va_arg(ap, double), 10);
 	else if ((format->type == 'f' || format->type == 'F' || \
 		format->type == 'e' || format->type == 'E' || \
 		format->type == 'g' || format->type == 'G') && \
 		!ft_strcmp(format->length_flag, "L"))
-		res = convert_fge2string(format, va_arg(ap, long double));
+		res = convert_double2string(format, va_arg(ap, long double), 10);
 	return (res);
 }

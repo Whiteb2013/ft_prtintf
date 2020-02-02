@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-void	sum_integer(t_float *a, t_float *exp)
+void	sum_integer(t_array *a, t_array *exp)
 {
 	unsigned long int	sum;
 	int					i;
@@ -29,16 +29,16 @@ void	sum_integer(t_float *a, t_float *exp)
 		a->current_element = i;
 	else
 		a->current_element = i - 1;
-	array_cleaner(exp);
+	clean_array(exp);
 }
 
-void	sum_integer_const(t_float *a, int array_elem_id, \
+void	sum_integer_const(t_array *a, int array_elem_id, \
 							int digit_in_elem, unsigned long int value)
 {
-	t_float			b;
+	t_array			b;
 	unsigned int	base;
 
-	array_cleaner(&b);
+	clean_array(&b);
 	if (a->current_element != array_elem_id)
 	{
 		if (!digit_in_elem)
@@ -60,7 +60,7 @@ void	sum_integer_const(t_float *a, int array_elem_id, \
 	sum_integer(a, &b);
 }
 
-void	sum_decimal(t_float *a, t_float *exp)
+void	sum_decimal(t_array *a, t_array *exp)
 {
 	int					i;
 	unsigned long int	mediator_next;
@@ -84,10 +84,10 @@ void	sum_decimal(t_float *a, t_float *exp)
 	}
 	else
 		(*a).current_element = i - 1;
-	array_cleaner(exp);
+	clean_array(exp);
 }
 
-int		sum_decimal_const(t_float *a, size_t *zero_counter, \
+int		sum_decimal_const(t_float *flt, t_array *a, \
 							int array_elem_id, int digit_in_elem)
 {
 	unsigned int	current_value;
@@ -102,9 +102,9 @@ int		sum_decimal_const(t_float *a, size_t *zero_counter, \
 			int_length(a->array[a->current_element], 10) > \
 				int_length(current_value, 10))
 	{
-		if (*zero_counter)
+		if (flt->zero_counter)
 		{
-			(*zero_counter)--;
+			flt->zero_counter--;
 			return (2);
 		}
 		else
@@ -125,20 +125,20 @@ int		sum_decimal_const(t_float *a, size_t *zero_counter, \
 				zero_plus = int_length(current_value, 10) - \
 								int_length(a->array[a->current_element], 10);
 			}
-			*zero_counter = zero_plus;
+			flt->zero_counter = zero_plus;
 			return (1);
 		}
 	}
 	return (0);
 }
 
-t_float	*power(unsigned long int base, short int power, t_float *exp)
+t_array	*power(unsigned long int base, short int power, t_array *exp)
 {
 	int					i;
 	unsigned long int	mediator_next;
 	unsigned long int	mediator_prev;
 
-	array_cleaner(exp);
+	clean_array(exp);
 	(*exp).array[0] = 1;
 	while (power-- > 0)
 	{

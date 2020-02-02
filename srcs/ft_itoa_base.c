@@ -36,7 +36,7 @@ char	*ft_itoa_base(unsigned long long int2convert, size_t base, size_t size)
 	return (str);
 }
 
-int		fill_first_elem(char *str, int i, t_float *array, size_t precision)
+int		fill_first_elem(char *str, int i, t_array *array, size_t precision)
 {
 	unsigned int	int2convert;
 	unsigned int	base;
@@ -57,7 +57,7 @@ int		fill_first_elem(char *str, int i, t_float *array, size_t precision)
 	return (i);
 }
 
-int		fill_first_elem_e(char *str, t_float *array, size_t precision)
+int		fill_first_elem_e(char *str, t_array *array, size_t precision)
 {
 	unsigned int	int2convert;
 	unsigned int	base;
@@ -82,13 +82,14 @@ int		fill_first_elem_e(char *str, t_float *array, size_t precision)
 	return (i);
 }
 
-char	*ft_itoa_base_array_precision(t_float *array, size_t base, \
+char	*ft_itoa_base_array_precision(t_format *format, t_array *array, \
 										size_t zero_counter, size_t precision)
 {
 	char			*str;
 	char			*values;
 	int				i;
 	unsigned int	int2convert;
+	int				base;
 
 	values = "0123456789abcdef";
 	if (!(str = ft_strnew(precision)))
@@ -106,10 +107,9 @@ char	*ft_itoa_base_array_precision(t_float *array, size_t base, \
 			base = BASE / 10;
 			while (base && precision - i)
 			{
-				str[i] = values[int2convert / base];
+				str[i++] = values[int2convert / base];
 				int2convert %= base;
 				base /= 10;
-				i++;
 			}
 			array->current_element--;
 		}
@@ -119,17 +119,17 @@ char	*ft_itoa_base_array_precision(t_float *array, size_t base, \
 	return (str);
 }
 
-char	*ft_itoa_base_array_precision_e(t_float *array, \
-										size_t base, t_format *format)
+char	*ft_itoa_base_array_precision_e(t_format *format, t_array *array)
 {
 	char			*str;
 	char			*values;
 	int				i;
 	unsigned int	int2convert;
 	size_t			size;
+	int				base;
 
 	values = "0123456789abcdef";
-	size = int_length_array(array, base);
+	size = array->array_len;
 	if (format->precision < size - 1)
 		size = format->precision + 1;
 	if (format->precision || format->flag.hash == 't')
@@ -150,10 +150,9 @@ char	*ft_itoa_base_array_precision_e(t_float *array, \
 			base = BASE / 10;
 			while (base && size - i)
 			{
-				str[i] = values[int2convert / base];
+				str[i++] = values[int2convert / base];
 				int2convert %= base;
 				base /= 10;
-				i++;
 			}
 			array->current_element--;
 		}

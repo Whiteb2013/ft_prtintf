@@ -63,6 +63,7 @@ int		apply_plus(t_format *format)
 		return (1);
 	if (format->type != 'u' && format->type != 'U' && \
 		format->type != 'x' && format->type != 'X' && \
+		format->type != 'o' && format->type != 'O' && \
 		!(format->content.string2show = \
 		join_prefix(&format->content.sign, format)))
 		return (0);

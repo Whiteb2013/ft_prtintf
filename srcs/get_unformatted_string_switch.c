@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_unformatted_string.c                           :+:      :+:    :+:   */
+/*   get_unformatted_string_switch.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmarin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,34 +12,25 @@
 
 #include "ft_printf.h"
 
-int		convert_char2string(t_format *format, int a)
-{
-	if (!(format->content.string2show = ft_strnew(1)))
-		return (0);
-	format->content.string2show[0] = (unsigned char)a;
-	return (1);
-}
-
-int		convert_string2string(t_format *format, char *str)
-{
-	if (!str)
-	{
-		if (!(format->content.string2show = ft_strdup("(null)")))
-			return (0);
-	}
-	else if (!(format->content.string2show = ft_strdup(str)))
-		return (0);
-	return (1);
-}
-
-int		convert2string_for_types(t_format *format, va_list ap, int res)
+int		convert2string_for_symbols(t_format *format, va_list ap, int res)
 {
 	if (format->type == 'c')
 		res = convert_char2string(format, va_arg(ap, int));
 	else if (format->type == 's')
 		res = convert_string2string(format, va_arg(ap, char *));
-	else if (format->type == 'p')
+	else if (format->type == 'C')
+		res = convert_char2utf8(format, va_arg(ap, int));
+	else if (format->type == 'S')
+		res = convert_string2utf8(format, va_arg(ap, int *));
+	return (res);
+}
+
+int		convert2string_for_digits(t_format *format, va_list ap, int res)
+{
+	if (format->type == 'p')
 		res = convert_pointer2string(format, va_arg(ap, long long int));
+	else if (format->length_flag[0])
+		res = apply_length(format, ap);
 	else if (format->type == 'd' || format->type == 'i')
 		res = convert_int2string(format, va_arg(ap, int), 10);
 	else if (format->type == 'x' || format->type == 'X')
@@ -51,11 +42,7 @@ int		convert2string_for_types(t_format *format, va_list ap, int res)
 	else if (format->type == 'f' || format->type == 'F' || \
 		format->type == 'e' || format->type == 'E' || \
 		format->type == 'g' || format->type == 'G')
-		res = convert_fge2string(format, va_arg(ap, double));
-	else if (format->type == 'C')
-		res = convert_char2utf8(format, va_arg(ap, int));
-	else if (format->type == 'S')
-		res = convert_string2utf8(format, va_arg(ap, int *));
+		res = convert_double2string(format, va_arg(ap, double), 10);
 	return (res);
 }
 
@@ -66,10 +53,12 @@ int		convert2string(t_format *format, va_list ap)
 	res = 0;
 	if (format->type == '%')
 		res = convert_char2string(format, '%');
-	if (format->length_flag[0])
-		res = apply_length(format, ap);
+	else if (format->type == 'c' || format->type == 'C' || \
+				format->type == 's' || format->type == 'S')
+		res = convert2string_for_symbols(format, ap, res);
 	else
-		res = convert2string_for_types(format, ap, res);
-	format->length = ft_strlen(format->content.string2show);
+		res = convert2string_for_digits(format, ap, res);
+	if (res)
+		format->length = ft_strlen(format->content.string2show);
 	return (res);
 }

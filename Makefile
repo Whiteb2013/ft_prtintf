@@ -7,25 +7,31 @@ SRC_FILES =	ft_printf.c \
 			parameter_parser.c \
 			parameter_parser_subroutines.c \
 			check_options.c \
-			get_unformatted_string.c \
-			get_unformatted_string_2.c \
+			get_unformatted_string_switch.c \
+			get_unformatted_string_cs.c \
+			get_unformatted_string_CSpdioOuUxX.c \
+			get_unformatted_string_double_switch.c \
+			get_unformatted_string_fF.c \
+			get_unformatted_string_eE.c \
+			get_unformatted_string_gG.c \
+			dbl_subroutines_1.c \
+			dbl_subroutines_2.c \
+			dbl_check_exceptions.c \
 			get_formatted_string.c \
 			apply_width.c \
 			apply_length.c \
 			apply_flags.c \
 			apply_precision.c \
 			ft_itoa_base.c \
-			sub_functions.c \
+			subroutines_length_calc.c \
 			long_calc_math.c \
 			display.c \
 			formatting.c \
 			undefined_behavior.c \
 			try_dollar.c \
 			utf8.c \
-			cleaner.c \
-			convert_double.c \
-			check_dbl_exceptions.c \
-			dbl_rounding.c
+			cleaner.c
+
 
 SRC_LIB_FILES = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 				ft_memchr.c ft_memcmp.c ft_strlen.c ft_strdup.c ft_strcpy.c \

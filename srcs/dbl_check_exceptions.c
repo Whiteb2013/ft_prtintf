@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_dbl_exceptions.c                             :+:      :+:    :+:   */
+/*   dbl_check_exceptions.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmarin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int		check_double_exceptions(t_format *format, t_dbl dbl)
+int		dbl_check_exceptions(t_format *format, t_float *flt)
 {
 	int state;
 	int	remaining_part;
@@ -20,9 +20,9 @@ int		check_double_exceptions(t_format *format, t_dbl dbl)
 
 	offset = 62;
 	remaining_part = 0;
-	state = dbl.t_union.mantissa >> offset;
+	state = flt->dbl.t_union.mantissa >> offset;
 	while (offset-- && !remaining_part)
-		if (((dbl.t_union.mantissa >> offset) & 1L) == 1L)
+		if (((flt->dbl.t_union.mantissa >> offset) & 1L) == 1L)
 			remaining_part = 1;
 	if (state == 2 && !remaining_part)
 	{

@@ -1,36 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleaner.c                                          :+:      :+:    :+:   */
+/*   get_unformatted_string_cs.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmarin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/11 21:27:06 by gmarin            #+#    #+#             */
-/*   Updated: 2019/09/11 21:27:07 by gmarin           ###   ########.fr       */
+/*   Created: 2019/09/06 18:55:53 by gmarin            #+#    #+#             */
+/*   Updated: 2019/09/06 18:55:56 by gmarin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		clean_format(t_format *format)
+int		convert_char2string(t_format *format, int a)
 {
-	if (format)
-	{
-		if (format->content.string2show)
-			free(format->content.string2show);
-		if (format->length_flag)
-			free(format->length_flag);
-		free(format);
-	}
-	return (-1);
+	if (!(format->content.string2show = ft_strnew(1)))
+		return (0);
+	format->content.string2show[0] = (unsigned char)a;
+	return (1);
 }
 
-void	clean_array(t_array *array)
+int		convert_string2string(t_format *format, char *str)
 {
-	int i;
-
-	i = 0;
-	while (i <= MAX_ELEM)
-		array->array[i++] = 0;
-	array->current_element = 0;
+	if (!str)
+	{
+		if (!(format->content.string2show = ft_strdup("(null)")))
+			return (0);
+	}
+	else if (!(format->content.string2show = ft_strdup(str)))
+		return (0);
+	return (1);
 }

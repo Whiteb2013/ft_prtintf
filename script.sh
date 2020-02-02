@@ -6,8 +6,8 @@
 #    By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/07 19:27:55 by lgeorgin          #+#    #+#              #
-#    Updated: 2019/07/27 18:50:46 by lgeorgin         ###   ########.fr        #
+#    Updated: 2020/02/02 23:33:48 by lgeorgin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-make re && gcc -I ./srcs -I ./libft main_test.c -L. -lftprintf -o printf && make fclean && ./printf
+make re && gcc -I ./srcs -I ./libft main_test_original.c -L. -lftprintf -o printf && make fclean && ./printf

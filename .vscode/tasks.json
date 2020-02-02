@@ -6,7 +6,7 @@
         {
             "label": "build_printf",
             "type": "shell",
-            "command": "make re && gcc -g -I ./srcs -I ./libft main_test_exceptions.c -L. -lftprintf -o printf && make fclean",
+            "command": "make re && gcc -g -I ./srcs -I ./libft main_test_original.c -L. -lftprintf -o printf && make fclean",
             "group": {
                 "kind": "build",
                 "isDefault": true

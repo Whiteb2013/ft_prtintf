@@ -28,22 +28,22 @@ int			extract_parameter(const char **str, va_list ap, va_list ap_root)
 	if (!(format = (t_format *)ft_memalloc(sizeof(t_format))))
 		return (0);
 	if ((i = get_type(*str, format, ap_root)) < 0)
-		return (cleaner(format));
+		return (clean_format(format));
 	if (check_type(format->type))
 	{
 		get_options(*str, format, ap, i);
 		if (!convert2string(format, ap))
-			return (cleaner(format));
+			return (clean_format(format));
 		if (!format_string(format))
-			return (cleaner(format));
+			return (clean_format(format));
 	}
 	else if (!undefined_behaviour(format))
-		return (cleaner(format));
+		return (clean_format(format));
 	k = display_parameter_buffer(format);
 	*str = *str + i;
 	if (**str)
 		*str = *str + 1;
-	cleaner(format);
+	clean_format(format);
 	return (k);
 }
 
