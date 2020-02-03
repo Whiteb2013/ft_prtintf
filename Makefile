@@ -9,11 +9,11 @@ SRC_FILES =	ft_printf.c \
 			check_options.c \
 			get_unformatted_string_switch.c \
 			get_unformatted_string_cs.c \
-			get_unformatted_string_CSpdioOuUxX.c \
+			get_unformatted_string_pdioux_utf.c \
 			get_unformatted_string_double_switch.c \
-			get_unformatted_string_fF.c \
-			get_unformatted_string_eE.c \
-			get_unformatted_string_gG.c \
+			get_unformatted_string_f.c \
+			get_unformatted_string_e.c \
+			get_unformatted_string_g.c \
 			dbl_subroutines_1.c \
 			dbl_subroutines_2.c \
 			dbl_check_exceptions.c \

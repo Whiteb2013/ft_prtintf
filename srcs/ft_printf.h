@@ -77,6 +77,7 @@ typedef struct				s_array
 	unsigned long int		array[MAX_ELEM];
 	int						current_element;
 	size_t					array_len;
+	size_t					first_len;
 }							t_array;
 
 int							display_static_buffer(const char **str, int i);
@@ -88,9 +89,9 @@ int							get_type(\
 void						get_options(\
 								const char *str, t_format *format, \
 								va_list ap, int i);
-void						get_decimal(t_format *format, t_float *flt,
+void						dbl_get_decimal(t_format *format, t_float *flt,
 								t_array *decimal);
-void						get_integer(t_format *format, t_float *flt,
+void						dbl_get_integer(t_format *format, t_float *flt,
 								t_array *integer);
 int							check_options(char c, char mode);
 int							check_type(char c);
@@ -129,10 +130,13 @@ size_t						int_length(\
 size_t						int_length_array(t_array *array, unsigned int base);
 int							dbl_check_exceptions(t_format *format, \
 								t_float *flt);
-void						dbl_rounding(t_float *flt, t_array *integer, \
-								t_array *decimal, size_t precision);
+void						dbl_rounding(t_format *format, t_float *flt, \
+								t_array *integer, t_array *decimal, \
+								size_t precision);
 void						dbl_e_rounding(t_format *format, t_float *flt, \
 								t_array *integer, t_array *decimal);
+void						dbl_count_leading_zero(t_format *format, \
+								t_float *flt, t_array *decimal, int flag);
 void						dbl_remove_trailing_zeros(t_format *format);
 int							subroutine_1(t_format *format, va_list ap, int k);
 int							subroutine_2(const char *str, t_format *format, \
@@ -142,8 +146,9 @@ void						sum_integer(t_array *a, t_array *exp);
 void						sum_integer_const(t_array *a, int array_elem_id, \
 								int digit_in_elem, unsigned long int value);
 void						sum_decimal(t_array *a, t_array *exp);
-int							sum_decimal_const(t_float *flt, t_array *a, \
-								int array_elem_id, int digit_in_elem);
+int							sum_decimal_const(t_format *format, t_float *flt, \
+								t_array *a, int array_elem_id, \
+								int digit_in_elem);
 t_array						*power(\
 								unsigned long int base, short int power, \
 								t_array *exp);

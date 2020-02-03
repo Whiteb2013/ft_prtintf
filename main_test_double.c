@@ -6,6 +6,10 @@
 
 int main()
 {
+	printf("{%f}{%lf}{%Lf}", 1.42, 1.42, 1.42l);
+	puts("");
+	ft_printf("{%f}{%lf}{%Lf}", 1.42, 1.42, 1.42l);
+	puts("");
 	printf("std:%.20f", 1.005);
 	puts("");
 	ft_printf("cst:%.20f", 1.005);

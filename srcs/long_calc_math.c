@@ -87,13 +87,11 @@ void	sum_decimal(t_array *a, t_array *exp)
 	clean_array(exp);
 }
 
-int		sum_decimal_const(t_float *flt, t_array *a, \
+int		sum_decimal_const(t_format *format, t_float *flt, t_array *a, \
 							int array_elem_id, int digit_in_elem)
 {
 	unsigned int	current_value;
 	unsigned int	top_element;
-	unsigned int	base;
-	size_t			zero_plus;
 
 	top_element = a->current_element;
 	current_value = a->array[top_element];
@@ -107,27 +105,8 @@ int		sum_decimal_const(t_float *flt, t_array *a, \
 			flt->zero_counter--;
 			return (2);
 		}
-		else
-		{
-			if (a->current_element > top_element)
-			{
-				a->array[a->current_element--] = 0;
-				zero_plus = int_length(current_value, 10) - \
-								int_length(a->array[a->current_element], 10);
-			}
-			else
-			{
-				base = BASE;
-				while (int_length(base, 10) > \
-						int_length(a->array[a->current_element], 10))
-					base /= 10;
-				a->array[a->current_element] -= base;
-				zero_plus = int_length(current_value, 10) - \
-								int_length(a->array[a->current_element], 10);
-			}
-			flt->zero_counter = zero_plus;
-			return (1);
-		}
+		dbl_count_leading_zero(format, flt, a, 1);
+		return (1);
 	}
 	return (0);
 }

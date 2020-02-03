@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int		detect_leading_zero(t_float *flt, t_array *decimal, t_array *exp)
+int		dbl_detect_leading_zero(t_float *flt, t_array *decimal, t_array *exp)
 {
 	short int	counter;
 
@@ -36,7 +36,7 @@ int		detect_leading_zero(t_float *flt, t_array *decimal, t_array *exp)
 	return (0);
 }
 
-void	count_leading_zero(t_format *format, t_float *flt, \
+void	dbl_count_leading_zero(t_format *format, t_float *flt, \
 								t_array *decimal, int flag)
 {
 	unsigned long int	base;
@@ -56,11 +56,11 @@ void	count_leading_zero(t_format *format, t_float *flt, \
 	if (!decimal->array[decimal->current_element] && decimal->current_element)
 	{
 		decimal->current_element--;
-		count_leading_zero(format, flt, decimal, 0);
+		dbl_count_leading_zero(format, flt, decimal, 0);
 	}
 }
 
-void	get_decimal(t_format *format, t_float *flt, t_array *decimal)
+void	dbl_get_decimal(t_format *format, t_float *flt, t_array *decimal)
 {
 	t_array				exp;
 	int					flag;
@@ -70,7 +70,7 @@ void	get_decimal(t_format *format, t_float *flt, t_array *decimal)
 	flag = 0;
 	if (flt->exponent != EXP_DFLT && flt->fraction_len > 0)
 	{
-		flag = detect_leading_zero(flt, decimal, &exp);
+		flag = dbl_detect_leading_zero(flt, decimal, &exp);
 		while (flt->fraction_len-- > 0)
 		{
 			((flt->dbl.t_union.mantissa >> flt->fraction_len) & 1L) == 1L ? \
@@ -80,13 +80,13 @@ void	get_decimal(t_format *format, t_float *flt, t_array *decimal)
 		}
 	}
 	if (flag)
-		count_leading_zero(format, flt, decimal, flag);
+		dbl_count_leading_zero(format, flt, decimal, flag);
 	else
 		flt->zero_counter = 0;
 	decimal->array_len = int_length_array(decimal, format->base);
 }
 
-void	get_integer(t_format *format, t_float *flt, t_array *integer)
+void	dbl_get_integer(t_format *format, t_float *flt, t_array *integer)
 {
 	t_array				exp;
 
@@ -99,4 +99,6 @@ void	get_integer(t_format *format, t_float *flt, t_array *integer)
 			flt->exponent--;
 		}
 	integer->array_len = int_length_array(integer, format->base);
+	integer->first_len = int_length(integer->array[integer->current_element], \
+	format->base);
 }

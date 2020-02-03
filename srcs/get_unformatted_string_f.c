@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_unformatted_string_fF.c                        :+:      :+:    :+:   */
+/*   get_unformatted_string_f.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmarin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -15,7 +15,7 @@
 int		convert_f2string(t_format *format, t_float *flt,
 							t_array *integer, t_array *decimal)
 {
-	dbl_rounding(flt, integer, decimal, format->precision);
+	dbl_rounding(format, flt, integer, decimal, format->precision);
 	if (!(format->content.string2show = ft_itoa_base_array_precision(\
 		format, decimal, flt->zero_counter, format->precision)))
 		return (0);

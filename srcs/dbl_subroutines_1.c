@@ -36,7 +36,7 @@ int		dbl_check_for_rounding(t_array *array, int array_elem_id, \
 ** 2 - applied, impact on leading zeros
 */
 
-void	dbl_rounding(t_float *flt, t_array *integer, \
+void	dbl_rounding(t_format *format, t_float *flt, t_array *integer, \
 					t_array *decimal, size_t precision)
 {
 	size_t	first_elem_len;
@@ -58,38 +58,38 @@ void	dbl_rounding(t_float *flt, t_array *integer, \
 															% BASE_LEN;
 	}
 	if (dbl_check_for_rounding(decimal, array_elem_id, digit_in_elem))
-		if (sum_decimal_const(flt, decimal, array_elem_id, digit_in_elem) == 1)
+		if (sum_decimal_const(format, flt, decimal, array_elem_id, \
+															digit_in_elem) == 1)
 			sum_integer_const(integer, 0, 4, 1);
 }
 
 void	dbl_e_rounding(t_format *format, t_float *flt, \
 					t_array *integer, t_array *decimal)
 {
-	size_t	first_elem_len;
 	int		array_elem_id;
 	int		digit_in_elem;
 
 	array_elem_id = integer->current_element;
-	first_elem_len = int_length(integer->array[array_elem_id], format->base);
 	if (format->precision < integer->array_len - 1)
 	{
-		if (format->precision + 1 < first_elem_len)
+		if (format->precision + 1 < integer->first_len)
 			digit_in_elem = format->precision + 1;
 		else
 		{
-			if ((array_elem_id -= (format->precision + 1 - first_elem_len) / \
-					BASE_LEN + 1) < 0)
+			if ((array_elem_id -= (format->precision + 1 - integer->first_len) \
+														/ BASE_LEN + 1) < 0)
 				return ;
-			digit_in_elem = (format->precision + 1 - first_elem_len) % BASE_LEN;
+			digit_in_elem = (format->precision + 1 - integer->first_len) \
+														% BASE_LEN;
 		}
 		if (dbl_check_for_rounding(integer, array_elem_id, digit_in_elem))
 			sum_integer_const(integer, array_elem_id, digit_in_elem, 1);
 	}
 	else if (integer->array[array_elem_id])
-		dbl_rounding(flt, integer, decimal, \
+		dbl_rounding(format, flt, integer, decimal, \
 						format->precision - integer->array_len + 1);
 	else if (format->precision < format->precision + flt->zero_counter + 1)
-		dbl_rounding(flt, integer, decimal, \
+		dbl_rounding(format, flt, integer, decimal, \
 						format->precision + flt->zero_counter + 1);
 }
 

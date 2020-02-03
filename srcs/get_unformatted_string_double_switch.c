@@ -61,8 +61,8 @@ int		convert_double2string(t_format *format, long double a, size_t base)
 	}
 	flt.fraction_len = 64;
 	flt.zero_counter = 0;
-	get_integer(format, &flt, &integer);
-	get_decimal(format, &flt, &decimal);
+	dbl_get_integer(format, &flt, &integer);
+	dbl_get_decimal(format, &flt, &decimal);
 	if (!select_double_type(format, &flt, &integer, &decimal))
 		return (0);
 	return (1);
