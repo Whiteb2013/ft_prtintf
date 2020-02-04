@@ -16,13 +16,13 @@ int		convert_e2string_positive(t_format *format, t_float *flt, \
 									t_array *integer, t_array *decimal)
 {
 	if (!(format->content.string2show = ft_itoa_base_array_precision_e(\
-		format, integer)))
+														format, integer)))
 		return (0);
 	if (integer->array_len - 1 < format->precision)
 	{
 		if (!(format->content.string2show = \
 			join_strings(format->content.string2show, \
-			ft_itoa_base_array_precision(format, decimal, flt->zero_counter, \
+			ft_itoa_base_array_precision(decimal, flt->zero_counter, \
 				format->precision - integer->array_len + 1), format)))
 			return (0);
 	}
@@ -40,7 +40,7 @@ int		convert_e2string_negative(t_format *format, t_float *flt, \
 									t_array *decimal)
 {
 	if (!(format->content.string2show = ft_itoa_base_array_precision_e(\
-	format, decimal)))
+														format, decimal)))
 		return (0);
 	dbl_remove_trailing_zeros(format);
 	if (!(format->content.string2show = join_postfix(format, "e-")))

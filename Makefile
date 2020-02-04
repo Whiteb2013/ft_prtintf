@@ -7,6 +7,8 @@ SRC_FILES =	ft_printf.c \
 			parameter_parser.c \
 			parameter_parser_subroutines.c \
 			check_options.c \
+			try_dollar.c \
+			utf8.c \
 			get_unformatted_string_switch.c \
 			get_unformatted_string_cs.c \
 			get_unformatted_string_pdioux_utf.c \
@@ -14,22 +16,21 @@ SRC_FILES =	ft_printf.c \
 			get_unformatted_string_f.c \
 			get_unformatted_string_e.c \
 			get_unformatted_string_g.c \
+			dbl_check_exceptions.c \
 			dbl_subroutines_1.c \
 			dbl_subroutines_2.c \
-			dbl_check_exceptions.c \
+			dbl_itoa_base.c \
 			get_formatted_string.c \
 			apply_width.c \
 			apply_length.c \
 			apply_flags.c \
 			apply_precision.c \
+			join_strings.c \
 			ft_itoa_base.c \
 			subroutines_length_calc.c \
 			long_calc_math.c \
 			display.c \
-			formatting.c \
-			undefined_behavior.c \
-			try_dollar.c \
-			utf8.c \
+			undefined_behaviour.c \
 			cleaner.c
 
 
@@ -58,11 +59,11 @@ CFLAGS = -Wall -Wextra -Werror
 LFLAGS = -I ./libft/ -I ./srcs/
 
 %.o:$(SRC_DIR)/%.c
-	@$(CC) $(LFLAGS) -o $@ -c $<
-#	$(CC) $(CFLAGS) $(LFLAGS) -o $@ -c $<
+#	@$(CC) $(LFLAGS) -o $@ -c $<
+	@$(CC) $(CFLAGS) $(LFLAGS) -o $@ -c $<
 %.o:$(LIB_DIR)/%.c
-	@$(CC) $(LFLAGS) -o $@ -c $<
-#	$(CC) $(CFLAGS) $(LFLAGS) -o $@ -c $<
+#	@$(CC) $(LFLAGS) -o $@ -c $<
+	@$(CC) $(CFLAGS) $(LFLAGS) -o $@ -c $<
 
 all: $(NAME)
 

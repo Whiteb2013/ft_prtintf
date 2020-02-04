@@ -17,13 +17,13 @@ int		convert_f2string(t_format *format, t_float *flt,
 {
 	dbl_rounding(format, flt, integer, decimal, format->precision);
 	if (!(format->content.string2show = ft_itoa_base_array_precision(\
-		format, decimal, flt->zero_counter, format->precision)))
+		decimal, flt->zero_counter, format->precision)))
 		return (0);
 	if (format->precision && !(format->content.string2show = join_prefix(\
 		".", format)))
 		return (0);
 	if (!(format->content.string2show = join_strings(\
-		ft_itoa_base_array_precision(format, integer, 0, integer->array_len), \
+		ft_itoa_base_array_precision(integer, 0, integer->array_len), \
 		format->content.string2show, format)))
 		return (0);
 	dbl_remove_trailing_zeros(format);

@@ -120,8 +120,7 @@ int							convert_g2string(t_format *format, t_float *flt, \
 char						*ft_itoa_base(unsigned long long b, size_t base, \
 								size_t size);
 char						*ft_itoa_base_array(t_array *array, size_t base);
-char						*ft_itoa_base_array_precision(\
-								t_format *format, t_array *array, \
+char						*ft_itoa_base_array_precision(t_array *array, \
 								size_t zero_counter, size_t precision);
 char						*ft_itoa_base_array_precision_e(t_format *format, \
 								t_array *array);

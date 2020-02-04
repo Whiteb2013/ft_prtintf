@@ -13,7 +13,7 @@
 #include "ft_printf.h"
 
 int		dbl_check_for_rounding(t_array *array, int array_elem_id, \
-							int digit_in_elem)
+															int digit_in_elem)
 {
 	unsigned long int	comp_base;
 
@@ -37,7 +37,7 @@ int		dbl_check_for_rounding(t_array *array, int array_elem_id, \
 */
 
 void	dbl_rounding(t_format *format, t_float *flt, t_array *integer, \
-					t_array *decimal, size_t precision)
+										t_array *decimal, size_t precision)
 {
 	size_t	first_elem_len;
 	int		array_elem_id;
@@ -64,7 +64,7 @@ void	dbl_rounding(t_format *format, t_float *flt, t_array *integer, \
 }
 
 void	dbl_e_rounding(t_format *format, t_float *flt, \
-					t_array *integer, t_array *decimal)
+										t_array *integer, t_array *decimal)
 {
 	int		array_elem_id;
 	int		digit_in_elem;

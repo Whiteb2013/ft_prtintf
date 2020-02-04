@@ -37,7 +37,7 @@ int		dbl_detect_leading_zero(t_float *flt, t_array *decimal, t_array *exp)
 }
 
 void	dbl_count_leading_zero(t_format *format, t_float *flt, \
-								t_array *decimal, int flag)
+												t_array *decimal, int flag)
 {
 	unsigned long int	base;
 

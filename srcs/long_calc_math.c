@@ -36,7 +36,7 @@ void	sum_integer_const(t_array *a, int array_elem_id, \
 							int digit_in_elem, unsigned long int value)
 {
 	t_array			b;
-	unsigned int	base;
+	size_t			base;
 
 	clean_array(&b);
 	if (a->current_element != array_elem_id)
@@ -52,12 +52,13 @@ void	sum_integer_const(t_array *a, int array_elem_id, \
 	else
 	{
 		base = int_length(a->array[a->current_element], 10);
-		while (digit_in_elem++ != base)
+		while (digit_in_elem++ - base)
 			value *= 10;
 	}
 	b.array[array_elem_id] = value;
 	b.current_element = array_elem_id;
 	sum_integer(a, &b);
+	a->array_len = int_length_array(a, 10);
 }
 
 void	sum_decimal(t_array *a, t_array *exp)
@@ -88,10 +89,10 @@ void	sum_decimal(t_array *a, t_array *exp)
 }
 
 int		sum_decimal_const(t_format *format, t_float *flt, t_array *a, \
-							int array_elem_id, int digit_in_elem)
+										int array_elem_id, int digit_in_elem)
 {
 	unsigned int	current_value;
-	unsigned int	top_element;
+	int				top_element;
 
 	top_element = a->current_element;
 	current_value = a->array[top_element];

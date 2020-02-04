@@ -54,7 +54,7 @@ int		apply_length_x(t_format *format, va_list ap)
 	else if (!ft_strcmp(format->length_flag, "ll"))
 		return (convert_xo2string(format, \
 				va_arg(ap, unsigned long long), 16));
-		return (0);
+	return (0);
 }
 
 int		apply_length_o(t_format *format, va_list ap)
@@ -70,7 +70,7 @@ int		apply_length_o(t_format *format, va_list ap)
 	else if (!ft_strcmp(format->length_flag, "ll"))
 		return (convert_xo2string(format, \
 				va_arg(ap, unsigned long long), 8));
-		return (0);
+	return (0);
 }
 
 int		apply_length(t_format *format, va_list ap)
