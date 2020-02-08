@@ -27,6 +27,17 @@ int		clean_format(t_format *format)
 
 void	clean_array(t_array *array)
 {
+	//int i;
+
+	//i = 0;
+	while (array->current_element >= 0)
+		array->array[array->current_element--] = 0;
+	array->current_element = 0;
+}
+
+
+void	clean_array_initial(t_array *array)
+{
 	int i;
 
 	i = 0;

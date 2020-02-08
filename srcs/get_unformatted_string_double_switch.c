@@ -45,8 +45,8 @@ int		convert_double2string(t_format *format, long double a, size_t base)
 	t_array				decimal;
 	t_float				flt;
 
-	clean_array(&integer);
-	clean_array(&decimal);
+	clean_array_initial(&integer);
+	clean_array_initial(&decimal);
 	flt.dbl.dbl = (long double)a;
 	apply_default_options_dbl(format, &flt, base);
 	if (dbl_check_exceptions(&flt))

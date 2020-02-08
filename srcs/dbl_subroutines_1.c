@@ -59,7 +59,7 @@ void	dbl_rounding(t_format *format, t_float *flt, t_array *integer, \
 		{
 			integer->round.elem_id = 0;
 			integer->round.digit_in_elem = 4;
-			sum_integer_const(format, integer, 1);
+			sum_array_const(format, integer, 1);
 		}
 }
 
@@ -81,7 +81,7 @@ void	dbl_e_rounding(t_format *format, t_float *flt, \
 			integer->round.digit_in_elem = rounding_pos % BASE_LEN;
 		}
 		if (dbl_check_for_rounding(format, integer))
-			sum_integer_const(format, integer, 1);
+			sum_array_const(format, integer, 1);
 	}
 	else if (integer->array[integer->current_element])
 		dbl_rounding(format, flt, integer, decimal, \

@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-void	sum_integer(t_array *a, t_array *exp)
+void	sum_array(t_array *a, t_array *exp)
 {
 	unsigned long int	sum;
 	int					i;
@@ -32,12 +32,12 @@ void	sum_integer(t_array *a, t_array *exp)
 	clean_array(exp);
 }
 
-void	sum_integer_const(t_format *format, t_array *a, unsigned long int value)
+void	sum_array_const(t_format *format, t_array *a, unsigned long int value)
 {
 	t_array			b;
 	size_t			base;
 
-	clean_array(&b);
+	clean_array_initial(&b);
 	if (a->current_element != a->round.elem_id)
 	{
 		if (!a->round.digit_in_elem)
@@ -56,7 +56,7 @@ void	sum_integer_const(t_format *format, t_array *a, unsigned long int value)
 	}
 	b.array[a->round.elem_id] = value;
 	b.current_element = a->round.elem_id;
-	sum_integer(a, &b);
+	sum_array(a, &b);
 	dbl_update_array_length(format, a);
 }
 
@@ -71,19 +71,19 @@ void	sum_decimal(t_array *a, t_array *exp)
 	while (i <= a->current_element || i <= exp->current_element)
 	{
 		mediator_next = \
-			(mediator_prev + (*a).array[i] * 10 + (*exp).array[i]) / BASE;
-		(*a).array[i] = \
-			(mediator_prev + (*a).array[i] * 10 + (*exp).array[i]) % BASE;
+			(mediator_prev + a->array[i] * 10 + exp->array[i]) / BASE;
+		a->array[i] = \
+			(mediator_prev + a->array[i] * 10 + exp->array[i]) % BASE;
 		mediator_prev = mediator_next;
 		i++;
 	}
 	if (mediator_next)
 	{
-		(*a).array[i] = mediator_next;
-		(*a).current_element = i;
+		a->array[i] = mediator_next;
+		a->current_element = i;
 	}
 	else
-		(*a).current_element = i - 1;
+		a->current_element = i - 1;
 	clean_array(exp);
 }
 
@@ -94,7 +94,7 @@ int		sum_decimal_const(t_format *format, t_float *flt, t_array *a)
 
 	top_element = a->current_element;
 	current_value = a->array[top_element];
-	sum_integer_const(format, a, 1);
+	sum_array_const(format, a, 1);
 	if (a->current_element > top_element || \
 			int_length(a->array[a->current_element], format->base) > \
 				int_length(current_value, format->base))
@@ -117,22 +117,22 @@ t_array	*power(unsigned long int base, short int power, t_array *exp)
 	unsigned long int	mediator_prev;
 
 	clean_array(exp);
-	(*exp).array[0] = 1;
+	exp->array[0] = 1;
 	while (power-- > 0)
 	{
 		i = 0;
 		mediator_prev = 0;
-		while (i <= (*exp).current_element)
+		while (i <= exp->current_element)
 		{
-			mediator_next = (mediator_prev + (*exp).array[i] * base) / BASE;
-			(*exp).array[i] = (mediator_prev + (*exp).array[i] * base) % BASE;
+			mediator_next = (mediator_prev + exp->array[i] * base) / BASE;
+			exp->array[i] = (mediator_prev + exp->array[i] * base) % BASE;
 			mediator_prev = mediator_next;
 			i++;
 		}
 		if (mediator_next)
 		{
-			(*exp).array[i] = mediator_next;
-			(*exp).current_element = i;
+			exp->array[i] = mediator_next;
+			exp->current_element = i;
 		}
 	}
 	return (exp);

@@ -152,8 +152,8 @@ int							subroutine_1(t_format *format, va_list ap, int k);
 int							subroutine_2(const char *str, t_format *format, \
 								va_list ap, \
 								int ap_array_that_is_crutch_bc_norm[2]);
-void						sum_integer(t_array *a, t_array *exp);
-void						sum_integer_const(t_format *format, t_array *a, \
+void						sum_array(t_array *a, t_array *exp);
+void						sum_array_const(t_format *format, t_array *a, \
 								unsigned long int value);
 void						sum_decimal(t_array *a, t_array *exp);
 int							sum_decimal_const(t_format *format, t_float *flt, \
@@ -181,6 +181,7 @@ int							try_dollar(\
 void						ft_putchar_utf8(int c);
 int							clean_format(t_format *format);
 void						clean_array(t_array *array);
+void						clean_array_initial(t_array *array);
 int							undefined_behaviour(t_format *format);
 
 #endif
