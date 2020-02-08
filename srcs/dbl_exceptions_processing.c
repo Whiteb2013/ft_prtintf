@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dbl_check_exceptions.c                             :+:      :+:    :+:   */
+/*   dbl_exceptions_processing.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmarin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,17 +12,24 @@
 
 #include "ft_printf.h"
 
-int		dbl_check_exceptions(t_format *format, t_float *flt)
+int		dbl_check_exceptions(t_float *flt)
+{
+	if (((((flt->dbl.t_union.mantissa >> 63) & 1L) == 0L) || \
+		flt->exponent == EXP_EXCPN - EXP_DFLT) && flt->exponent != -EXP_DFLT)
+		return (1);
+	return (0);
+}
+
+int		dbl_define_exception(t_format *format, t_float *flt)
 {
 	int state;
 	int	remaining_part;
-	int offset;
 
-	offset = 62;
+	flt->fraction_len = flt->fraction_len - 2;
 	remaining_part = 0;
-	state = flt->dbl.t_union.mantissa >> offset;
-	while (offset-- && !remaining_part)
-		if (((flt->dbl.t_union.mantissa >> offset) & 1L) == 1L)
+	state = flt->dbl.t_union.mantissa >> flt->fraction_len;
+	while (flt->fraction_len-- && !remaining_part)
+		if (((flt->dbl.t_union.mantissa >> flt->fraction_len) & 1L) == 1L)
 			remaining_part = 1;
 	if (state == 2 && !remaining_part)
 	{

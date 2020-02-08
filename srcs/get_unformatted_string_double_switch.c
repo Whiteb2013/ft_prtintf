@@ -48,19 +48,9 @@ int		convert_double2string(t_format *format, long double a, size_t base)
 	clean_array(&integer);
 	clean_array(&decimal);
 	flt.dbl.dbl = (long double)a;
-	if (flt.dbl.t_union.sign)
-		format->content.sign = '-';
-	format->base = base;
-	flt.exponent = flt.dbl.t_union.exponent - EXP_DFLT;
-	if (((((flt.dbl.t_union.mantissa >> 63) & 1L) == 0L) || \
-		flt.exponent == EXP_EXCPN - EXP_DFLT) && flt.exponent != -EXP_DFLT)
-	{
-		if (!dbl_check_exceptions(format, &flt))
-			return (0);
-		return (1);
-	}
-	flt.fraction_len = 64;
-	flt.zero_counter = 0;
+	apply_default_options_dbl(format, &flt, base);
+	if (dbl_check_exceptions(&flt))
+		return (dbl_define_exception(format, &flt));
 	dbl_get_integer(format, &flt, &integer);
 	dbl_get_decimal(format, &flt, &decimal);
 	if (!select_double_type(format, &flt, &integer, &decimal))

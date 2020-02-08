@@ -64,12 +64,19 @@ typedef union				u_flt
 	long double				dbl;
 }							t_flt;
 
+typedef	struct				s_round
+{
+	int						elem_id;
+	int						digit_in_elem;
+}							t_round;
+
 typedef struct				s_float
 {
 	t_flt					dbl;
 	short int				fraction_len;
 	short int				exponent;
 	size_t					zero_counter;
+
 }							t_float;
 
 typedef struct				s_array
@@ -78,6 +85,7 @@ typedef struct				s_array
 	int						current_element;
 	size_t					array_len;
 	size_t					first_len;
+	t_round					round;
 }							t_array;
 
 int							display_static_buffer(const char **str, int i);
@@ -127,7 +135,8 @@ char						*ft_itoa_base_array_precision_e(t_format *format, \
 size_t						int_length(\
 								unsigned long long int b, unsigned int base);
 size_t						int_length_array(t_array *array, unsigned int base);
-int							dbl_check_exceptions(t_format *format, \
+int							dbl_check_exceptions(t_float *flt);
+int							dbl_define_exception(t_format *format, \
 								t_float *flt);
 void						dbl_rounding(t_format *format, t_float *flt, \
 								t_array *integer, t_array *decimal, \
@@ -137,23 +146,28 @@ void						dbl_e_rounding(t_format *format, t_float *flt, \
 void						dbl_count_leading_zero(t_format *format, \
 								t_float *flt, t_array *decimal, int flag);
 void						dbl_remove_trailing_zeros(t_format *format);
+void						dbl_update_array_length(t_format *format, \
+								t_array *a);
 int							subroutine_1(t_format *format, va_list ap, int k);
 int							subroutine_2(const char *str, t_format *format, \
 								va_list ap, \
 								int ap_array_that_is_crutch_bc_norm[2]);
 void						sum_integer(t_array *a, t_array *exp);
-void						sum_integer_const(t_array *a, int array_elem_id, \
-								int digit_in_elem, unsigned long int value);
+void						sum_integer_const(t_format *format, t_array *a, \
+								unsigned long int value);
 void						sum_decimal(t_array *a, t_array *exp);
 int							sum_decimal_const(t_format *format, t_float *flt, \
-								t_array *a, int array_elem_id, \
-								int digit_in_elem);
+								t_array *a);
 t_array						*power(\
 								unsigned long int base, short int power, \
 								t_array *exp);
 char						*join_prefix(char *s1, t_format *format);
 char						*join_postfix(t_format *format, char *s2);
 char						*join_strings(char *s1, char *s2, t_format *format);
+int							apply_default_options_general(t_format *format, \
+								va_list ap_root);
+int							apply_default_options_dbl(t_format *format, \
+								t_float *flt, size_t base);
 int							apply_width(t_format *format);
 int							apply_length(t_format *format, va_list ap);
 int							apply_flags(t_format *format);

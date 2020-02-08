@@ -12,33 +12,6 @@
 
 #include "ft_printf.h"
 
-/*
-**	defining default displaying options
-*/
-
-int		apply_default_options(t_format *format, va_list ap_root)
-{
-	if (!(format->length_flag = ft_strnew(2)))
-		return (0);
-	format->flag.minus = 'f';
-	format->flag.plus = 'f';
-	format->flag.space = 'f';
-	format->flag.zero = 'f';
-	format->flag.hash = 'f';
-	format->precision_flag = 'f';
-	format->width = 0;
-	format->content.sign = '+';
-	format->zero_flag = 'f';
-	if (format->type == 'f' || format->type == 'e' || format->type == 'g' || \
-		format->type == 'F' || format->type == 'E' || format->type == 'G')
-		format->precision = 6;
-	else
-		format->precision = 0;
-	format->length_utf8 = 0;
-	*format->ap_root = *ap_root;
-	return (1);
-}
-
 int		extract_flag(const char *str, t_format *format)
 {
 	if (str[0] == '-')
@@ -116,7 +89,7 @@ int		get_type(const char *str, t_format *format, va_list ap_root)
 			i = posible_type_pos;
 	}
 	format->type = str[i];
-	if (!apply_default_options(format, ap_root))
+	if (!apply_default_options_general(format, ap_root))
 		return (-1);
 	return (i);
 }

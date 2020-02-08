@@ -12,6 +12,12 @@
 
 #include "ft_printf.h"
 
+void	dbl_update_array_length(t_format *format, t_array *a)
+{
+	a->array_len = int_length_array(a, format->base);
+	a->first_len = int_length(a->array[a->current_element], format->base);
+}
+
 int		dbl_detect_leading_zero(t_float *flt, t_array *decimal, t_array *exp)
 {
 	short int	counter;
@@ -83,7 +89,7 @@ void	dbl_get_decimal(t_format *format, t_float *flt, t_array *decimal)
 		dbl_count_leading_zero(format, flt, decimal, flag);
 	else
 		flt->zero_counter = 0;
-	decimal->array_len = int_length_array(decimal, format->base);
+	dbl_update_array_length(format, decimal);
 }
 
 void	dbl_get_integer(t_format *format, t_float *flt, t_array *integer)
@@ -98,7 +104,5 @@ void	dbl_get_integer(t_format *format, t_float *flt, t_array *integer)
 				sum_integer(integer, power(2, flt->exponent, &exp)) : 0;
 			flt->exponent--;
 		}
-	integer->array_len = int_length_array(integer, format->base);
-	integer->first_len = int_length(integer->array[integer->current_element], \
-	format->base);
+	dbl_update_array_length(format, integer);
 }

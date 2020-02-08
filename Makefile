@@ -16,11 +16,12 @@ SRC_FILES =	ft_printf.c \
 			get_unformatted_string_f.c \
 			get_unformatted_string_e.c \
 			get_unformatted_string_g.c \
-			dbl_check_exceptions.c \
+			dbl_exceptions_processing.c \
 			dbl_subroutines_1.c \
 			dbl_subroutines_2.c \
 			dbl_itoa_base.c \
 			get_formatted_string.c \
+			apply_default_type_options.c \
 			apply_width.c \
 			apply_length.c \
 			apply_flags.c \

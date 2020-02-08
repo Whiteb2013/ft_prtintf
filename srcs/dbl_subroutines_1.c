@@ -12,19 +12,20 @@
 
 #include "ft_printf.h"
 
-int		dbl_check_for_rounding(t_array *array, int array_elem_id, \
-															int digit_in_elem)
+int		dbl_check_for_rounding(t_format *format, t_array *array)
 {
 	unsigned long int	comp_base;
+	int					digit_in_elem;
 
 	comp_base = BASE;
-	if (array_elem_id == array->current_element)
-		while ((int_length(comp_base, 10) - \
-				int_length(array->array[array_elem_id], 10)) > 1)
-			comp_base /= 10;
+	digit_in_elem = array->round.digit_in_elem;
+	if (array->round.elem_id == array->current_element)
+		while ((int_length(comp_base, format->base) - \
+				int_length(array->array[array->round.elem_id], 10)) > 1)
+			comp_base /= format->base;
 	while (digit_in_elem--)
-		comp_base /= 10;
-	if (array->array[array_elem_id] % comp_base < comp_base / 2)
+		comp_base /= format->base;
+	if (array->array[array->round.elem_id] % comp_base < comp_base / 2)
 		return (0);
 	return (1);
 }
@@ -39,53 +40,50 @@ int		dbl_check_for_rounding(t_array *array, int array_elem_id, \
 void	dbl_rounding(t_format *format, t_float *flt, t_array *integer, \
 										t_array *decimal, size_t precision)
 {
-	size_t	first_elem_len;
-	int		array_elem_id;
-	int		digit_in_elem;
+	int		rounding_pos;
 
 	if (precision < flt->zero_counter)
 		return ;
-	array_elem_id = decimal->current_element;
-	first_elem_len = int_length(decimal->array[array_elem_id], 10);
-	if (precision < flt->zero_counter + first_elem_len)
-		digit_in_elem = precision - flt->zero_counter;
+	decimal->round.elem_id = decimal->current_element;
+	if (precision < flt->zero_counter + decimal->first_len)
+		decimal->round.digit_in_elem = precision - flt->zero_counter;
 	else
 	{
-		if ((array_elem_id -= (precision - flt->zero_counter - first_elem_len) \
-															/ BASE_LEN + 1) < 0)
+		rounding_pos = precision - flt->zero_counter - decimal->first_len;
+		if ((decimal->round.elem_id -= rounding_pos / BASE_LEN + 1) < 0)
 			return ;
-		digit_in_elem = (precision - flt->zero_counter - first_elem_len) \
-															% BASE_LEN;
+		decimal->round.digit_in_elem = rounding_pos % BASE_LEN;
 	}
-	if (dbl_check_for_rounding(decimal, array_elem_id, digit_in_elem))
-		if (sum_decimal_const(format, flt, decimal, array_elem_id, \
-															digit_in_elem) == 1)
-			sum_integer_const(integer, 0, 4, 1);
+	if (dbl_check_for_rounding(format, decimal))
+		if (sum_decimal_const(format, flt, decimal) == 1)
+		{
+			integer->round.elem_id = 0;
+			integer->round.digit_in_elem = 4;
+			sum_integer_const(format, integer, 1);
+		}
 }
 
 void	dbl_e_rounding(t_format *format, t_float *flt, \
 										t_array *integer, t_array *decimal)
 {
-	int		array_elem_id;
-	int		digit_in_elem;
+	int		rounding_pos;
 
-	array_elem_id = integer->current_element;
+	integer->round.elem_id = integer->current_element;
 	if (format->precision < integer->array_len - 1)
 	{
 		if (format->precision + 1 < integer->first_len)
-			digit_in_elem = format->precision + 1;
+			integer->round.digit_in_elem = format->precision + 1;
 		else
 		{
-			if ((array_elem_id -= (format->precision + 1 - integer->first_len) \
-														/ BASE_LEN + 1) < 0)
+			rounding_pos = format->precision - integer->first_len + 1;
+			if ((integer->round.elem_id -= rounding_pos / BASE_LEN + 1) < 0)
 				return ;
-			digit_in_elem = (format->precision + 1 - integer->first_len) \
-														% BASE_LEN;
+			integer->round.digit_in_elem = rounding_pos % BASE_LEN;
 		}
-		if (dbl_check_for_rounding(integer, array_elem_id, digit_in_elem))
-			sum_integer_const(integer, array_elem_id, digit_in_elem, 1);
+		if (dbl_check_for_rounding(format, integer))
+			sum_integer_const(format, integer, 1);
 	}
-	else if (integer->array[array_elem_id])
+	else if (integer->array[integer->current_element])
 		dbl_rounding(format, flt, integer, decimal, \
 						format->precision - integer->array_len + 1);
 	else if (format->precision < format->precision + flt->zero_counter + 1)

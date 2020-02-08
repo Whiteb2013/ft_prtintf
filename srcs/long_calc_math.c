@@ -32,33 +32,32 @@ void	sum_integer(t_array *a, t_array *exp)
 	clean_array(exp);
 }
 
-void	sum_integer_const(t_array *a, int array_elem_id, \
-							int digit_in_elem, unsigned long int value)
+void	sum_integer_const(t_format *format, t_array *a, unsigned long int value)
 {
 	t_array			b;
 	size_t			base;
 
 	clean_array(&b);
-	if (a->current_element != array_elem_id)
+	if (a->current_element != a->round.elem_id)
 	{
-		if (!digit_in_elem)
+		if (!a->round.digit_in_elem)
 		{
-			array_elem_id++;
-			digit_in_elem = BASE_LEN;
+			a->round.elem_id++;
+			a->round.digit_in_elem = BASE_LEN;
 		}
-		while (digit_in_elem++ != BASE_LEN)
-			value *= 10;
+		while (a->round.digit_in_elem++ != BASE_LEN)
+			value *= format->base;
 	}
 	else
 	{
-		base = int_length(a->array[a->current_element], 10);
-		while (digit_in_elem++ - base)
-			value *= 10;
+		base = int_length(a->array[a->current_element], format->base);
+		while (a->round.digit_in_elem++ - base)
+			value *= format->base;
 	}
-	b.array[array_elem_id] = value;
-	b.current_element = array_elem_id;
+	b.array[a->round.elem_id] = value;
+	b.current_element = a->round.elem_id;
 	sum_integer(a, &b);
-	a->array_len = int_length_array(a, 10);
+	dbl_update_array_length(format, a);
 }
 
 void	sum_decimal(t_array *a, t_array *exp)
@@ -88,18 +87,17 @@ void	sum_decimal(t_array *a, t_array *exp)
 	clean_array(exp);
 }
 
-int		sum_decimal_const(t_format *format, t_float *flt, t_array *a, \
-										int array_elem_id, int digit_in_elem)
+int		sum_decimal_const(t_format *format, t_float *flt, t_array *a)
 {
 	unsigned int	current_value;
 	int				top_element;
 
 	top_element = a->current_element;
 	current_value = a->array[top_element];
-	sum_integer_const(a, array_elem_id, digit_in_elem, 1);
+	sum_integer_const(format, a, 1);
 	if (a->current_element > top_element || \
-			int_length(a->array[a->current_element], 10) > \
-				int_length(current_value, 10))
+			int_length(a->array[a->current_element], format->base) > \
+				int_length(current_value, format->base))
 	{
 		if (flt->zero_counter)
 		{
