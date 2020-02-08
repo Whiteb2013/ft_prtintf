@@ -12,6 +12,16 @@
 
 #include "ft_printf.h"
 
+/*
+**	adopting string according to displaying rules for activated width
+**	flag stored in 'format' structure
+**	Entry:
+**		custom structure - format (carrier for general displaying settings).
+**	Exit:
+**		0 - exception behaviour encountered,
+**		1 - processed successfully.
+*/
+
 int		apply_width(t_format *format)
 {
 	char	*filler_str;

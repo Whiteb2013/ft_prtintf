@@ -13,7 +13,13 @@
 #include "ft_printf.h"
 
 /*
-**	defining default displaying options
+**	defining default displaying options for all types
+**	Entry:
+**		custom structure - format (carrier for general displaying settings),
+**		pointer to parameters array - ap_root.
+**	Exit:
+**		0 - exception behaviour encountered,
+**		1 - processed successfully.
 */
 
 int		apply_default_options_general(t_format *format, va_list ap_root)
@@ -38,6 +44,16 @@ int		apply_default_options_general(t_format *format, va_list ap_root)
 	*format->ap_root = *ap_root;
 	return (1);
 }
+
+/*
+**	defining default displaying options for float
+**	Entry:
+**		custom structure - format (carrier for general displaying settings),
+**		custom structure - flt (carrier for specific float settings),
+**		calculation base value - base (for furhter multibase extension)
+**	Exit:
+**		1 - processed successfully.
+*/
 
 int		apply_default_options_dbl(t_format *format, t_float *flt, size_t base)
 {

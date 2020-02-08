@@ -37,6 +37,22 @@ int		dbl_check_for_rounding(t_format *format, t_array *array)
 ** 2 - applied, impact on leading zeros
 */
 
+int		dbl_e_rounding_subroutine(t_format *format, t_float *flt, \
+										t_array *integer, t_array *decimal)
+{
+	if (integer->array[integer->current_element])
+	{
+		flt->dec_prec = format->precision - integer->array_len + 1;
+		dbl_dec_rounding(format, flt, integer, decimal);
+	}
+	else if (format->precision < \
+				(flt->dec_prec = format->precision + flt->zero_counter + 1))
+		dbl_dec_rounding(format, flt, integer, decimal);
+	else
+		return (0);
+	return (1);
+}
+
 void	dbl_dec_rounding(t_format *format, t_float *flt, \
 										t_array *integer, t_array *decimal)
 {
@@ -63,7 +79,7 @@ void	dbl_dec_rounding(t_format *format, t_float *flt, \
 		}
 }
 
-void	dbl_e_rounding(t_format *format, t_float *flt, \
+int		dbl_e_rounding(t_format *format, t_float *flt, \
 										t_array *integer, t_array *decimal)
 {
 	int		rounding_pos;
@@ -76,20 +92,15 @@ void	dbl_e_rounding(t_format *format, t_float *flt, \
 		else
 		{
 			if ((integer->round.elem_id -= rounding_pos / BASE_LEN + 1) < 0)
-				return ;
+				return (1);
 			integer->round.digit_in_elem = rounding_pos % BASE_LEN;
 		}
 		if (dbl_check_for_rounding(format, integer))
 			sum_array_const(format, integer, 1);
 	}
-	else if (integer->array[integer->current_element])
-	{
-		flt->dec_prec = format->precision - integer->array_len + 1;
-		dbl_dec_rounding(format, flt, integer, decimal);
-	}
-	else if (format->precision < \
-				(flt->dec_prec = format->precision + flt->zero_counter + 1))
-		dbl_dec_rounding(format, flt, integer, decimal);
+	else
+		return (dbl_e_rounding_subroutine(format, flt, integer, decimal));
+	return (1);
 }
 
 void	dbl_remove_trailing_zeros(t_format *format)

@@ -28,10 +28,6 @@ int		check_precision(char c)
 		return (0);
 }
 
-/*
-**	replace with ft_isdigit
-*/
-
 int		check_width(char c)
 {
 	if (c >= '1' && c <= '9')
@@ -58,11 +54,21 @@ int		check_flag(char c)
 }
 
 /*
-**	checking modes:
-**		a - all (check if symbol is part of flag or width or precision);
-**		f - flag (check if symbol is part of flag);
-**		w - width (check if symbol is part of width);
-**		p - precision (check if symbol is part of precision);
+**	checking if encountered symbols may be classified as displaying flag
+**	Entry:
+**		single char - c (from original string transferred as parameter),
+**		single char - mode
+**		(checking modes:
+**			a - all (check if symbol is part of flag or width or precision);
+**			f - flag (check if symbol is part of flag);
+**			w - width (check if symbol is part of width);
+**			p - precision (check if symbol is part of precision);
+**			$ - dollar (check if symbol is a special parameter's array
+**			managing symbol);
+**		)
+**	Exit:
+**		0 - false (nothing parameter-like (mode dependent) detected),
+**		1 - true (something parameter-like (mode dependent) detected).
 */
 
 int		check_options(char c, char mode)

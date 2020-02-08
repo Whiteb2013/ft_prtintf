@@ -55,7 +55,8 @@ int		convert_e2string_negative(t_format *format, t_float *flt, \
 int		convert_e2string(t_format *format, t_float *flt, \
 							t_array *integer, t_array *decimal)
 {
-	dbl_e_rounding(format, flt, integer, decimal);
+	if (!dbl_e_rounding(format, flt, integer, decimal))
+		return (0);
 	if (integer->array[integer->current_element] || \
 		!decimal->array[decimal->current_element])
 	{

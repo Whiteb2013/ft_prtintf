@@ -20,12 +20,12 @@ int		try_dollar(const char *str, t_format *format, va_list ap, int k)
 		k += int_length(format->width, 10);
 		if (check_options(str[k], '$'))
 		{
-			format->width = format->width - 1;
+			format->width--;
 			*ap = *format->ap_root;
 			while (format->width)
 			{
 				va_arg(ap, void *);
-				format->width = format->width - 1;
+				format->width--;
 			}
 			k++;
 		}

@@ -12,6 +12,16 @@
 
 #include "ft_printf.h"
 
+/*
+**	adopting string according to displaying rules for activated precision
+**	flag stored in 'format' structure for type 's'
+**	Entry:
+**		custom structure - format (carrier for general displaying settings).
+**	Exit:
+**		0 - exception behaviour encountered,
+**		1 - processed successfully.
+*/
+
 int		apply_precision_string(t_format *format)
 {
 	char	*tmp;
@@ -26,6 +36,17 @@ int		apply_precision_string(t_format *format)
 	}
 	return (1);
 }
+
+/*
+**	adopting string according to displaying rules for activated precision
+**	flag stored in 'format' structure for types 'i', 'd', 'o', 'O', 'x',
+**	'X', 'u', 'U', 'p'
+**	Entry:
+**		custom structure - format (carrier for general displaying settings).
+**	Exit:
+**		0 - exception behaviour encountered,
+**		1 - processed successfully.
+*/
 
 int		apply_precision_int(t_format *format)
 {
@@ -52,10 +73,23 @@ int		apply_precision_int(t_format *format)
 	return (1);
 }
 
+/*
+**	adopting string according to displaying rules for activated precision
+**	flag stored in 'format' structure
+**	Entry:
+**		custom structure - format (carrier for general displaying settings).
+**	Exit:
+**		0 - exception behaviour encountered,
+**		1 - processed successfully.
+*/
+
 int		apply_precision(t_format *format)
 {
-	if (format->type == 's' && !apply_precision_string(format))
-		return (0);
+	if (format->type == 's')
+	{
+		if (!apply_precision_string(format))
+			return (0);
+	}
 	if (format->type == 'i' || format->type == 'd' || format->type == 'o' || \
 		format->type == 'O' || format->type == 'x' || format->type == 'X' ||
 		format->type == 'u' || format->type == 'U' || format->type == 'p')

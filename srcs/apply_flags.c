@@ -12,6 +12,15 @@
 
 #include "ft_printf.h"
 
+/*
+**	adopting string according to displaying rules for hash flag
+**	Entry:
+**		custom structure - format (carrier for general displaying settings).
+**	Exit:
+**		0 - exception behaviour encountered,
+**		1 - processed successfully.
+*/
+
 int		apply_hash(t_format *format)
 {
 	if ((format->type == 'x' || format->type == 'X') \
@@ -33,6 +42,15 @@ int		apply_hash(t_format *format)
 	format->length = ft_strlen(format->content.string2show);
 	return (1);
 }
+
+/*
+**	adopting string according to displaying rules for space flag
+**	Entry:
+**		custom structure - format (carrier for general displaying settings).
+**	Exit:
+**		0 - exception behaviour encountered,
+**		1 - processed successfully.
+*/
 
 int		apply_space(t_format *format)
 {
@@ -56,6 +74,15 @@ int		apply_space(t_format *format)
 	return (1);
 }
 
+/*
+**	adopting string according to displaying rules for plus flag
+**	Entry:
+**		custom structure - format (carrier for general displaying settings).
+**	Exit:
+**		0 - exception behaviour encountered,
+**		1 - processed successfully.
+*/
+
 int		apply_plus(t_format *format)
 {
 	if (format->type == 'c' || format->type == 'C' || \
@@ -71,6 +98,15 @@ int		apply_plus(t_format *format)
 	return (1);
 }
 
+/*
+**	adopting string according to displaying rules for zero flag
+**	Entry:
+**		custom structure - format (carrier for general displaying settings).
+**	Exit:
+**		0 - exception behaviour encountered,
+**		1 - processed successfully.
+*/
+
 int		apply_zero(t_format *format)
 {
 	if (format->type != 'c' && format->type != 'C' \
@@ -82,6 +118,16 @@ int		apply_zero(t_format *format)
 	format->length = ft_strlen(format->content.string2show);
 	return (1);
 }
+
+/*
+**	adopting string according to displaying rules for activated formatting
+**	flags stored in 'format' structure
+**	Entry:
+**		custom structure - format (carrier for general displaying settings).
+**	Exit:
+**		0 - exception behaviour encountered,
+**		1 - processed successfully.
+*/
 
 int		apply_flags(t_format *format)
 {

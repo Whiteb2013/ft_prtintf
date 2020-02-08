@@ -26,7 +26,7 @@ int			extract_parameter(const char **str, va_list ap, va_list ap_root)
 
 	*str = *str + 1;
 	if (!(format = (t_format *)ft_memalloc(sizeof(t_format))))
-		return (0);
+		return (-1);
 	if ((i = get_type(*str, format, ap_root)) < 0)
 		return (clean_format(format));
 	if (check_type(format->type))
@@ -105,7 +105,7 @@ const char	*read_str(const char *str, \
 			*i = 0;
 		}
 		else
-			(*i)++;
+			++*i;
 	}
 	return (str);
 }

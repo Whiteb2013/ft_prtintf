@@ -141,7 +141,7 @@ int							dbl_define_exception(t_format *format, \
 								t_float *flt);
 void						dbl_dec_rounding(t_format *format, t_float *flt, \
 								t_array *integer, t_array *decimal);
-void						dbl_e_rounding(t_format *format, t_float *flt, \
+int							dbl_e_rounding(t_format *format, t_float *flt, \
 								t_array *integer, t_array *decimal);
 void						dbl_count_leading_zero(t_format *format, \
 								t_float *flt, t_array *decimal, int flag);

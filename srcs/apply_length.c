@@ -12,6 +12,17 @@
 
 #include "ft_printf.h"
 
+/*
+**	adopting string according to displaying rules for activated length
+**	flags stored in 'format' structure for types 'd', 'i'
+**	Entry:
+**		custom structure - format (carrier for general displaying settings),
+**		pointer to parameters array - ap.
+**	Exit:
+**		0 - exception behaviour encountered,
+**		1 - processed successfully.
+*/
+
 int		apply_length_d(t_format *format, va_list ap)
 {
 	if (!ft_strcmp(format->length_flag, "h"))
@@ -25,6 +36,17 @@ int		apply_length_d(t_format *format, va_list ap)
 		return (convert_int2string(format, va_arg(ap, long long), 10));
 	return (0);
 }
+
+/*
+**	adopting string according to displaying rules for activated length
+**	flags stored in 'format' structure for types 'u', 'U'
+**	Entry:
+**		custom structure - format (carrier for general displaying settings),
+**		pointer to parameters array - ap.
+**	Exit:
+**		0 - exception behaviour encountered,
+**		1 - processed successfully.
+*/
 
 int		apply_length_u(t_format *format, va_list ap)
 {
@@ -40,6 +62,17 @@ int		apply_length_u(t_format *format, va_list ap)
 		return (convert_int2string(format, va_arg(ap, unsigned long long), 10));
 	return (0);
 }
+
+/*
+**	adopting string according to displaying rules for activated length
+**	flags stored in 'format' structure for types 'x', 'X'
+**	Entry:
+**		custom structure - format (carrier for general displaying settings),
+**		pointer to parameters array - ap.
+**	Exit:
+**		0 - exception behaviour encountered,
+**		1 - processed successfully.
+*/
 
 int		apply_length_x(t_format *format, va_list ap)
 {
@@ -57,6 +90,17 @@ int		apply_length_x(t_format *format, va_list ap)
 		return (0);
 }
 
+/*
+**	adopting string according to displaying rules for activated length
+**	flags stored in 'format' structure for types 'o', 'O'
+**	Entry:
+**		custom structure - format (carrier for general displaying settings),
+**		pointer to parameters array - ap.
+**	Exit:
+**		0 - exception behaviour encountered,
+**		1 - processed successfully.
+*/
+
 int		apply_length_o(t_format *format, va_list ap)
 {
 	if (!ft_strcmp(format->length_flag, "h"))
@@ -72,6 +116,17 @@ int		apply_length_o(t_format *format, va_list ap)
 				va_arg(ap, unsigned long long), 8));
 		return (0);
 }
+
+/*
+**	adopting string according to displaying rules for activated length
+**	flags stored in 'format' structure
+**	Entry:
+**		custom structure - format (carrier for general displaying settings),
+**		pointer to parameters array - ap_root.
+**	Exit:
+**		0 - exception behaviour encountered,
+**		1 - processed successfully.
+*/
 
 int		apply_length(t_format *format, va_list ap)
 {

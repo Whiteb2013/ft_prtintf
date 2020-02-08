@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-void	add_char_to_string(t_format *format, char *str)
+int		add_char_to_string(t_format *format, char *str)
 {
 	char	*tmp;
 
@@ -24,9 +24,12 @@ void	add_char_to_string(t_format *format, char *str)
 		format->content.string2show = ft_strjoin(tmp, str);
 		free(tmp);
 	}
+	if (!format->content.string2show)
+		return (0);
+	return (1);
 }
 
-void	get_char_utf8(t_format *format, int c)
+int		get_char_utf8(t_format *format, int c)
 {
 	char	str[5];
 
@@ -51,14 +54,15 @@ void	get_char_utf8(t_format *format, int c)
 		str[2] = ((c >> 6) & 0x3F) | 0x80;
 		str[3] = (c & 0x3F) | 0x80;
 	}
-	add_char_to_string(format, str);
+	return (add_char_to_string(format, str));
 }
 
 int		convert_char2utf8(t_format *format, int c)
 {
 	size_t tmp;
 
-	get_char_utf8(format, c);
+	if (!get_char_utf8(format, c))
+		return (0);
 	format->length_utf8 = 1;
 	if (format->width)
 	{
@@ -77,12 +81,14 @@ int		convert_string2utf8(t_format *format, int *str)
 	i = 0;
 	if (str && (format->precision_flag == 'f' || format->precision))
 	{
-		get_char_utf8(format, str[0]);
+		if (!(get_char_utf8(format, str[0])))
+			return (0);
 		while (str[++i])
 		{
 			if (i == format->precision)
 				break ;
-			get_char_utf8(format, str[i]);
+			if (!get_char_utf8(format, str[i]))
+				return (0);
 		}
 	}
 	format->length_utf8 = i;

@@ -17,8 +17,11 @@ int		format_string(t_format *format)
 	int i;
 
 	i = -1;
-	if (format->precision_flag == 't' && !apply_precision(format))
-		return (0);
+	if (format->precision_flag == 't')
+	{
+		if (!apply_precision(format))
+			return (0);
+	}
 	if (!apply_flags(format))
 		return (0);
 	if (!apply_width(format))
