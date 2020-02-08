@@ -37,19 +37,19 @@ int		dbl_check_for_rounding(t_format *format, t_array *array)
 ** 2 - applied, impact on leading zeros
 */
 
-void	dbl_rounding(t_format *format, t_float *flt, t_array *integer, \
-										t_array *decimal, size_t precision)
+void	dbl_dec_rounding(t_format *format, t_float *flt, \
+										t_array *integer, t_array *decimal)
 {
 	int		rounding_pos;
 
-	if (precision < flt->zero_counter)
+	if (flt->dec_prec < flt->zero_counter)
 		return ;
 	decimal->round.elem_id = decimal->current_element;
-	if (precision < flt->zero_counter + decimal->first_len)
-		decimal->round.digit_in_elem = precision - flt->zero_counter;
+	if (flt->dec_prec < flt->zero_counter + decimal->first_len)
+		decimal->round.digit_in_elem = flt->dec_prec - flt->zero_counter;
 	else
 	{
-		rounding_pos = precision - flt->zero_counter - decimal->first_len;
+		rounding_pos = flt->dec_prec - flt->zero_counter - decimal->first_len;
 		if ((decimal->round.elem_id -= rounding_pos / BASE_LEN + 1) < 0)
 			return ;
 		decimal->round.digit_in_elem = rounding_pos % BASE_LEN;
@@ -71,11 +71,10 @@ void	dbl_e_rounding(t_format *format, t_float *flt, \
 	integer->round.elem_id = integer->current_element;
 	if (format->precision < integer->array_len - 1)
 	{
-		if (format->precision + 1 < integer->first_len)
+		if ((rounding_pos = format->precision + 1 - integer->first_len) < 0)
 			integer->round.digit_in_elem = format->precision + 1;
 		else
 		{
-			rounding_pos = format->precision - integer->first_len + 1;
 			if ((integer->round.elem_id -= rounding_pos / BASE_LEN + 1) < 0)
 				return ;
 			integer->round.digit_in_elem = rounding_pos % BASE_LEN;
@@ -84,11 +83,13 @@ void	dbl_e_rounding(t_format *format, t_float *flt, \
 			sum_array_const(format, integer, 1);
 	}
 	else if (integer->array[integer->current_element])
-		dbl_rounding(format, flt, integer, decimal, \
-						format->precision - integer->array_len + 1);
-	else if (format->precision < format->precision + flt->zero_counter + 1)
-		dbl_rounding(format, flt, integer, decimal, \
-						format->precision + flt->zero_counter + 1);
+	{
+		flt->dec_prec = format->precision - integer->array_len + 1;
+		dbl_dec_rounding(format, flt, integer, decimal);
+	}
+	else if (format->precision < \
+				(flt->dec_prec = format->precision + flt->zero_counter + 1))
+		dbl_dec_rounding(format, flt, integer, decimal);
 }
 
 void	dbl_remove_trailing_zeros(t_format *format)

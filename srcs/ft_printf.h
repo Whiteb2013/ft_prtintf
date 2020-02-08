@@ -76,6 +76,7 @@ typedef struct				s_float
 	short int				fraction_len;
 	short int				exponent;
 	size_t					zero_counter;
+	size_t					dec_prec;
 
 }							t_float;
 
@@ -138,9 +139,8 @@ size_t						int_length_array(t_array *array, unsigned int base);
 int							dbl_check_exceptions(t_float *flt);
 int							dbl_define_exception(t_format *format, \
 								t_float *flt);
-void						dbl_rounding(t_format *format, t_float *flt, \
-								t_array *integer, t_array *decimal, \
-								size_t precision);
+void						dbl_dec_rounding(t_format *format, t_float *flt, \
+								t_array *integer, t_array *decimal);
 void						dbl_e_rounding(t_format *format, t_float *flt, \
 								t_array *integer, t_array *decimal);
 void						dbl_count_leading_zero(t_format *format, \

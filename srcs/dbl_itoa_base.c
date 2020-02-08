@@ -43,7 +43,7 @@ size_t	fill_first_elem_e(char *str, t_array *array, size_t i, \
 	values = "0123456789abcdef";
 	int2convert = array->array[array->current_element];
 	base = BASE / 10;
-	while (base > int2convert)
+	while (base > int2convert && int2convert)
 		base /= 10;
 	while (base && precision > i)
 	{
