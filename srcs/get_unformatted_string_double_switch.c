@@ -51,6 +51,7 @@ int		convert_double2string(t_format *format, long double a, size_t base)
 	apply_default_options_dbl(format, &flt, base);
 	if (dbl_check_exceptions(&flt))
 		return (dbl_define_exception(format, &flt));
+	//if (dbl_check_limits(&flt))
 	dbl_get_integer(format, &flt, &integer);
 	dbl_get_decimal(format, &flt, &decimal);
 	if (!select_double_type(format, &flt, &integer, &decimal))
