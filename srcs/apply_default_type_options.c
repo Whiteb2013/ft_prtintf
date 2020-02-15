@@ -60,7 +60,7 @@ int		apply_default_options_dbl(t_format *format, t_float *flt, size_t base)
 	if (flt->dbl.t_union.sign)
 		format->content.sign = '-';
 	format->base = base;
-	flt->exponent = flt->dbl.t_union.exponent - EXP_DFLT;
+	flt->exponent = flt->dbl.t_union.exponent - LDBL_EXP_ZERO;
 	flt->fraction_len = 64;
 	flt->zero_counter = 0;
 	return (1);

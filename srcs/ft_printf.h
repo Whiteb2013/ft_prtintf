@@ -15,7 +15,8 @@
 # define MAX_ELEM 300000
 # define BASE 10000
 # define BASE_LEN 4
-# define EXP_DFLT 16383
+# define LDBL_EXP_ZERO 16383
+# define DBL_EXP_ZERO 1028
 # define EXP_EXCPN 32767
 
 # include "../libft/libft.h"
@@ -137,6 +138,7 @@ size_t						int_length(\
 								unsigned long long int b, unsigned int base);
 size_t						int_length_array(t_array *array, unsigned int base);
 int							dbl_check_exceptions(t_float *flt);
+int							dbl_check_limits(t_format *format, t_float *flt);
 int							dbl_define_exception(t_format *format, \
 								t_float *flt);
 void						dbl_dec_rounding(t_format *format, t_float *flt, \

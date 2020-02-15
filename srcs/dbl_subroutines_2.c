@@ -72,10 +72,10 @@ void	dbl_get_decimal(t_format *format, t_float *flt, t_array *decimal)
 	int					flag;
 
 	clean_array_initial(&exp);
-	flt->exponent = -flt->exponent;
 	flag = 0;
-	if (flt->exponent != EXP_DFLT && flt->fraction_len > 0)
+	if (dbl_check_limits(format, flt) && flt->fraction_len > 0)
 	{
+		flt->exponent = -flt->exponent;
 		flag = dbl_detect_leading_zero(flt, decimal, &exp);
 		while (flt->fraction_len-- > 0)
 		{
@@ -87,8 +87,6 @@ void	dbl_get_decimal(t_format *format, t_float *flt, t_array *decimal)
 	}
 	if (flag)
 		dbl_count_leading_zero(format, flt, decimal, flag);
-	else
-		flt->zero_counter = 0;
 	dbl_update_array_length(format, decimal);
 }
 
@@ -97,7 +95,7 @@ void	dbl_get_integer(t_format *format, t_float *flt, t_array *integer)
 	t_array				exp;
 
 	clean_array_initial(&exp);
-	if (flt->exponent != -EXP_DFLT)
+	if (dbl_check_limits(format, flt))
 		while (flt->exponent >= 0 && flt->fraction_len-- > 0)
 		{
 			((flt->dbl.t_union.mantissa >> flt->fraction_len) & 1L) == 1L ? \

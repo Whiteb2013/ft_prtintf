@@ -15,7 +15,7 @@
 int		dbl_check_exceptions(t_float *flt)
 {
 	if (((((flt->dbl.t_union.mantissa >> 63) & 1L) == 0L) || \
-		flt->exponent == EXP_EXCPN - EXP_DFLT) && flt->exponent != -EXP_DFLT)
+		flt->exponent == EXP_EXCPN - LDBL_EXP_ZERO) && flt->exponent != -LDBL_EXP_ZERO)
 		return (1);
 	return (0);
 }
@@ -43,4 +43,13 @@ int		dbl_define_exception(t_format *format, t_float *flt)
 			return (0);
 	}
 	return (1);
+}
+
+int		dbl_check_limits(t_format *format, t_float *flt)
+{
+	if (flt->exponent == -LDBL_EXP_ZERO)
+		return (0);
+	else if (flt->exponent == -DBL_EXP_ZERO && format->length_flag[0] != 'L')
+		return (0);
+	return(1);
 }
