@@ -21,7 +21,6 @@
 
 # include "../libft/libft.h"
 # include <stdarg.h>
-# include <stdio.h>
 
 typedef	struct				s_flag
 {
@@ -137,7 +136,8 @@ char						*ft_itoa_base_array_precision_e(t_format *format, \
 size_t						int_length(\
 								unsigned long long int b, unsigned int base);
 size_t						int_length_array(t_array *array, unsigned int base);
-int							dbl_check_exceptions(t_float *flt);
+int							dbl_check_exceptions(t_format *format, \
+								t_float *flt);
 int							dbl_check_limits(t_format *format, t_float *flt);
 int							dbl_define_exception(t_format *format, \
 								t_float *flt);

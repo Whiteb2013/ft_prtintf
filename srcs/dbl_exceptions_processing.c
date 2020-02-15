@@ -12,10 +12,11 @@
 
 #include "ft_printf.h"
 
-int		dbl_check_exceptions(t_float *flt)
+int		dbl_check_exceptions(t_format *format, t_float *flt)
 {
 	if (((((flt->dbl.t_union.mantissa >> 63) & 1L) == 0L) || \
-		flt->exponent == EXP_EXCPN - LDBL_EXP_ZERO) && flt->exponent != -LDBL_EXP_ZERO)
+			flt->exponent == EXP_EXCPN - LDBL_EXP_ZERO) && \
+			dbl_check_limits(format, flt))
 		return (1);
 	return (0);
 }
@@ -51,5 +52,5 @@ int		dbl_check_limits(t_format *format, t_float *flt)
 		return (0);
 	else if (flt->exponent == -DBL_EXP_ZERO && format->length_flag[0] != 'L')
 		return (0);
-	return(1);
+	return (1);
 }

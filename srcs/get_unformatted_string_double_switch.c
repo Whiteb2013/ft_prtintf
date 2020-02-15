@@ -49,7 +49,7 @@ int		convert_double2string(t_format *format, long double a, size_t base)
 	clean_array_initial(&decimal);
 	flt.dbl.dbl = (long double)a;
 	apply_default_options_dbl(format, &flt, base);
-	if (dbl_check_exceptions(&flt))
+	if (dbl_check_exceptions(format, &flt))
 		return (dbl_define_exception(format, &flt));
 	dbl_get_integer(format, &flt, &integer);
 	dbl_get_decimal(format, &flt, &decimal);
